@@ -18,7 +18,7 @@
  */
 void cls()
 {
-    // system("clear||cls");
+    system("clear||cls");
 }
 
 /**
@@ -148,20 +148,5 @@ int menu()
 }
 int main()
 {
-    setColor(RED);
-    setBackgroundColor(YELLOW);
-    printf("bonjour\n");
-    setColor(GREEN);
-    setBackgroundColor(BLUE);
-    printf("bonjour\n");
-    setBackgroundColor(RED);
-    setColor(BLUE);
-    printf("bonjour\n");
-    setBackgroundColor(WHITE);
-    setColor(BLACK);
-    printf("bonjour\n");
-    setDefaultColor();
-    printf("fin\n");
-
-    return 0;
+    return menu();
 }
