@@ -7,25 +7,25 @@ void setColor(Color color)
 
     switch (color) {
     case RED:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4| FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
         break;
     case BLUE:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1| FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
         break;
     case GREEN:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2| FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
         break;
     case BLACK:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0| FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);
         break;
     case WHITE:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15| FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
         break;
     case GREY:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0| FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
         break;
     case YELLOW:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 6 | FOREGROUND_INTENSITY);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
         break;
     default:
         break;
@@ -36,33 +36,33 @@ void setBackgroundColor(Color color)
 {
     switch (color) {
     case RED:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | 4);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 154);
         break;
     case BLUE:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | 1);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 151);
         break;
     case GREEN:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | 1);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 152);
         break;
     case BLACK:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | 0);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 150);
         break;
     case WHITE:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | 15);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1515);
         break;
     case GREY:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | 0);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 158);
         break;
     case YELLOW:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), BACKGROUND_INTENSITY | 6);
+        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 156);
         break;
     default:
         break;
     }
 }
-void setDefaultColor(){
+void setDefaultColor()
+{
     setColor(WHITE);
-	setBackgroundColor(BLACK);
 }
 #else
 void setDefaultColor()
