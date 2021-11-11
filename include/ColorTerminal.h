@@ -3,13 +3,13 @@
 
 #include <stdio.h>
 
-#ifdef __unix__         
+#ifdef __unix__
 
-#elif defined(_WIN32) || defined(WIN32) 
+#elif defined(_WIN32) || defined(WIN32)
 
-    #include <windows.h>
-    #include <conio.h>
-    #define OS_Windows
+#include <conio.h>
+#include <windows.h>
+#define OS_Windows
 
 #endif
 
@@ -36,6 +36,5 @@ typedef enum {
 void setDefaultColor();
 void setColor(Color color);
 void setBackgroundColor(Color color);
-
 
 #endif

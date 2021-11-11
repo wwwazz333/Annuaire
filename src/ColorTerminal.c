@@ -1,68 +1,73 @@
 #include "ColorTerminal.h"
 
 #ifdef OS_Windows
+int currTextColor = 15;
+int currBackgroundColor = 0;
 
 void setColor(Color color)
 {
 
     switch (color) {
     case RED:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 4);
+        currTextColor = 4;
         break;
     case BLUE:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1);
+        currTextColor = 1;
         break;
     case GREEN:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 2);
+        currTextColor = 2;
         break;
     case BLACK:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 0);
+        currTextColor = 0;
         break;
     case WHITE:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+        currTextColor = 15;
         break;
     case GREY:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 8);
+        currTextColor = 8;
         break;
     case YELLOW:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
+        currTextColor = 14;
         break;
     default:
         break;
     }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currTextColor + 16 * currBackgroundColor);
 }
 
 void setBackgroundColor(Color color)
 {
     switch (color) {
     case RED:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 154);
+        currBackgroundColor = 4;
         break;
     case BLUE:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 151);
+        currBackgroundColor = 1;
         break;
     case GREEN:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 152);
+        currBackgroundColor = 2;
         break;
     case BLACK:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 150);
+        currBackgroundColor = 0;
         break;
     case WHITE:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 1515);
+        currBackgroundColor = 15;
         break;
     case GREY:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 158);
+        currBackgroundColor = 8;
         break;
     case YELLOW:
-        SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 156);
+        currBackgroundColor = 14;
         break;
     default:
         break;
     }
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currTextColor + 16 * currBackgroundColor);
 }
 void setDefaultColor()
 {
     setColor(WHITE);
+    setBackgroundColor(BLACK);
 }
 #else
 void setDefaultColor()
