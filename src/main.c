@@ -148,5 +148,20 @@ int menu()
 }
 int main()
 {
-    return menu();
+    setColor(RED);
+    setBackgroundColor(YELLOW);
+    printf("bonjour\n");
+    setColor(GREEN);
+    setBackgroundColor(BLUE);
+    printf("bonjour\n");
+    setBackgroundColor(RED);
+    setColor(BLUE);
+    printf("bonjour\n");
+    setBackgroundColor(WHITE);
+    setColor(BLACK);
+    printf("bonjour\n");
+    setDefaultColor();
+    printf("fin\n");
+
+    return 0;
 }
