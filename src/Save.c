@@ -32,7 +32,7 @@ char* readU2(char* depart, char* dst, int taille_max_dst, char fin)
 {
     char* ptr_fin = strchr(depart, fin);
     long int distance = ptr_fin - depart;
-    printf("taille : %ld\n", ptr_fin - depart);
+
     if (distance >= taille_max_dst) { // trop grand
         distance = taille_max_dst - 1;
     }
@@ -54,47 +54,24 @@ int readUser(FILE* fp, user* u)
 
     char* first = &ligne[0]; // pareille que first = ligne;
     first = readU2(first, u->nom, SIZE_NOM, ',');
-    for (int i = 0; i < SIZE_NOM; i++) {
-        printf("%d : ", i);
-        if (u->nom[i] == '\0') {
-            printf("\\0");
-        }
-        if (u->nom[i] == '\n') {
-            printf("\\n");
-        } else {
-            printf("%c", u->nom[i]);
-        }
-        printf("\n");
-    }
     first = readU2(first, u->prenom, SIZE_PRENOM, ',');
     first = readU2(first, u->ville, SIZE_VILLE, ',');
     first = readU2(first, u->code_postal, SIZE_CODE_POSTAL, ',');
     first = readU2(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
     first = readU2(first, u->email, SIZE_EMAIL, ',');
     first = readU2(first, u->metier, SIZE_METIER, '\n');
-    for (int i = 0; i < SIZE_METIER; i++) {
-        printf("%d : ", i);
-        if (u->metier[i] == '\0') {
-            printf("\\0");
-        }
-        if (u->metier[i] == '\n') {
-            printf("\\n");
-        } else {
-            printf("%c", u->metier[i]);
-        }
-        printf("\n");
-    }
 
     return 0;
-
-    readUntil(fp, u->nom, SIZE_NOM, ',');
-    readUntil(fp, u->prenom, SIZE_PRENOM, ',');
-    readUntil(fp, u->ville, SIZE_VILLE, ',');
-    readUntil(fp, u->code_postal, SIZE_CODE_POSTAL, ',');
-    readUntil(fp, u->no_telephone, SIZE_NO_TELEPHONE, ',');
-    readUntil(fp, u->email, SIZE_EMAIL, ',');
-    return readUntil(fp, u->metier, SIZE_METIER, '\n'); // car readUntil retourne EOF donc fin du fichier si c'est la fin du fichier
-    // return fscanf(fp, "%s,%s,%s,%s,%s,%s,%s\n", u->nom, u->prenom, u->ville, u->code_postal, u->no_telephone, u->email, u->metier);
+    /*
+        readUntil(fp, u->nom, SIZE_NOM, ',');
+        readUntil(fp, u->prenom, SIZE_PRENOM, ',');
+        readUntil(fp, u->ville, SIZE_VILLE, ',');
+        readUntil(fp, u->code_postal, SIZE_CODE_POSTAL, ',');
+        readUntil(fp, u->no_telephone, SIZE_NO_TELEPHONE, ',');
+        readUntil(fp, u->email, SIZE_EMAIL, ',');
+        return readUntil(fp, u->metier, SIZE_METIER, '\n'); // car readUntil retourne EOF donc fin du fichier si c'est la fin du fichier
+        // return fscanf(fp, "%s,%s,%s,%s,%s,%s,%s\n", u->nom, u->prenom, u->ville, u->code_postal, u->no_telephone, u->email, u->metier);
+    */
 }
 int load(FILE* fp, user* users, int taille_user)
 {
