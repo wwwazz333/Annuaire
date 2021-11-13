@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define TAILLE_MAX_LIGNE 537
+
 //TODO : verifier si ouvert dans le bon mode ??????? (r, w)
 
 
@@ -21,6 +23,7 @@
  * @return int : EOF si on est a la fin du fichier et 0 sinon
  */
 int readUntil(FILE* fp, char* str, int taille_str, char fin);
+char* readU(char* depart, char* dst, int taille_max_dst, char fin);
 
 /**
  * @brief lit une ligne du fichier fp (à partire de l'emplacemenet du curseur) et place les information dans l'user u

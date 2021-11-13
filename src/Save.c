@@ -1,6 +1,5 @@
 #include "Save.h"
 
-//TODO: regarder se qui est le mieux pour nombre_utilisateurs
 //TODO : nb_carcactère max d'une ligne : sizeof(user)/sizeof(char) + '\n'
 
 int readUntil(FILE* fp, char* str, int taille_str, char fin)
@@ -18,12 +17,51 @@ int readUntil(FILE* fp, char* str, int taille_str, char fin)
     str[i] = '\0';
     return 0;
 }
-
+char* readU(char* depart, char* dst, int taille_max_dst, char fin)
+{
+    int i = 0;
+    while(*(depart+i) != fin && i < taille_max_dst-1){
+        dst[i] = *(depart+i);
+        i++;
+    }
+    dst[i] = '\0';
+    return (depart+i+1);
+}
 int readUser(FILE* fp, user* u)
 {
     if (fp == NULL) {
         return 1;
     }
+    char ligne[TAILLE_MAX_LIGNE];
+    if(fgets(ligne, TAILLE_MAX_LIGNE, fp) == NULL){
+        return EOF;
+    }
+
+    char* first = &ligne[0];
+    first = readU(first, u->nom, SIZE_NOM, ',');
+    
+
+    first = readU(first, u->prenom, SIZE_PRENOM, ',');
+    
+    
+    first = readU(first, u->ville, SIZE_VILLE, ',');
+    
+    
+    first = readU(first, u->code_postal, SIZE_CODE_POSTAL, ',');
+    
+    
+    first = readU(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
+    
+    
+    first = readU(first, u->email, SIZE_EMAIL, ',');
+   
+    
+    first = readU(first, u->metier, SIZE_METIER, '\n');
+    
+    
+    return 0;
+    
+
 
     readUntil(fp, u->nom, SIZE_NOM, ',');
     readUntil(fp, u->prenom, SIZE_PRENOM, ',');
@@ -105,8 +143,8 @@ int nombre_utilisateurs(FILE* fp)
     }
     fseek(fp, 0, SEEK_SET);
     int nb_ligne = 0;
-    char str[537]; // sizeof(user)/sizeof(char) = 536
-    while (fgets(str, 537, fp) != NULL) {
+    char str[TAILLE_MAX_LIGNE]; // sizeof(user)/sizeof(char) = 536
+    while (fgets(str, TAILLE_MAX_LIGNE, fp) != NULL) {
         if (str[6] != '\n') {
             nb_ligne++;
         }
