@@ -23,6 +23,18 @@
  */
 int readUntil(FILE* fp, char* str, int taille_str, char fin);
 char* readU(char* depart, char* dst, int taille_max_dst, char fin);
+/**
+ * @brief lit le fichier fp et met les caractère dans dst jusqu'à renctonrer le char "fin"
+ * 
+ * @pre fp ouvert en mode lecture et qu'il y est bien le caractère de fin dans la partie du fichier que l'on va lire
+ * @post dst contien tous les caractère (à partir de l'emplacement de départ) jusqu'au caractère fin (éxclu), si il y a assez de place sinon coupe la chaine et retourne un pointeur sur le prochain caractère après le char "fin"
+ * 
+ * @param fp le fichier
+ * @param dst la chaine ou l'on place les caractère
+ * @param taille_max_dst la taille max de dst (pour ne pas écrire si il n'y a plus d'emplacement de libre)
+ * @param fin le caractère de fin
+ * @return char* : qui pointe sur le char après le char fin
+ */
 char* readU2(char* depart, char* dst, int taille_max_dst, char fin);
 
 /**
