@@ -6,7 +6,7 @@ int readUntil(FILE* fp, char* str, int taille_str, char fin)
 {
     if (fp == NULL) {
         return 1;
-    } 
+    }
     int i = 0;
     while ((str[i] = getc(fp)) != fin && i < taille_str - 1) { // on lit un caractèrer et on verifie qu'il y a assez de place dans str (en comptant '\0') et que se n'est pas le caractère de fin
         if (str[i] == EOF) {
@@ -20,48 +20,66 @@ int readUntil(FILE* fp, char* str, int taille_str, char fin)
 char* readU(char* depart, char* dst, int taille_max_dst, char fin)
 {
     int i = 0;
-    while(*(depart+i) != fin && i < taille_max_dst-1){
-        dst[i] = *(depart+i);
+
+    while (*(depart + i) != fin && i < taille_max_dst - 1) {
+        dst[i] = *(depart + i);
         i++;
     }
     dst[i] = '\0';
-    return (depart+i+1);
+    return (depart + i + 1);
 }
+char* readU2(char* depart, char* dst, int taille_max_dst, char fin)
+{
+    char* ptr_fin = strchr(depart, fin);
+    long int distance = ptr_fin - depart;
+    printf("taille : %ld\n", ptr_fin - depart);
+    if (distance >= taille_max_dst) { // trop grand
+        memcpy(dst, depart, taille_max_dst-1);
+        dst[taille_max_dst-1] = '\0';
+    } 
+    else { //pas trop grand
+        memcpy(dst, depart, distance);
+        dst[distance] = '\0';
+    }
+    return (depart + distance + 1);
+}
+
 int readUser(FILE* fp, user* u)
 {
     if (fp == NULL) {
         return 1;
     }
     char ligne[TAILLE_MAX_LIGNE];
-    if(fgets(ligne, TAILLE_MAX_LIGNE, fp) == NULL){
+    if (fgets(ligne, TAILLE_MAX_LIGNE, fp) == NULL) {
         return EOF;
     }
 
-    char* first = &ligne[0];
-    first = readU(first, u->nom, SIZE_NOM, ',');
-    
+    char* first = &ligne[0]; // pareille que first = ligne;
+    first = readU2(first, u->nom, SIZE_NOM, ',');
+    for (int i = 0; i < SIZE_NOM; i++)
+    {
+        printf("%d : ", i);
+        if(u->nom[i] == '\0'){printf("\\0");}
+        if(u->nom[i] == '\n'){printf("\\n");}
+        else{printf("%c", u->nom[i]);}
+        printf("\n");
+    }
+    first = readU2(first, u->prenom, SIZE_PRENOM, ',');
+    first = readU2(first, u->ville, SIZE_VILLE, ',');
+    first = readU2(first, u->code_postal, SIZE_CODE_POSTAL, ',');
+    first = readU2(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
+    first = readU2(first, u->email, SIZE_EMAIL, ',');
+    first = readU2(first, u->metier, SIZE_METIER, '\n');
+    for (int i = 0; i < SIZE_METIER; i++)
+    {
+        printf("%d : ", i);
+        if(u->metier[i] == '\0'){printf("\\0");}
+        if(u->metier[i] == '\n'){printf("\\n");}
+        else{printf("%c", u->metier[i]);}
+        printf("\n");
+    }
 
-    first = readU(first, u->prenom, SIZE_PRENOM, ',');
-    
-    
-    first = readU(first, u->ville, SIZE_VILLE, ',');
-    
-    
-    first = readU(first, u->code_postal, SIZE_CODE_POSTAL, ',');
-    
-    
-    first = readU(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
-    
-    
-    first = readU(first, u->email, SIZE_EMAIL, ',');
-   
-    
-    first = readU(first, u->metier, SIZE_METIER, '\n');
-    
-    
     return 0;
-    
-
 
     readUntil(fp, u->nom, SIZE_NOM, ',');
     readUntil(fp, u->prenom, SIZE_PRENOM, ',');

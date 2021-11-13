@@ -9,7 +9,6 @@
 
 //TODO : verifier si ouvert dans le bon mode ??????? (r, w)
 
-
 /**
  * @brief lit le fichier fp et met les caractère dans str jusqu'à renctonrer le char "fin"
  * 
@@ -24,6 +23,7 @@
  */
 int readUntil(FILE* fp, char* str, int taille_str, char fin);
 char* readU(char* depart, char* dst, int taille_max_dst, char fin);
+char* readU2(char* depart, char* dst, int taille_max_dst, char fin);
 
 /**
  * @brief lit une ligne du fichier fp (à partire de l'emplacemenet du curseur) et place les information dans l'user u
