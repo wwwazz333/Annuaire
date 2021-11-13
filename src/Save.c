@@ -34,13 +34,11 @@ char* readU2(char* depart, char* dst, int taille_max_dst, char fin)
     long int distance = ptr_fin - depart;
     printf("taille : %ld\n", ptr_fin - depart);
     if (distance >= taille_max_dst) { // trop grand
-        memcpy(dst, depart, taille_max_dst-1);
-        dst[taille_max_dst-1] = '\0';
-    } 
-    else { //pas trop grand
-        memcpy(dst, depart, distance);
-        dst[distance] = '\0';
+        distance = taille_max_dst - 1;
     }
+    memcpy(dst, depart, distance);
+    dst[distance] = '\0';
+    
     return (depart + distance + 1);
 }
 
@@ -56,12 +54,16 @@ int readUser(FILE* fp, user* u)
 
     char* first = &ligne[0]; // pareille que first = ligne;
     first = readU2(first, u->nom, SIZE_NOM, ',');
-    for (int i = 0; i < SIZE_NOM; i++)
-    {
+    for (int i = 0; i < SIZE_NOM; i++) {
         printf("%d : ", i);
-        if(u->nom[i] == '\0'){printf("\\0");}
-        if(u->nom[i] == '\n'){printf("\\n");}
-        else{printf("%c", u->nom[i]);}
+        if (u->nom[i] == '\0') {
+            printf("\\0");
+        }
+        if (u->nom[i] == '\n') {
+            printf("\\n");
+        } else {
+            printf("%c", u->nom[i]);
+        }
         printf("\n");
     }
     first = readU2(first, u->prenom, SIZE_PRENOM, ',');
@@ -70,12 +72,16 @@ int readUser(FILE* fp, user* u)
     first = readU2(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
     first = readU2(first, u->email, SIZE_EMAIL, ',');
     first = readU2(first, u->metier, SIZE_METIER, '\n');
-    for (int i = 0; i < SIZE_METIER; i++)
-    {
+    for (int i = 0; i < SIZE_METIER; i++) {
         printf("%d : ", i);
-        if(u->metier[i] == '\0'){printf("\\0");}
-        if(u->metier[i] == '\n'){printf("\\n");}
-        else{printf("%c", u->metier[i]);}
+        if (u->metier[i] == '\0') {
+            printf("\\0");
+        }
+        if (u->metier[i] == '\n') {
+            printf("\\n");
+        } else {
+            printf("%c", u->metier[i]);
+        }
         printf("\n");
     }
 
