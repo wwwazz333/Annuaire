@@ -40,7 +40,28 @@ char* readU2(char* depart, char* dst, int taille_max_dst, char fin)
 
     return (depart + distance_char_fin + 1);
 }
+/*
+char* readU3(char* depart, char* dst, int taille_max_dst, char* fin)
+{
+    long int distance_char_fin;
+    long int temp;
+    for (int i = 0; fin[i] != '\0'; i++) {
+        if ((temp = strchr(depart, fin[i]) - depart) != NULL) {
+            if (temp < distance_char_fin) {
+                distance_char_fin = temp;
+            }
+        }
+    }
 
+    if (distance_char_fin >= taille_max_dst) { // trop grand
+        distance_char_fin = taille_max_dst - 1;
+    }
+    memcpy(dst, depart, distance_char_fin);
+    dst[distance_char_fin] = '\0';
+
+    return (depart + distance_char_fin + 1);
+}
+*/
 int readUser(FILE* fp, user* u)
 {
     if (fp == NULL) {
@@ -52,7 +73,7 @@ int readUser(FILE* fp, user* u)
     }
 
     char* first = &ligne[0]; // pareille que first = ligne;
-    
+
     first = readU2(first, u->nom, SIZE_NOM, ',');
     first = readU2(first, u->prenom, SIZE_PRENOM, ',');
     first = readU2(first, u->ville, SIZE_VILLE, ',');
@@ -60,7 +81,6 @@ int readUser(FILE* fp, user* u)
     first = readU2(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
     first = readU2(first, u->email, SIZE_EMAIL, ',');
     first = readU2(first, u->metier, SIZE_METIER, '\n');
-    
 
     return 0;
     /*
@@ -100,7 +120,7 @@ int writeUser(FILE* fp, user* u)
     if (fp == NULL) {
         return 1;
     }
-    
+
     // plus lent
     // fprintf(fp, "%s,%s,%s,%s,%s,%s,%s\n", u->nom, u->prenom, u->ville, u->code_postal, u->no_telephone, u->email, u->metier);
 
@@ -146,7 +166,7 @@ int nombre_utilisateurs(FILE* fp)
     }
     fseek(fp, 0, SEEK_SET);
     int nb_ligne = 0;
-    
+
     char str[TAILLE_MAX_LIGNE]; // sizeof(user)/sizeof(char) = 536
     while (fgets(str, TAILLE_MAX_LIGNE, fp) != NULL) {
         if (str[6] != '\n') {

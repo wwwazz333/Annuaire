@@ -36,6 +36,7 @@ char* readU(char* depart, char* dst, int taille_max_dst, char fin);
  * @return char* : qui pointe sur le char après le char fin
  */
 char* readU2(char* depart, char* dst, int taille_max_dst, char fin);
+// char* readU3(char* depart, char* dst, int taille_max_dst, char* fin);
 
 /**
  * @brief lit une ligne du fichier fp (à partire de l'emplacemenet du curseur) et place les information dans l'user u
