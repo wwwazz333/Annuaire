@@ -67,6 +67,8 @@ void usercpy(user* dst, user* src);
  * @param taille taille du tableau
  * @return int 0 ssi il a pu etre supprimer
  */
-int del_user(user tableau[], int ligne, int taille);
+int del_user(user tableau[], int id, int taille);
+
+int insert_user(user tab[], int taille, user u);
 
 #endif

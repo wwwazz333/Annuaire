@@ -64,7 +64,7 @@ void show_menu()
     show_line_menu("Ajouter Client\n", &i);
     show_line_menu("Supprimer Client\n", &i);
     show_line_menu("Rechercher\n", &i);
-    show_line_menu("Quiter\n", &i);
+    show_line_menu("Quitter\n", &i);
 }
 
 /**
@@ -91,7 +91,7 @@ int menu()
         flush(); // vide stdin (au cas ou entrer plusieur caractère précédament)
         cls();
         switch (reponse) {
-        case '0':
+        case '0': // charger un fichier
             show_menu_Title("Charger fichier");
             fp = fopen(ask_fichier_existant("csv"), "r");
             if (fp == NULL) {
@@ -106,7 +106,7 @@ int menu()
             }
             // tri_vide(users, 5, nbr_utilisateur);
             break;
-        case '1':
+        case '1': // Sauvgrade du tableau
             show_menu_Title("Sauvgarde fichier");
             fp = fopen(ask_fichier("csv"), "w");
             if (fp == NULL) {
@@ -118,7 +118,7 @@ int menu()
                 fclose(fp);
             }
             break;
-        case '2':
+        case '2': // Affichage Clients
             if (users_init) {
                 show_menu_Title("Affichage Clients");
                 for (int i = 0; i < nbr_utilisateur; i++) {
@@ -133,7 +133,16 @@ int menu()
                 }
             }
             break;
-
+        case '3': // ajout d'utilisateur
+            show_menu_Title("ajou Clients");
+            printf("création de l'utilisateur a ajouté a l'annuaire...");
+            user u = input_user();
+            insert_user(users, nbr_utilisateur, u);
+            break;
+        case '4': // suppression d'utilisateur
+            break;
+        case '5': // Recherche
+            break;
         default:
             break;
         }
