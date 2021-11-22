@@ -144,25 +144,37 @@ void setBackgroundColor(Color color)
 {
     switch (color) {
     case RED:
-        bRGBoutput(255, 0, 0);
+        bRGBoutput(197, 15, 31);
         break;
     case BLUE:
-        bRGBoutput(0, 0, 255);
+        bRGBoutput(59, 120, 255);
         break;
     case GREEN:
-        bRGBoutput(0, 255, 0);
+        bRGBoutput(19, 161, 14);
         break;
     case BLACK:
-        bRGBoutput(0, 0, 0);
+        bRGBoutput(12, 12, 12);
         break;
     case WHITE:
-        bRGBoutput(255, 255, 255);
+        bRGBoutput(204, 204, 204);
         break;
     case GREY:
-        bRGBoutput(128, 128, 128);
+        bRGBoutput(118, 118, 118);
         break;
     case YELLOW:
-        bRGBoutput(255, 255, 0);
+        bRGBoutput(193, 156, 0);
+        break;
+    case PINK:
+        bRGBoutput(180, 0, 158);
+        break;
+    case PURPLE:
+        bRGBoutput(136, 23, 152);
+        break;
+    case ORANGE:
+        bRGBoutput(247, 179, 91);
+        break;
+    case AQUA:
+        bRGBoutput(58, 150, 221);
         break;
     default:
         break;
