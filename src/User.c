@@ -82,7 +82,7 @@ int insert_user(user tab[], int taille, user u)
     return 0;
 }
 
-int recherche(user tab[], int taille, char nom[64])
+int recherche(user tab[], int taille, char nom[64]) // recherche le dernnier
 {
     int i;
     int gauche = 0;
@@ -94,7 +94,7 @@ int recherche(user tab[], int taille, char nom[64])
             gauche = i + 1;
         } else if (strcmp((char*)&tab[i].nom, nom) > 0) {
             printf("décale droite\n");
-            droite = i - 1;
+            droite = i -1;
         } else {
             return i;
         }

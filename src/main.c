@@ -5,6 +5,7 @@
 #include "Save.h"
 #include "User.h"
 #include "Verif.h"
+#include "tri.h"
 
 #include <sys/time.h>
 #include <time.h>
@@ -18,7 +19,7 @@
  */
 void cls()
 {
-    system("clear||cls");
+    // system("clear||cls");
 }
 
 /**
@@ -131,6 +132,8 @@ int menu()
                     setDefaultColor();
                     printf("\n");
                 }
+
+                quick_sort(users, 0, nbr_utilisateur-1);
             }
             break;
         case '3': // ajout d'utilisateur
@@ -142,6 +145,9 @@ int menu()
         case '4': // suppression d'utilisateur
             break;
         case '5': // Recherche
+            char nn[64];
+            input(nn, 64);
+            printf("emplacmenet : %d\n", recherche(users, nbr_utilisateur, nn));
             break;
         default:
             break;
