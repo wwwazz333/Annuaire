@@ -98,7 +98,7 @@ int menu()
         show_menu();
         setColor(ORANGE);
         printf(">> ");
-        setColor(WHITE);
+        setColor(AQUA);
         scanf("%c", &reponse);
         setDefaultColor();
         // while ((reponse = getc(stdin)) == '\n') { }; // passe les '\n' inutile
