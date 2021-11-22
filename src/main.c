@@ -57,14 +57,20 @@ void show_line_menu(const char* text, int* i)
 void show_menu()
 {
     int i = 0;
+    setDefaultColor();
     show_menu_Title("Menu");
-    show_line_menu("Charger ficher\n", &i);
-    show_line_menu("Sauvgarder fichier\n", &i);
-    show_line_menu("Afficher Clients\n", &i);
-    show_line_menu("Ajouter Client\n", &i);
-    show_line_menu("Supprimer Client\n", &i);
-    show_line_menu("Rechercher\n", &i);
-    show_line_menu("Quitter\n", &i);
+    setColor(GREEN);
+    show_line_menu("Charger ficher\n", &i);//0
+    show_line_menu("Sauvgarder fichier\n", &i);//1
+    setColor(BLUE);
+    show_line_menu("Ajouter Client\n", &i);//2
+    show_line_menu("Supprimer Client\n", &i);//3
+    setColor(YELLOW);
+    show_line_menu("Afficher Clients\n", &i);//4
+    show_line_menu("Rechercher\n", &i);//5
+    setColor(RED);
+    show_line_menu("Quitter\n", &i);//6
+    setDefaultColor();
 }
 
 /**
@@ -118,7 +124,15 @@ int menu()
                 fclose(fp);
             }
             break;
-        case '2': // Affichage Clients
+        case '2': // ajout d'utilisateur
+            show_menu_Title("ajou Clients");
+            printf("création de l'utilisateur a ajouté a l'annuaire...");
+            user u = input_user();
+            insert_user(users, nbr_utilisateur, u);
+            break;
+        case '3': // suppression d'utilisateur
+            break;
+        case '4': // Affichage Clients
             if (users_init) {
                 show_menu_Title("Affichage Clients");
                 for (int i = 0; i < nbr_utilisateur; i++) {
@@ -132,14 +146,6 @@ int menu()
                     printf("\n");
                 }
             }
-            break;
-        case '3': // ajout d'utilisateur
-            show_menu_Title("ajou Clients");
-            printf("création de l'utilisateur a ajouté a l'annuaire...");
-            user u = input_user();
-            insert_user(users, nbr_utilisateur, u);
-            break;
-        case '4': // suppression d'utilisateur
             break;
         case '5': // Recherche
             break;
