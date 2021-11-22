@@ -26,16 +26,16 @@ void quick_sort(user* tab, int first, int last)
     j = last - 1;
 
     while (1) {
-        while (strcmp(&tab[i].nom, &tab[last].nom) < 0) {
+        while (strcmp((char*)&tab[i].nom, (char*)&tab[last].nom) < 0) {
             i += 1;
         }
-        while (strcmp(&tab[j].nom, &tab[last].nom) > 0) {
+        while (strcmp((char*)&tab[j].nom, (char*)&tab[last].nom) > 0) {
             j -= 1;
         }
         if (j <= i) {
             break;
         }
-        if (strcmp(&tab[i].nom, &tab[j].nom) == 0) {
+        if (strcmp((char*)&tab[i].nom, (char*)&tab[j].nom) == 0) {
             i++;
             j--;
             continue;

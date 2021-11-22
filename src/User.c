@@ -58,9 +58,9 @@ int insert_user(user tab[], int taille, user u)
     droite = taille - 1;
     while (gauche < droite) {
         millieu = (gauche + droite) / 2;
-        if (strcmp(&u.nom, &tab[millieu].nom) < 0) {
+        if (strcmp((char*)&u.nom, (char*)&tab[millieu].nom) < 0) {
             droite = millieu - 1;
-        } else if (strcmp(&u.nom, &tab[millieu].nom) > 0) {
+        } else if (strcmp((char*)&u.nom, (char*)&tab[millieu].nom) > 0) {
             gauche = millieu + 1;
         } else {
             index_a_ajouter = millieu + 1;
@@ -89,10 +89,10 @@ int recherche(user tab[], int taille, char nom[64])
     int droite = taille - 1;
     while (gauche < droite) {
         i = (droite + gauche) / 2;
-        if (strcmp(&tab[i].nom, nom) < 0) {
+        if (strcmp((char*)&tab[i].nom, nom) < 0) {
             printf("décale gauche\n");
             gauche = i + 1;
-        } else if (strcmp(&tab[i].nom, nom) > 0) {
+        } else if (strcmp((char*)&tab[i].nom, nom) > 0) {
             printf("décale droite\n");
             droite = i - 1;
         } else {
