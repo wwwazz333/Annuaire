@@ -133,7 +133,7 @@ void setColor(Color color)
         RGBoutput(247, 179, 91);
         break;
     case AQUA:
-        RGBoutput(59, 120, 255);
+        RGBoutput(58, 150, 221);
         break;
     default:
         break;
