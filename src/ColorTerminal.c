@@ -12,7 +12,7 @@ void setColor(Color color)
         currTextColor = 4;
         break;
     case BLUE:
-        currTextColor = 1;
+        currTextColor = 9;
         break;
     case GREEN:
         currTextColor = 2;
@@ -28,6 +28,15 @@ void setColor(Color color)
         break;
     case YELLOW:
         currTextColor = 14;
+        break;
+    case PINK:
+        currTextColor = 13;
+        break;
+    case PURPLE:
+        currTextColor = 5;
+        break;
+    case ORANGE:
+        currTextColor = 6;
         break;
     default:
         break;
@@ -58,6 +67,15 @@ void setBackgroundColor(Color color)
         break;
     case YELLOW:
         currBackgroundColor = 14;
+        break;
+    case PINK:
+        currBackgroundColor = 13;
+        break;
+    case PURPLE:
+        currBackgroundColor = 5;
+        break;
+    case ORANGE:
+        currBackgroundColor = 6;
         break;
     default:
         break;

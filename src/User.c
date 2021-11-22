@@ -3,6 +3,7 @@
 user input_user()
 {
     user u;
+    setColor(ORANGE);
     printf("\nEntrez le nom : ");
     input(u.nom, SIZE_NOM);
 
@@ -23,6 +24,7 @@ user input_user()
 
     printf("\nEntrez le metier : ");
     input(u.metier, SIZE_METIER);
+    setDefaultColor();
 
     return u;
 }

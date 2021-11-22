@@ -21,6 +21,9 @@ typedef enum {
     WHITE,
     GREY,
     YELLOW,
+    PINK,
+    PURPLE,
+    ORANGE,
     DEFAULT_COLOR,
     DEFAULT_BACKGROUND_COLOR
 } Color;

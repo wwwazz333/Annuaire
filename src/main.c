@@ -32,7 +32,10 @@ void cls()
  */
 void show_menu_Title(const char* Title)
 {
+    setBackgroundColor(GREY);
+    setColor(PINK);
     printf("\n-----------------%s-----------------\n", Title);
+    setDefaultColor();
 }
 
 /**
@@ -65,7 +68,7 @@ void show_menu()
     setColor(BLUE);
     show_line_menu("Ajouter Client\n", &i);//2
     show_line_menu("Supprimer Client\n", &i);//3
-    setColor(YELLOW);
+    setColor(PINK);
     show_line_menu("Afficher Clients\n", &i);//4
     show_line_menu("Rechercher\n", &i);//5
     setColor(RED);
@@ -91,8 +94,11 @@ int menu()
     char reponse = '\0';
     while (reponse != '6') {
         show_menu();
+        setColor(ORANGE);
         printf(">> ");
+        setColor(WHITE);
         scanf("%c", &reponse);
+        setDefaultColor();
         // while ((reponse = getc(stdin)) == '\n') { }; // passe les '\n' inutile
         flush(); // vide stdin (au cas ou entrer plusieur caractère précédament)
         cls();
@@ -101,31 +107,39 @@ int menu()
             show_menu_Title("Charger fichier");
             fp = fopen(ask_fichier_existant("csv"), "r");
             if (fp == NULL) {
+                setColor(RED);
                 printf("Le fichier n'a pas pu etre ouvert.\n");
+                setDefaultColor();
             } else {
                 nbr_utilisateur = nombre_utilisateurs(fp);
                 users = malloc(nbr_utilisateur * sizeof(user));
                 load(fp, users, nbr_utilisateur);
                 users_init = 1;
+                setColor(GREEN);
                 printf("Le fichier est charger.\n");
+                setDefaultColor();
                 fclose(fp);
             }
             // tri_vide(users, 5, nbr_utilisateur);
             break;
         case '1': // Sauvgrade du tableau
-            show_menu_Title("Sauvgarde fichier");
+            show_menu_Title("Sauvegarde fichier");
             fp = fopen(ask_fichier("csv"), "w");
             if (fp == NULL) {
+                setColor(RED);
                 printf("Le fichier n'a pas pu etre ouvert.\n");
+                setDefaultColor();
             } else {
 
                 save(fp, users, nbr_utilisateur);
+                setColor(GREEN);
                 printf("Le fichier est sauvgarder.\n");
+                setDefaultColor();
                 fclose(fp);
             }
             break;
         case '2': // ajout d'utilisateur
-            show_menu_Title("ajou Clients");
+            show_menu_Title("ajout Client");
             printf("création de l'utilisateur a ajouté a l'annuaire...");
             user u = input_user();
             insert_user(users, nbr_utilisateur, u);
@@ -135,9 +149,10 @@ int menu()
         case '4': // Affichage Clients
             if (users_init) {
                 show_menu_Title("Affichage Clients");
-                for (int i = 0; i < nbr_utilisateur; i++) {
+                int i;
+                for (i = 0; i < nbr_utilisateur; i++) {
                     if (i % 2 == 0) {
-                        setColor(YELLOW);
+                        setColor(PURPLE);
                     } else {
                         setColor(WHITE);
                     }
