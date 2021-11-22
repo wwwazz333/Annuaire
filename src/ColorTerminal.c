@@ -103,25 +103,37 @@ void setColor(Color color)
 {
     switch (color) {
     case RED:
-        RGBoutput(255, 0, 0);
+        RGBoutput(197, 15, 31);
         break;
     case BLUE:
-        RGBoutput(0, 0, 255);
+        RGBoutput(59, 120, 255);
         break;
     case GREEN:
-        RGBoutput(0, 255, 0);
+        RGBoutput(19, 161, 14);
         break;
     case BLACK:
-        RGBoutput(0, 0, 0);
+        RGBoutput(12, 12, 12);
         break;
     case WHITE:
-        RGBoutput(255, 255, 255);
+        RGBoutput(204, 204, 204);
         break;
     case GREY:
-        RGBoutput(128, 128, 128);
+        RGBoutput(118, 118, 118);
         break;
     case YELLOW:
-        RGBoutput(255, 255, 0);
+        RGBoutput(193, 156, 0);
+        break;
+    case PINK:
+        RGBoutput(180, 0, 158);
+        break;
+    case PURPLE:
+        RGBoutput(136, 23, 152);
+        break;
+    case ORANGE:
+        RGBoutput(247, 179, 91);
+        break;
+    case AQUA:
+        RGBoutput(59, 120, 255);
         break;
     default:
         break;
