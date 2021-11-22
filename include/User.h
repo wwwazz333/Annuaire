@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Verif.h"
+
 
 #define SIZE_PRENOM 64
 #define SIZE_NOM 64
@@ -71,8 +71,7 @@ int del_user(user tableau[], int id, int taille);
 
 int insert_user(user tab[], int taille, user u);
 
-int is_del(user u);
 
-int recherche(user tab[], int taille, char nom[64]);
+int recherche_emplacement(user tab[], int taille, char nom[64]);
 
 #endif

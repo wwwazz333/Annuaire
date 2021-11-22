@@ -1,7 +1,7 @@
 #ifndef _VERIF_H_
 #define _VERIF_H_
 
-#include "Verif.h"
+#include "User.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -63,6 +63,8 @@ int file_exist(const char* file_path);
  * 
  */
 void flush();
+
+int is_del(user u);
 
 
 #endif

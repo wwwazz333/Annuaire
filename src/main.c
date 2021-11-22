@@ -147,7 +147,7 @@ int menu()
         case '5': // Recherche
             char nn[64];
             input(nn, 64);
-            printf("emplacmenet : %d\n", recherche(users, nbr_utilisateur, nn));
+            printf("emplacmenet : %d\n", recherche_emplacement(users, nbr_utilisateur, nn));
             break;
         default:
             break;
