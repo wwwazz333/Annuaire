@@ -5,24 +5,37 @@ user input_user()
     user u;
     setColor(ORANGE);
     printf("\nEntrez le nom : ");
+    setColor(AQUA);
     input(u.nom, SIZE_NOM);
 
+    setColor(ORANGE);
     printf("\nEntrez le prenom : ");
+    setColor(AQUA);
     input(u.prenom, SIZE_PRENOM);
 
+    setColor(ORANGE);
     printf("\nEntrez la ville : ");
+    setColor(AQUA);
     input(u.ville, SIZE_VILLE);
 
+    setColor(ORANGE);
     printf("\nEntrez le code postal : ");
+    setColor(AQUA);
     input(u.code_postal, SIZE_CODE_POSTAL);
 
+    setColor(ORANGE);
     printf("\nEntrez le numero de telephone : ");
+    setColor(AQUA);
     input(u.no_telephone, SIZE_NO_TELEPHONE);
 
+    setColor(ORANGE);
     printf("\nEntrez l'email : ");
+    setColor(AQUA);
     input(u.email, SIZE_EMAIL);
 
+    setColor(ORANGE);
     printf("\nEntrez le metier : ");
+    setColor(AQUA);
     input(u.metier, SIZE_METIER);
     setDefaultColor();
 

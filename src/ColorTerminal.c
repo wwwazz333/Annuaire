@@ -38,6 +38,9 @@ void setColor(Color color)
     case ORANGE:
         currTextColor = 6;
         break;
+    case AQUA:
+        currTextColor = 3;
+        break;
     default:
         break;
     }
@@ -75,6 +78,9 @@ void setBackgroundColor(Color color)
         currBackgroundColor = 5;
         break;
     case ORANGE:
+        currBackgroundColor = 6;
+        break;
+    case AQUA:
         currBackgroundColor = 6;
         break;
     default:

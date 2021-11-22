@@ -22,8 +22,11 @@ char* ask_fichier(char* extension)
     nom = calloc(50, sizeof(char));
 
     while (nom[0] == '\0' || nom[0] == '\n') {
+        setColor(ORANGE);
         printf("Nom fichier: ");
+        setColor(AQUA);
         input(nom, 50);
+        setDefaultColor();
     }
     if (extension[0] != '\0') {
         strcat(nom, ".");

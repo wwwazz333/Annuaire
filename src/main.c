@@ -32,10 +32,12 @@ void cls()
  */
 void show_menu_Title(const char* Title)
 {
-    setBackgroundColor(GREY);
+    printf("\n\n");
+    setBackgroundColor(WHITE);
     setColor(PINK);
-    printf("\n-----------------%s-----------------\n", Title);
+    printf("-----------------%s-----------------", Title);
     setDefaultColor();
+    printf("\n");
 }
 
 /**
@@ -122,7 +124,7 @@ int menu()
             }
             // tri_vide(users, 5, nbr_utilisateur);
             break;
-        case '1': // Sauvgrade du tableau
+        case '1': // Sauvegarde du tableau
             show_menu_Title("Sauvegarde fichier");
             fp = fopen(ask_fichier("csv"), "w");
             if (fp == NULL) {
@@ -140,7 +142,6 @@ int menu()
             break;
         case '2': // ajout d'utilisateur
             show_menu_Title("ajout Client");
-            printf("création de l'utilisateur a ajouté a l'annuaire...");
             user u = input_user();
             insert_user(users, nbr_utilisateur, u);
             break;
@@ -172,8 +173,9 @@ int menu()
     if (users_init) {
         free(users);
     }
-
+    setColor(RED);
     printf("exit\n");
+    setDefaultColor();
     return EXIT_SUCCESS;
 }
 int main()
