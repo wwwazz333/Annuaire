@@ -1,4 +1,5 @@
 #include "User.h"
+#include "tri.h"
 
 user input_user()
 {
@@ -41,11 +42,65 @@ int del_user(user tableau[], int id, int taille)
     return 0;
 }
 
-int insert_user(user tab[], int taille, user u)
+int is_del(user u)
 {
+    if (
+        u.nom[0] == '\0' && u.prenom[0] == '\0' && u.ville[0] == '\0' && u.code_postal[0] == '\0' && u.no_telephone[0] == '\0' && u.email[0] == '\0' && u.metier[0] == '\0') {
+        return 1;
+    }
     return 0;
 }
 
+int insert_user(user tab[], int taille, user u)
+{
+    int gauche, droite, index_a_ajouter, millieu;
+    gauche = 0;
+    droite = taille - 1;
+    while (gauche < droite) {
+        millieu = (gauche + droite) / 2;
+        if (strcmp(&u.nom, &tab[millieu].nom) < 0) {
+            droite = millieu - 1;
+        } else if (strcmp(&u.nom, &tab[millieu].nom) > 0) {
+            gauche = millieu + 1;
+        } else {
+            index_a_ajouter = millieu + 1;
+        }
+    }
+    printf("on ajoute à %d\n", index_a_ajouter);
+
+    permute(&tab[index_a_ajouter], &u);
+    int i = 1;
+    while (i < taille && is_del(u) != 1) {
+        permute(&tab[index_a_ajouter + i], &u);
+
+        i++;
+    }
+    if (is_del(u) != 1) {
+        printf("il n'y avais pas assez de place dans le tableau et on a pas encore prévue\n");
+    }
+
+    return 0;
+}
+
+int recherche(user tab[], int taille, char nom[64])
+{
+    int i;
+    int gauche = 0;
+    int droite = taille - 1;
+    while (gauche < droite) {
+        i = (droite + gauche) / 2;
+        if (strcmp(&tab[i].nom, nom) < 0) {
+            printf("décale gauche\n");
+            gauche = i + 1;
+        } else if (strcmp(&tab[i].nom, nom) > 0) {
+            printf("décale droite\n");
+            droite = i - 1;
+        } else {
+            return i;
+        }
+    }
+    return i;
+}
 void usercpy(user* dst, user* src)
 {
     if (dst == NULL || src == NULL) {
