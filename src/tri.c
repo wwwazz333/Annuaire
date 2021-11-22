@@ -3,9 +3,12 @@
 void permute(user* a, user* b)
 {
     user temp;
-    usercpy(&temp, a);
-    usercpy(a, b);
-    usercpy(b, &temp);
+    // usercpy(&temp, a);
+    // usercpy(a, b);
+    // usercpy(b, &temp);
+    memcpy(&temp, a, sizeof(user));
+    memcpy(a, b, sizeof(user));
+    memcpy(b, &temp, sizeof(user));
 }
 
 void quick_sort(user* tab, int first, int last)
@@ -15,7 +18,7 @@ void quick_sort(user* tab, int first, int last)
     }
     int i, j;
 
-    int pivot = (first + last - 1);
+    int pivot = (first + last - 1) / 2;
     // met le pivot en fin de chaine
     permute(&tab[pivot], &tab[last]);
 
@@ -32,6 +35,12 @@ void quick_sort(user* tab, int first, int last)
         if (j <= i) {
             break;
         }
+        if (strcmp(&tab[i].nom, &tab[j].nom) == 0) {
+            i++;
+            j--;
+            continue;
+        }
+
         permute(&tab[i], &tab[j]);
     }
     // remet le pivot au bonne endroit

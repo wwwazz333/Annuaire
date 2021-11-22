@@ -71,4 +71,8 @@ int del_user(user tableau[], int id, int taille);
 
 int insert_user(user tab[], int taille, user u);
 
+int is_del(user u);
+
+int recherche(user tab[], int taille, char nom[64]);
+
 #endif
