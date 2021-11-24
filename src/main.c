@@ -33,7 +33,12 @@ void cls()
  */
 void show_menu_Title(const char* Title)
 {
-    printf("\n-----------------%s-----------------\n", Title);
+    printf("\n\n");
+    setBackgroundColor(WHITE);
+    setColor(PINK);
+    printf("-----------------%s-----------------", Title);
+    setDefaultColor();
+    printf("\n");
 }
 
 /**
@@ -58,14 +63,20 @@ void show_line_menu(const char* text, int* i)
 void show_menu()
 {
     int i = 0;
+    setDefaultColor();
     show_menu_Title("Menu");
-    show_line_menu("Charger ficher\n", &i);
-    show_line_menu("Sauvgarder fichier\n", &i);
-    show_line_menu("Afficher Clients\n", &i);
-    show_line_menu("Ajouter Client\n", &i);
-    show_line_menu("Supprimer Client\n", &i);
-    show_line_menu("Rechercher\n", &i);
-    show_line_menu("Quitter\n", &i);
+    setColor(GREEN);
+    show_line_menu("Charger ficher\n", &i);//0
+    show_line_menu("Sauvgarder fichier\n", &i);//1
+    setColor(BLUE);
+    show_line_menu("Ajouter Client\n", &i);//2
+    show_line_menu("Supprimer Client\n", &i);//3
+    setColor(PINK);
+    show_line_menu("Afficher Clients\n", &i);//4
+    show_line_menu("Rechercher\n", &i);//5
+    setColor(RED);
+    show_line_menu("Quitter\n", &i);//6
+    setDefaultColor();
 }
 
 /**
@@ -86,8 +97,11 @@ int menu()
     char reponse = '\0';
     while (reponse != '6') {
         show_menu();
+        setColor(ORANGE);
         printf(">> ");
+        setColor(AQUA);
         scanf("%c", &reponse);
+        setDefaultColor();
         // while ((reponse = getc(stdin)) == '\n') { }; // passe les '\n' inutile
         flush(); // vide stdin (au cas ou entrer plusieur caractère précédament)
         cls();
@@ -96,35 +110,51 @@ int menu()
             show_menu_Title("Charger fichier");
             fp = fopen(ask_fichier_existant("csv"), "r");
             if (fp == NULL) {
+                setColor(RED);
                 printf("Le fichier n'a pas pu etre ouvert.\n");
+                setDefaultColor();
             } else {
                 nbr_utilisateur = nombre_utilisateurs(fp);
                 users = malloc(nbr_utilisateur * sizeof(user));
                 load(fp, users, nbr_utilisateur);
                 users_init = 1;
+                setColor(GREEN);
                 printf("Le fichier est charger.\n");
+                setDefaultColor();
                 fclose(fp);
             }
             // tri_vide(users, 5, nbr_utilisateur);
             break;
-        case '1': // Sauvgrade du tableau
-            show_menu_Title("Sauvgarde fichier");
+        case '1': // Sauvegarde du tableau
+            show_menu_Title("Sauvegarde fichier");
             fp = fopen(ask_fichier("csv"), "w");
             if (fp == NULL) {
+                setColor(RED);
                 printf("Le fichier n'a pas pu etre ouvert.\n");
+                setDefaultColor();
             } else {
 
                 save(fp, users, nbr_utilisateur);
+                setColor(GREEN);
                 printf("Le fichier est sauvgarder.\n");
+                setDefaultColor();
                 fclose(fp);
             }
             break;
-        case '2': // Affichage Clients
+        case '2': // ajout d'utilisateur
+            show_menu_Title("ajout Client");
+            user u = input_user();
+            insert_user(users, nbr_utilisateur, u);
+            break;
+        case '3': // suppression d'utilisateur
+            break;
+        case '4': // Affichage Clients
             if (users_init) {
                 show_menu_Title("Affichage Clients");
-                for (int i = 0; i < nbr_utilisateur; i++) {
+                int i;
+                for (i = 0; i < nbr_utilisateur; i++) {
                     if (i % 2 == 0) {
-                        setColor(YELLOW);
+                        setColor(PURPLE);
                     } else {
                         setColor(WHITE);
                     }
@@ -135,14 +165,6 @@ int menu()
 
                 quick_sort(users, 0, nbr_utilisateur-1);
             }
-            break;
-        case '3': // ajout d'utilisateur
-            show_menu_Title("ajou Clients");
-            printf("création de l'utilisateur a ajouté a l'annuaire...");
-            user u = input_user();
-            insert_user(users, nbr_utilisateur, u);
-            break;
-        case '4': // suppression d'utilisateur
             break;
         case '5': // Recherche
             char nn[64];
@@ -157,8 +179,9 @@ int menu()
     if (users_init) {
         free(users);
     }
-
+    setColor(RED);
     printf("exit\n");
+    setDefaultColor();
     return EXIT_SUCCESS;
 }
 int main()

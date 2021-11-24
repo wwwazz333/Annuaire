@@ -12,7 +12,7 @@ void setColor(Color color)
         currTextColor = 4;
         break;
     case BLUE:
-        currTextColor = 1;
+        currTextColor = 9;
         break;
     case GREEN:
         currTextColor = 2;
@@ -28,6 +28,18 @@ void setColor(Color color)
         break;
     case YELLOW:
         currTextColor = 14;
+        break;
+    case PINK:
+        currTextColor = 13;
+        break;
+    case PURPLE:
+        currTextColor = 5;
+        break;
+    case ORANGE:
+        currTextColor = 6;
+        break;
+    case AQUA:
+        currTextColor = 3;
         break;
     default:
         break;
@@ -59,6 +71,18 @@ void setBackgroundColor(Color color)
     case YELLOW:
         currBackgroundColor = 14;
         break;
+    case PINK:
+        currBackgroundColor = 13;
+        break;
+    case PURPLE:
+        currBackgroundColor = 5;
+        break;
+    case ORANGE:
+        currBackgroundColor = 6;
+        break;
+    case AQUA:
+        currBackgroundColor = 6;
+        break;
     default:
         break;
     }
@@ -79,25 +103,37 @@ void setColor(Color color)
 {
     switch (color) {
     case RED:
-        RGBoutput(255, 0, 0);
+        RGBoutput(197, 15, 31);
         break;
     case BLUE:
-        RGBoutput(0, 0, 255);
+        RGBoutput(59, 120, 255);
         break;
     case GREEN:
-        RGBoutput(0, 255, 0);
+        RGBoutput(19, 161, 14);
         break;
     case BLACK:
-        RGBoutput(0, 0, 0);
+        RGBoutput(12, 12, 12);
         break;
     case WHITE:
-        RGBoutput(255, 255, 255);
+        RGBoutput(204, 204, 204);
         break;
     case GREY:
-        RGBoutput(128, 128, 128);
+        RGBoutput(118, 118, 118);
         break;
     case YELLOW:
-        RGBoutput(255, 255, 0);
+        RGBoutput(193, 156, 0);
+        break;
+    case PINK:
+        RGBoutput(180, 0, 158);
+        break;
+    case PURPLE:
+        RGBoutput(136, 23, 152);
+        break;
+    case ORANGE:
+        RGBoutput(247, 179, 91);
+        break;
+    case AQUA:
+        RGBoutput(58, 150, 221);
         break;
     default:
         break;
@@ -108,25 +144,37 @@ void setBackgroundColor(Color color)
 {
     switch (color) {
     case RED:
-        bRGBoutput(255, 0, 0);
+        bRGBoutput(197, 15, 31);
         break;
     case BLUE:
-        bRGBoutput(0, 0, 255);
+        bRGBoutput(59, 120, 255);
         break;
     case GREEN:
-        bRGBoutput(0, 255, 0);
+        bRGBoutput(19, 161, 14);
         break;
     case BLACK:
-        bRGBoutput(0, 0, 0);
+        bRGBoutput(12, 12, 12);
         break;
     case WHITE:
-        bRGBoutput(255, 255, 255);
+        bRGBoutput(204, 204, 204);
         break;
     case GREY:
-        bRGBoutput(128, 128, 128);
+        bRGBoutput(118, 118, 118);
         break;
     case YELLOW:
-        bRGBoutput(255, 255, 0);
+        bRGBoutput(193, 156, 0);
+        break;
+    case PINK:
+        bRGBoutput(180, 0, 158);
+        break;
+    case PURPLE:
+        bRGBoutput(136, 23, 152);
+        break;
+    case ORANGE:
+        bRGBoutput(247, 179, 91);
+        break;
+    case AQUA:
+        bRGBoutput(58, 150, 221);
         break;
     default:
         break;

@@ -150,7 +150,8 @@ int writeUser(FILE* fp, user* u)
 int save(FILE* fp, user* users, int nombre_user)
 {
     fseek(fp, 0, SEEK_SET);
-    for (int i = 0; i < nombre_user; i++) {
+    int i;
+    for (i = 0; i < nombre_user; i++) {
         if (users[i].nom[0] != '\0' || users[i].prenom[0] != '\0' || users[i].ville[0] != '\0' || users[i].code_postal[0] != '\0' || users[i].no_telephone[0] != '\0' || users[i].email[0] != '\0' || users[i].metier[0] != '\0') {
             writeUser(fp, &users[i]);
         }
