@@ -1,10 +1,5 @@
 #include "Verif.h"
 
-int is_digit(char c)
-{
-    return (c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9');
-}
-
 void input(char* str, int sizeof_str)
 {
     int i = 0;

@@ -9,7 +9,6 @@
 
 #include "ColorTerminal.h"
 
-int is_digit(char c);
 
 /**
  * @brief récuper les caractère entrer et les place dans str
@@ -44,6 +43,7 @@ char* ask_fichier(char* extension);
  * @return char* le nom + extension
  */
 char* ask_fichier_existant(char* extension);
+
 /**
  * @brief retourne 1 ssi le ficher exister
  * 
@@ -64,6 +64,15 @@ int file_exist(const char* file_path);
  */
 void flush();
 
+/**
+ * @brief 
+ * 
+ * @pre aucune
+ * @post retourne 1 ssi del est vide (supprimer)
+ * 
+ * @param u 
+ * @return int 
+ */
 int is_del(user u);
 
 
