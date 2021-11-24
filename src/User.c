@@ -47,7 +47,6 @@ user input_user()
 int insert_user(user tab[], int taille, user u)
 {
     int index_a_ajouter = recherche_emplacement(tab, taille, u.nom);
-    printf("on ajoute à %d\n", index_a_ajouter);
 
     permute(&tab[index_a_ajouter], &u);
     index_a_ajouter++;
@@ -81,7 +80,6 @@ int recherche_emplacement(user tab[], int taille, char nom[64]) // recherche le 
             return gauche;
         }
     }
-    printf("droite : %d\tgauche : %d\n", droite, gauche);
     return gauche;
 }
 void usercpy(user* dst, user* src)
