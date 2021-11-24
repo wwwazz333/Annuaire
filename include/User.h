@@ -69,9 +69,30 @@ void usercpy(user* dst, user* src);
  */
 int del_user(user tableau[], int id, int taille);
 
-int insert_user(user* tab[], int taille, user u);
+/**
+ * @brief insert u dans tab au bonne emplacement et agrandi si nécessaire
+ * 
+ * @pre aucune
+ * @post u est dans le tableau au bonne endroit
+ * 
+ * @param tab 
+ * @param taille 
+ * @param u 
+ * @return int 
+ */
+int insert_user(user* tab[], int* taille, user u);
 
-
+/**
+ * @brief retourne l'emplacement où ajouté l'utilisateur avec pour nom "nom"
+ * 
+ * @pre acune
+ * @post retourne l'index où doit être l'utilisateur qui a pour nom "nom"
+ * 
+ * @param tab 
+ * @param taille 
+ * @param nom 
+ * @return int 
+ */
 int recherche_emplacement(user tab[], int taille, char nom[64]);
 
 #endif

@@ -122,8 +122,9 @@ int menu()
                 printf("Le fichier est charger.\n");
                 setDefaultColor();
                 fclose(fp);
+
+                quick_sort(users, 0, nbr_utilisateur - 1);
             }
-            // tri_vide(users, 5, nbr_utilisateur);
             break;
         case '1': // Sauvegarde du tableau
             show_menu_Title("Sauvegarde fichier");
@@ -144,9 +145,7 @@ int menu()
         case '2': // ajout d'utilisateur
             show_menu_Title("ajout Client");
             user u = input_user();
-            if (insert_user(&users, nbr_utilisateur, u) == EXIT_SUCCESS) {
-                nbr_utilisateur++;
-            }
+            insert_user(&users, &nbr_utilisateur, u);
             break;
         case '3': // suppression d'utilisateur
             break;
@@ -164,8 +163,6 @@ int menu()
                     setDefaultColor();
                     printf("\n");
                 }
-
-                quick_sort(users, 0, nbr_utilisateur - 1);
             }
             break;
         case '5': // Recherche

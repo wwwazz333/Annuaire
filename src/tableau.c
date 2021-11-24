@@ -1,14 +1,13 @@
 #include "tableau.h"
 
+#include <string.h>
+
 void permute(user* a, user* b)
 {
     user temp;
-    // usercpy(&temp, a);
-    // usercpy(a, b);
-    // usercpy(b, &temp);
-    memcpy(&temp, a, sizeof(user));
-    memcpy(a, b, sizeof(user));
-    memcpy(b, &temp, sizeof(user));
+    usercpy(&temp, a);
+    usercpy(a, b);
+    usercpy(b, &temp);
 }
 
 void quick_sort(user* tab, int first, int last)

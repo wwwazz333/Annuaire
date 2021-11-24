@@ -26,6 +26,16 @@ void quick_sort(user* tab, int first, int last);
  */
 void permute(user* a, user* b);
 
+/**
+ * @brief agrandi la taille de tab à new_siez
+ * 
+ * @pre new_size >= curr_size
+ * @post tab a pour taille new_size et contien les même éléments
+ * 
+ * @param tab un pointeur de tableau
+ * @param curr_size la taille de tab actuelle
+ * @param new_size la taille de tab désirer
+ */
 void add_space(user** tab, int curr_size, int new_size);
 
 #endif
