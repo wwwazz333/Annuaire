@@ -1,7 +1,8 @@
 #include "Save.h"
 
-//TODO : nb_carcactère max d'une ligne : sizeof(user)/sizeof(char) + '\n'
+#include "Verif.h"
 
+// TODO : nb_carcactère max d'une ligne : sizeof(user)/sizeof(char) + '\n'
 
 char* readUntil(char* depart, char* dst, int taille_max_dst, char fin)
 {
@@ -45,13 +46,13 @@ int load(FILE* fp, user* users, int taille_user)
     }
     int nb = nombre_utilisateurs(fp);
     if (nb > taille_user) {
-        return 2;// autre type d'erreur
+        return 2; // autre type d'erreur
     }
     fseek(fp, 0, SEEK_SET);
     int i = 0;
     while (i < nb) {
         readUser(fp, &users[i]);
-        if (users[i].nom[0] != '\0' || users[i].prenom[0] != '\0' || users[i].ville[0] != '\0' || users[i].code_postal[0] != '\0' || users[i].no_telephone[0] != '\0' || users[i].email[0] != '\0' || users[i].metier[0] != '\0') {
+        if (!is_del(users[i])) {
             i++;
         }
     }
@@ -93,7 +94,7 @@ int save(FILE* fp, user* users, int nombre_user)
     fseek(fp, 0, SEEK_SET);
     int i;
     for (i = 0; i < nombre_user; i++) {
-        if (users[i].nom[0] != '\0' || users[i].prenom[0] != '\0' || users[i].ville[0] != '\0' || users[i].code_postal[0] != '\0' || users[i].no_telephone[0] != '\0' || users[i].email[0] != '\0' || users[i].metier[0] != '\0') {
+        if (!is_del(users[i])) {
             writeUser(fp, &users[i]);
         }
     }
