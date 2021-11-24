@@ -1,6 +1,6 @@
 #include "User.h"
 #include "Verif.h"
-#include "tri.h"
+#include "tableau.h"
 
 user input_user()
 {
@@ -44,22 +44,26 @@ user input_user()
     return u;
 }
 
-int insert_user(user tab[], int taille, user u)
+int insert_user(user* tab[], int taille, user u)
 {
-    int index_a_ajouter = recherche_emplacement(tab, taille, u.nom);
-
-    permute(&tab[index_a_ajouter], &u);
+    int index_a_ajouter = recherche_emplacement(*tab, taille, u.nom);
+    if(index_a_ajouter < 0){
+        return EXIT_FAILURE;
+    }
+    permute(&(*tab)[index_a_ajouter], &u);
     index_a_ajouter++;
     while (index_a_ajouter < taille && is_del(u) != 1) {
-        permute(&tab[index_a_ajouter], &u);
+        permute(&(*tab)[index_a_ajouter], &u);
 
         index_a_ajouter++;
     }
-    if (!is_del(u) || index_a_ajouter >= taille-1) {
-        printf("il n'y avais pas assez de place dans le tableau et on a pas encore prévue\n");
+    if (!is_del(u)) {
+        printf("il n'y avais pas assez de place dans le tableau\n");
+        add_space(tab, taille, taille+1);
+        permute(&(*tab)[taille], &u);
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 int recherche_emplacement(user tab[], int taille, char nom[64]) // recherche le dernier

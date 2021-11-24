@@ -5,17 +5,17 @@
 #include "Save.h"
 #include "User.h"
 #include "Verif.h"
-#include "tri.h"
+#include "tableau.h"
 
 #include <sys/time.h>
 #include <time.h>
 
 /**
  * @brief efface tous dans le terminal (peut import l'OS)
- * 
+ *
  * @pre aucune
  * @post le terminal est clear
- * 
+ *
  */
 void cls()
 {
@@ -24,12 +24,12 @@ void cls()
 
 /**
  * @brief affiche un Titre d'une séction
- * 
+ *
  * @param Title chaine de charactère a afficher
- * 
+ *
  * @pre aucune
  * @post affiche le Titre entré
- * 
+ *
  */
 void show_menu_Title(const char* Title)
 {
@@ -43,10 +43,10 @@ void show_menu_Title(const char* Title)
 
 /**
  * @brief affiche une ligne d'un menu
- * 
+ *
  * @param text text à afficher
  * @param i (ptr) l'index de la ligne
- * 
+ *
  * @pre aucune
  * @post affiche une ligne d'un menu
  */
@@ -56,7 +56,7 @@ void show_line_menu(const char* text, int* i)
 }
 /**
  * @brief affiche les posibilité du menu
- * 
+ *
  * @pre aucune
  * @post affiche les posibilité du menu
  */
@@ -66,25 +66,25 @@ void show_menu()
     setDefaultColor();
     show_menu_Title("Menu");
     setColor(GREEN);
-    show_line_menu("Charger ficher\n", &i);//0
-    show_line_menu("Sauvgarder fichier\n", &i);//1
+    show_line_menu("Charger ficher\n", &i); // 0
+    show_line_menu("Sauvgarder fichier\n", &i); // 1
     setColor(BLUE);
-    show_line_menu("Ajouter Client\n", &i);//2
-    show_line_menu("Supprimer Client\n", &i);//3
+    show_line_menu("Ajouter Client\n", &i); // 2
+    show_line_menu("Supprimer Client\n", &i); // 3
     setColor(PINK);
-    show_line_menu("Afficher Clients\n", &i);//4
-    show_line_menu("Rechercher\n", &i);//5
+    show_line_menu("Afficher Clients\n", &i); // 4
+    show_line_menu("Rechercher\n", &i); // 5
     setColor(RED);
-    show_line_menu("Quitter\n", &i);//6
+    show_line_menu("Quitter\n", &i); // 6
     setDefaultColor();
 }
 
 /**
  * @brief affiche et gère le menu
- * 
+ *
  * @pre aucune
  * @post affiche et gère le menu
- * 
+ *
  * @return int 0 ssi aucune erreur (EXIT_SUCCESS)
  */
 int menu()
@@ -144,7 +144,9 @@ int menu()
         case '2': // ajout d'utilisateur
             show_menu_Title("ajout Client");
             user u = input_user();
-            insert_user(users, nbr_utilisateur, u);
+            if (insert_user(&users, nbr_utilisateur, u) == EXIT_SUCCESS) {
+                nbr_utilisateur++;
+            }
             break;
         case '3': // suppression d'utilisateur
             break;
@@ -163,7 +165,7 @@ int menu()
                     printf("\n");
                 }
 
-                quick_sort(users, 0, nbr_utilisateur-1);
+                quick_sort(users, 0, nbr_utilisateur - 1);
             }
             break;
         case '5': // Recherche
@@ -175,10 +177,10 @@ int menu()
             break;
         }
     }
-
     if (users_init) {
         free(users);
     }
+
     setColor(RED);
     printf("exit\n");
     setDefaultColor();

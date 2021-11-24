@@ -69,7 +69,7 @@ void usercpy(user* dst, user* src);
  */
 int del_user(user tableau[], int id, int taille);
 
-int insert_user(user tab[], int taille, user u);
+int insert_user(user* tab[], int taille, user u);
 
 
 int recherche_emplacement(user tab[], int taille, char nom[64]);

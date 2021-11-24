@@ -1,4 +1,4 @@
-#include "tri.h"
+#include "tableau.h"
 
 void permute(user* a, user* b)
 {
@@ -50,4 +50,13 @@ void quick_sort(user* tab, int first, int last)
     quick_sort(tab, first, i - 1);
     // partie droite
     quick_sort(tab, i + 1, last);
+}
+
+
+void add_space(user** tab, int curr_size, int new_size)
+{
+    user* temp = *tab;
+    *tab = malloc(new_size * sizeof(user));
+    memcpy(*tab, temp, curr_size * sizeof(user));
+    free(temp);
 }

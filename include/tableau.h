@@ -26,4 +26,6 @@ void quick_sort(user* tab, int first, int last);
  */
 void permute(user* a, user* b);
 
+void add_space(user** tab, int curr_size, int new_size);
+
 #endif
