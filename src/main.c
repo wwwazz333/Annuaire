@@ -121,11 +121,10 @@ int menu()
                 users = malloc(nbr_utilisateur * sizeof(user));
                 load(fp, users, nbr_utilisateur);
                 users_init = 1;
-                print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                print("Le fichier est charger et trier.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                oyelami(users, nbr_utilisateur - 1);
-                //quick_sort(users, 0, nbr_utilisateur - 1);
+                quick_sort(users, 0, nbr_utilisateur - 1);
             }
             break;
         case '1': // Sauvegarde du tableau
@@ -135,8 +134,10 @@ int menu()
                 if (fp == NULL) {
                     print("Le fichier n'a pas pu etre enregister.\n", RED, DEFAULT_BACKGROUND_COLOR);
                 } else {
+                    printf("oh");
+                    oyelami(users, nbr_utilisateur - 1);
                     save(fp, users, nbr_utilisateur);
-                    print("Le fichier est sauvgarder.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                    print("Le fichier est sauvegarder.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     fclose(fp);
                 }
             }
@@ -179,7 +180,7 @@ int menu()
             if (users_init) {
                 char nn[64];
                 input(nn, 64);
-                printf("emplacmenet : %d\n", recherche_emplacement_existant(users, nbr_utilisateur, nn));
+                printf("emplacement : %d\n", recherche_emplacement_existant(users, nbr_utilisateur, nn));
 
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);

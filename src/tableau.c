@@ -13,7 +13,6 @@ void oyelami(user* tab, int taille)
     int permutation;
     int en_cours=0, sens=1;
     int debut=1, fin=taille;
-    printf("cc toi");
     for (en_cours=0;en_cours<=fin/2;en_cours++) {
         if (strcmp((char*)&tab[en_cours].nom, (char*)&tab[fin - en_cours].nom) > 0) { //tab[en_cours]>tab[fin - en_cours]
                 permute(&tab[en_cours],&tab[fin - en_cours]);
