@@ -1,4 +1,5 @@
 #include "User.h"
+
 #include "Verif.h"
 #include "tableau.h"
 
@@ -42,6 +43,21 @@ user input_user()
     setDefaultColor();
 
     return u;
+}
+int del_user(user tableau[], int id, int taille)
+{
+    if(id < 0 || id >= taille){
+        return -1;
+    }
+    strcpy(tableau[id].nom, "\0");
+    strcpy(tableau[id].prenom, "\0");
+    strcpy(tableau[id].ville, "\0");
+    strcpy(tableau[id].code_postal, "\0");
+    strcpy(tableau[id].no_telephone, "\0");
+    strcpy(tableau[id].email, "\0");
+    strcpy(tableau[id].metier, "\0");
+    return 0;
+
 }
 
 int insert_user(user* tab[], int* taille, user u)
@@ -108,32 +124,30 @@ int recherche_emplacement_existant(user tab[], int taille, char nom[64])
         } else if (strcmp((char*)&tab[millieu].nom, nom) > 0) {
             droite = millieu - 1;
         } else { // si égale cherche le dernier
-            while (strcmp((char*)&tab[millieu+1].nom, nom) == 0){
+            while (strcmp((char*)&tab[millieu + 1].nom, nom) == 0) {
                 millieu++;
             }
             return millieu;
-
         }
     }
     return -1;
 }
-user* recherche_substring(user tab[], int taille, const char* substring, int* taille_tableau_retourner){
-    user* tab_substring;
-    tab_substring = malloc(taille*sizeof(user));
+void recherche_substring(user tab[], user tab_substring_matches[], int tab_key_matches[], int taille, const char* substring, int* taille_tableau_matches)
+{
+    int j = 0;
 
-    for (int i = 0, j = 0; i < taille; i++)
-    {
-        if(strstr(tab[i].nom, substring)){
-            usercpy(&tab_substring[j], &tab[i]);
+
+    for (int i = 0; i < taille; i++) {
+        if (strstr(tab[i].nom, substring)) {
+            usercpy(&tab_substring_matches[j], &tab[i]);
+            tab_key_matches[j] = i;
             j++;
         }
     }
-    
-
-
-    return tab_substring;
+    if (taille_tableau_matches != NULL) {
+        *taille_tableau_matches = j;
+    }
 }
-
 
 void usercpy(user* dst, user* src)
 {

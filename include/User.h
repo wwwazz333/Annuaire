@@ -1,6 +1,7 @@
 #ifndef _USER_H_
 #define _USER_H_
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -97,6 +98,6 @@ int recherche_emplacement(user tab[], int taille, char nom[64]);
 
 int recherche_emplacement_existant(user tab[], int taille, char nom[64]);
 
-user* recherche_substring(user tab[], int taille, const char* substring, int* taille_tableau_retourner);
+void recherche_substring(user tab[], user tab_substring_matches[], int tab_key_matches[], int taille, const char* substring, int* taille_tableau_matches);
 
 #endif

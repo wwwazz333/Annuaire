@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "ColorTerminal.h"
 #include "Save.h"
@@ -9,10 +10,12 @@
 
 #include <sys/time.h>
 #include <time.h>
+#include <string.h>
 
 // TODO : quand trié ???
 // TODO : tri oyalami
 // TODO : strsep ???
+// TODO : mettre tout en lower
 
 /**
  * @brief efface tous dans le terminal (peut import l'OS)
@@ -130,7 +133,7 @@ int menu()
         case '1': // Sauvegarde du tableau
             show_menu_Title("Sauvegarde fichier");
             if (users_init) {
-                    fp = fopen(ask_fichier("csv"), "w");
+                fp = fopen(ask_fichier("csv"), "w");
                 if (fp == NULL) {
                     print("Le fichier n'a pas pu etre enregister.\n", RED, DEFAULT_BACKGROUND_COLOR);
                 } else {
@@ -138,8 +141,7 @@ int menu()
                     print("Le fichier est sauvgarder.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     fclose(fp);
                 }
-            }
-            else {
+            } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
@@ -148,12 +150,27 @@ int menu()
                 show_menu_Title("ajout Client");
                 user u = input_user();
                 insert_user(&users, &nbr_utilisateur, u);
-            }
-            else {
+            } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
         case '3': // suppression d'utilisateur
+            if (users_init) {
+                show_menu_Title("suppression Client");
+                print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                int id_del;
+                scanf("%d", &id_del);
+                flush();
+                if (del_user(users, id_del-1, nbr_utilisateur) == 0) {
+
+                    print("suppression effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                }else{
+                    print("erreur lors de la suppression.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                }
+
+            } else {
+                print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
+            }
             break;
         case '4': // Affichage Clients
             if (users_init) {
@@ -169,16 +186,22 @@ int menu()
                     setDefaultColor();
                     printf("\n");
                 }
-            }
-            else {
+            } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
         case '5': // Recherche
             if (users_init) {
                 char nn[64];
+                print("nom : ", AQUA, DEFAULT_BACKGROUND_COLOR);
                 input(nn, 64);
-                printf("emplacmenet : %d\n", recherche_emplacement_existant(users, nbr_utilisateur, nn));
+                int tai;
+                user* substing_matches = malloc(nbr_utilisateur * sizeof(user));
+                int* key_matches = malloc(nbr_utilisateur * sizeof(user));
+                recherche_substring(users, substing_matches, key_matches, nbr_utilisateur, nn, &tai);
+                for (int i = 0; i < tai; i++) {
+                    printf("[%d] %s, %s, %s, %s, %s, %s, %s\n", key_matches[i] + 1, substing_matches[i].nom, substing_matches[i].prenom, substing_matches[i].ville, substing_matches[i].code_postal, substing_matches[i].no_telephone, substing_matches[i].email, substing_matches[i].metier);
+                }
 
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
@@ -195,6 +218,7 @@ int menu()
     print("exit\n", RED, DEFAULT_BACKGROUND_COLOR);
     return EXIT_SUCCESS;
 }
+
 int main()
 {
     return menu();
