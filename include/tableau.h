@@ -3,6 +3,19 @@
 
 #include "User.h"
 #include "string.h"
+
+/**
+ * @brief tri le tableau
+ * 
+ * @pre taille du tableau
+ * @post le tableau tab est trié par le nom
+ * 
+ * @param tab le tableau a trié
+ * @param taille len-1
+ * 
+ */
+void oyelami(user* tab, int taille);
+
 /**
  * @brief tire le tableau tab de l'indice first à last
  * 

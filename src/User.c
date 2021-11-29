@@ -117,23 +117,6 @@ int recherche_emplacement_existant(user tab[], int taille, char nom[64])
     }
     return -1;
 }
-user* recherche_substring(user tab[], int taille, const char* substring, int* taille_tableau_retourner){
-    user* tab_substring;
-    tab_substring = malloc(taille*sizeof(user));
-
-    for (int i = 0, j = 0; i < taille; i++)
-    {
-        if(strstr(tab[i].nom, substring)){
-            usercpy(&tab_substring[j], &tab[i]);
-            j++;
-        }
-    }
-    
-
-
-    return tab_substring;
-}
-
 
 void usercpy(user* dst, user* src)
 {

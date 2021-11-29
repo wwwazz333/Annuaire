@@ -124,7 +124,8 @@ int menu()
                 print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                quick_sort(users, 0, nbr_utilisateur - 1);
+                oyelami(users, nbr_utilisateur - 1);
+                //quick_sort(users, 0, nbr_utilisateur - 1);
             }
             break;
         case '1': // Sauvegarde du tableau
