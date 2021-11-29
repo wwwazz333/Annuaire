@@ -132,7 +132,7 @@ int menu()
             if (users_init) {
                     fp = fopen(ask_fichier("csv"), "w");
                 if (fp == NULL) {
-                    print("Le fichier n'a pas pu etre enregister.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                    print("Le fichier n'a pas pu etre enregister. (il est peut être ouvert)\n", RED, DEFAULT_BACKGROUND_COLOR);
                 } else {
                     printf("oh");
                     oyelami(users, nbr_utilisateur - 1);
