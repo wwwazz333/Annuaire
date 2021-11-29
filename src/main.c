@@ -101,22 +101,24 @@ int menu()
     int users_init = 0; // 1 ssi un fichier à été charger
     FILE* fp;
     int nbr_utilisateur;
+    char* nom_fichier;
 
     char reponse = '\0';
     while (reponse != '6') {
         show_menu();
-        setColor(ORANGE);
-        printf(">> ");
+        print(">> ", ORANGE, DEFAULT_BACKGROUND_COLOR);
         setColor(AQUA);
         scanf("%c", &reponse);
         setDefaultColor();
-        // while ((reponse = getc(stdin)) == '\n') { }; // passe les '\n' inutile
+
         flush(); // vide stdin (au cas ou entrer plusieur caractère précédament)
-        cls();
+        cls(); // clear le terminal
         switch (reponse) {
         case '0': // charger un fichier
             show_menu_Title("Charger fichier");
-            fp = fopen(ask_fichier_existant("csv"), "r");
+            nom_fichier = ask_fichier_existant("csv");
+            fp = fopen(nom_fichier, "r");
+            free(nom_fichier);
             if (fp == NULL) {
                 print("Le fichier n'a pas pu etre ouvert.\n", RED, DEFAULT_BACKGROUND_COLOR);
             } else {
@@ -133,7 +135,9 @@ int menu()
         case '1': // Sauvegarde du tableau
             show_menu_Title("Sauvegarde fichier");
             if (users_init) {
-                fp = fopen(ask_fichier("csv"), "w");
+                nom_fichier = ask_fichier("csv");
+                fp = fopen(nom_fichier, "w");
+                free(nom_fichier);
                 if (fp == NULL) {
                     print("Le fichier n'a pas pu etre enregister.\n", RED, DEFAULT_BACKGROUND_COLOR);
                 } else {
@@ -195,6 +199,7 @@ int menu()
                 char nn[64];
                 print("nom : ", AQUA, DEFAULT_BACKGROUND_COLOR);
                 input(nn, 64);
+                
                 int tai;
                 user* substing_matches = malloc(nbr_utilisateur * sizeof(user));
                 int* key_matches = malloc(nbr_utilisateur * sizeof(user));
@@ -209,6 +214,9 @@ int menu()
                     setDefaultColor();
                     printf("\n");
                 }
+
+                free(substing_matches);
+                free(key_matches);
 
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
@@ -228,5 +236,6 @@ int menu()
 
 int main()
 {
+    
     return menu();
 }

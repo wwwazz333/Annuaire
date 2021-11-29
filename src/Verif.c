@@ -61,8 +61,17 @@ void flush()
     // while ((c = getc(stdin)) != '\n' && c != EOF) { };
 }
 
-
 int is_del(user u)
 {
     return u.nom[0] == '\0' && u.prenom[0] == '\0' && u.ville[0] == '\0' && u.code_postal[0] == '\0' && u.no_telephone[0] == '\0' && u.email[0] == '\0' && u.metier[0] == '\0';
+}
+
+void strtolower(char* dst, char* src, int size)
+{
+
+    int i = 0;
+    for (; i < size-1 && src[i] != '\0'; i++) {
+        dst[i] = tolower(src[i]);
+    }
+    dst[i] = '\0';
 }

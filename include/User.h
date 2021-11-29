@@ -100,4 +100,6 @@ int recherche_emplacement_existant(user tab[], int taille, char nom[64]);
 
 void recherche_substring(user tab[], user tab_substring_matches[], int tab_key_matches[], int taille, const char* substring, int* taille_tableau_matches);
 
+char* get_arg(user u, int chaine);
+
 #endif

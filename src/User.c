@@ -46,7 +46,7 @@ user input_user()
 }
 int del_user(user tableau[], int id, int taille)
 {
-    if(id < 0 || id >= taille){
+    if (id < 0 || id >= taille) {
         return -1;
     }
     strcpy(tableau[id].nom, "\0");
@@ -57,7 +57,6 @@ int del_user(user tableau[], int id, int taille)
     strcpy(tableau[id].email, "\0");
     strcpy(tableau[id].metier, "\0");
     return 0;
-
 }
 
 int insert_user(user* tab[], int* taille, user u)
@@ -91,24 +90,33 @@ int recherche_emplacement(user tab[], int taille, char nom[64]) // recherche le 
     int millieu;
     int gauche = 0;
     int droite = taille - 1;
+
+    char* name_lower = malloc(64 * sizeof(char));
+    char* curr_name_lower = malloc(64 * sizeof(char));
+
+    strtolower(name_lower, nom, 64);
+
     while (gauche <= droite) {
         millieu = (droite + gauche) / 2;
-        if (strcmp((char*)&tab[millieu].nom, nom) < 0) {
+        strtolower(curr_name_lower, tab[millieu].nom, 64);
+        if (strcmp(curr_name_lower, name_lower) < 0) {
             gauche = millieu + 1;
-        } else if (strcmp((char*)&tab[millieu].nom, nom) > 0) {
+        } else if (strcmp(curr_name_lower, name_lower) > 0) {
             droite = millieu - 1;
         } else { // si égale
             do {
                 millieu++;
-            } while (strcmp((char*)&tab[millieu].nom, nom) == 0);
-            return millieu;
+                strtolower(curr_name_lower, tab[millieu].nom, 64);
+            } while (strcmp(curr_name_lower, name_lower) == 0);
 
-            while (strcmp((char*)&tab[millieu + 1].nom, nom) == 0) {
-                millieu++;
-            }
-            return millieu + 1;
+            free(name_lower);
+            free(curr_name_lower);
+            return millieu;
         }
     }
+
+    free(name_lower);
+    free(curr_name_lower);
     return gauche;
 }
 
@@ -117,28 +125,47 @@ int recherche_emplacement_existant(user tab[], int taille, char nom[64])
     int millieu;
     int gauche = 0;
     int droite = taille - 1;
+
+    char* name_lower = malloc(64 * sizeof(char));
+    char* curr_name_lower = malloc(64 * sizeof(char));
+
+    strtolower(name_lower, nom, 64);
+
     while (gauche <= droite) {
         millieu = (droite + gauche) / 2;
-        if (strcmp((char*)&tab[millieu].nom, nom) < 0) {
+        strtolower(curr_name_lower, tab[millieu].nom, 64);
+        if (strcmp(curr_name_lower, name_lower) < 0) {
             gauche = millieu + 1;
-        } else if (strcmp((char*)&tab[millieu].nom, nom) > 0) {
+        } else if (strcmp(curr_name_lower, name_lower) > 0) {
             droite = millieu - 1;
         } else { // si égale cherche le dernier
-            while (strcmp((char*)&tab[millieu + 1].nom, nom) == 0) {
+            while (strcmp(curr_name_lower, name_lower) == 0) {
                 millieu++;
+                strtolower(curr_name_lower, tab[millieu].nom, 64);
             }
+
+            free(name_lower);
+            free(curr_name_lower);
             return millieu;
         }
     }
+
+    free(name_lower);
+    free(curr_name_lower);
     return -1;
 }
 void recherche_substring(user tab[], user tab_substring_matches[], int tab_key_matches[], int taille, const char* substring, int* taille_tableau_matches)
 {
     int j = 0;
 
+    char* substring_lower = malloc((strlen(substring) + 1) * sizeof(char));
+    char* curr_name_lower = malloc((64 + 1) * sizeof(char));
+
+    strtolower(substring_lower, substring, strlen(substring) + 1);
 
     for (int i = 0; i < taille; i++) {
-        if (strstr(tab[i].nom, substring)) {
+        strtolower(curr_name_lower, tab[i].nom, 64);
+        if (strstr(curr_name_lower, substring_lower) != NULL) {
             usercpy(&tab_substring_matches[j], &tab[i]);
             tab_key_matches[j] = i;
             j++;
@@ -147,6 +174,9 @@ void recherche_substring(user tab[], user tab_substring_matches[], int tab_key_m
     if (taille_tableau_matches != NULL) {
         *taille_tableau_matches = j;
     }
+
+    free(substring_lower);
+    free(curr_name_lower);
 }
 
 void usercpy(user* dst, user* src)
@@ -155,4 +185,31 @@ void usercpy(user* dst, user* src)
         return;
     }
     memcpy(dst, src, sizeof(user));
+}
+
+char* get_arg(user u, int chaine)
+{
+    switch (chaine) {
+    case 0:
+        return u.nom;
+        break;
+    case 1:
+        return u.prenom;
+        break;
+    case 2:
+        return u.ville;
+        break;
+    case 3:
+        return u.code_postal;
+        break;
+    case 4:
+        return u.no_telephone;
+        break;
+    case 5:
+        return u.email;
+        break;
+    case 6:
+        return u.metier;
+        break;
+    }
 }

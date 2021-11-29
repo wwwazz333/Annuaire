@@ -75,6 +75,6 @@ void flush();
  */
 int is_del(user u);
 
-
+void strtolower(char* dst, char* src, int size);
 
 #endif
