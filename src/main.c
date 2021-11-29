@@ -200,7 +200,14 @@ int menu()
                 int* key_matches = malloc(nbr_utilisateur * sizeof(user));
                 recherche_substring(users, substing_matches, key_matches, nbr_utilisateur, nn, &tai);
                 for (int i = 0; i < tai; i++) {
-                    printf("[%d] %s, %s, %s, %s, %s, %s, %s\n", key_matches[i] + 1, substing_matches[i].nom, substing_matches[i].prenom, substing_matches[i].ville, substing_matches[i].code_postal, substing_matches[i].no_telephone, substing_matches[i].email, substing_matches[i].metier);
+                    if (i % 2 == 0) {
+                        setColor(PURPLE);
+                    } else {
+                        setColor(WHITE);
+                    }
+                    printf("[%d] %s, %s, %s, %s, %s, %s, %s", key_matches[i] + 1, substing_matches[i].nom, substing_matches[i].prenom, substing_matches[i].ville, substing_matches[i].code_postal, substing_matches[i].no_telephone, substing_matches[i].email, substing_matches[i].metier);
+                    setDefaultColor();
+                    printf("\n");
                 }
 
             } else {
