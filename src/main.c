@@ -134,7 +134,7 @@ int menu()
                 printf("Le fichier n'a pas pu etre ouvert.\n");
                 setDefaultColor();
             } else {
-
+                oyelami(users,nbr_utilisateur-1, 4);
                 save(fp, users, nbr_utilisateur);
                 setColor(GREEN);
                 printf("Le fichier est sauvgarder.\n");
