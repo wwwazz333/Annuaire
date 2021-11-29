@@ -41,4 +41,6 @@ void setDefaultColor();
 void setColor(Color color);
 void setBackgroundColor(Color color);
 
+void print(const char* str, Color color, Color background_color);
+
 #endif

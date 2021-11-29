@@ -182,3 +182,12 @@ void setBackgroundColor(Color color)
 }
 
 #endif
+
+
+void print(const char* str, Color color, Color background_color)
+{
+    setColor(color);
+    setBackgroundColor(background_color);
+    printf("%s", str);
+    setDefaultColor();
+}

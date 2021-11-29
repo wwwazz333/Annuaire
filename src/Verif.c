@@ -35,6 +35,7 @@ int file_exist(const char* file_path)
     if (access(file_path, F_OK) == 0) {
         return 1;
     } else {
+        print("Fichier inexistant.\n", RED, DEFAULT_BACKGROUND_COLOR);
         return 0;
     }
 }

@@ -95,4 +95,8 @@ int insert_user(user* tab[], int* taille, user u);
  */
 int recherche_emplacement(user tab[], int taille, char nom[64]);
 
+int recherche_emplacement_existant(user tab[], int taille, char nom[64]);
+
+user* recherche_substring(user tab[], int taille, const char* substring, int* taille_tableau_retourner);
+
 #endif

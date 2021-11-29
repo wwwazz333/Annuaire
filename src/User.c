@@ -95,6 +95,46 @@ int recherche_emplacement(user tab[], int taille, char nom[64]) // recherche le 
     }
     return gauche;
 }
+
+int recherche_emplacement_existant(user tab[], int taille, char nom[64])
+{
+    int millieu;
+    int gauche = 0;
+    int droite = taille - 1;
+    while (gauche <= droite) {
+        millieu = (droite + gauche) / 2;
+        if (strcmp((char*)&tab[millieu].nom, nom) < 0) {
+            gauche = millieu + 1;
+        } else if (strcmp((char*)&tab[millieu].nom, nom) > 0) {
+            droite = millieu - 1;
+        } else { // si égale cherche le dernier
+            while (strcmp((char*)&tab[millieu+1].nom, nom) == 0){
+                millieu++;
+            }
+            return millieu;
+
+        }
+    }
+    return -1;
+}
+user* recherche_substring(user tab[], int taille, const char* substring, int* taille_tableau_retourner){
+    user* tab_substring;
+    tab_substring = malloc(taille*sizeof(user));
+
+    for (int i = 0, j = 0; i < taille; i++)
+    {
+        if(strstr(tab[i].nom, substring)){
+            usercpy(&tab_substring[j], &tab[i]);
+            j++;
+        }
+    }
+    
+
+
+    return tab_substring;
+}
+
+
 void usercpy(user* dst, user* src)
 {
     if (dst == NULL || src == NULL) {
