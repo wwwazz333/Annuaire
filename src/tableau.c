@@ -13,12 +13,9 @@ void oyelami(user* tab, int taille)
     int permutation;
     int en_cours=0, sens=1;
     int debut=1, fin=taille;
-    for (en_cours=0;en_cours<=fin/2;en_cours++) {
-        if (strcmp((char*)&tab[en_cours].nom, (char*)&tab[fin - en_cours].nom) > 0) { //tab[en_cours]>tab[fin - en_cours]
-                permute(&tab[en_cours],&tab[fin - en_cours]);
-                // user temp = tab[en_cours];
-                // tab[en_cours] = tab[fin - en_cours];
-                // tab[fin - en_cours] = temp;        
+    for (en_cours=0;en_cours<=fin/2;en_cours++) { //on parcours le tableau dans les deux sens et en même temps
+        if (strcmp((char*)&tab[en_cours].nom, (char*)&tab[fin - en_cours].nom) > 0) { // comparaison des chaines opposées
+                permute(&tab[en_cours],&tab[fin - en_cours]); // permutation ces deux chaînes opposées
         }
     }
     en_cours=0;
@@ -26,15 +23,12 @@ void oyelami(user* tab, int taille)
         permutation=0;
         while (((sens==1) && (en_cours<fin)) || ((sens==-1) && (en_cours>debut))) {
             en_cours += sens;
-            if (strcmp((char*)&tab[en_cours].nom, (char*)&tab[en_cours-1].nom) < 0) { // tab[en_cours] < tab[en_cours-1]
-                permute(&tab[en_cours],&tab[en_cours-1]);
-                // user temp = tab[en_cours];
-                // tab[en_cours] = tab[en_cours-1];
-                // tab[en_cours-1]=temp;
+            if (strcmp((char*)&tab[en_cours].nom, (char*)&tab[en_cours-1].nom) < 0) { // comparaison entre deux chaines successives
+                permute(&tab[en_cours],&tab[en_cours-1]); // permutation des ces deux chaines successives
                 permutation=1;
             }
         }
-        if (sens==1) fin--; else debut++;
+        if (sens==1) fin--; else debut++; //changement de sens selon ce qui est déjà trié
         sens = -sens;
     } while (permutation==1);
 }

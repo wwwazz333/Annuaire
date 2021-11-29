@@ -10,10 +10,6 @@
 #include <sys/time.h>
 #include <time.h>
 
-// TODO : quand trié ???
-// TODO : tri oyalami
-// TODO : strsep ???
-
 /**
  * @brief efface tous dans le terminal (peut import l'OS)
  *
@@ -37,7 +33,6 @@ void cls()
  */
 void show_menu_Title(const char* Title)
 {
-    setDefaultColor();
     printf("\n\n");
     setBackgroundColor(WHITE);
     setColor(PINK);
@@ -95,7 +90,7 @@ void show_menu()
 int menu()
 {
     user* users;
-    int users_init = 0; // 1 ssi un fichier à été charger
+    int users_init = 0;
     FILE* fp;
     int nbr_utilisateur;
 
@@ -115,13 +110,17 @@ int menu()
             show_menu_Title("Charger fichier");
             fp = fopen(ask_fichier_existant("csv"), "r");
             if (fp == NULL) {
-                print("Le fichier n'a pas pu etre ouvert.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                setColor(RED);
+                printf("Le fichier n'a pas pu etre ouvert.\n");
+                setDefaultColor();
             } else {
                 nbr_utilisateur = nombre_utilisateurs(fp);
                 users = malloc(nbr_utilisateur * sizeof(user));
                 load(fp, users, nbr_utilisateur);
                 users_init = 1;
-                print("Le fichier est charger et trier.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                setColor(GREEN);
+                printf("Le fichier est charger.\n");
+                setDefaultColor();
                 fclose(fp);
 
                 quick_sort(users, 0, nbr_utilisateur - 1);
@@ -129,31 +128,24 @@ int menu()
             break;
         case '1': // Sauvegarde du tableau
             show_menu_Title("Sauvegarde fichier");
-            if (users_init) {
-                    fp = fopen(ask_fichier("csv"), "w");
-                if (fp == NULL) {
-                    print("Le fichier n'a pas pu etre enregister. (il est peut être ouvert)\n", RED, DEFAULT_BACKGROUND_COLOR);
-                } else {
-                    printf("oh");
-                    oyelami(users, nbr_utilisateur - 1);
-                    save(fp, users, nbr_utilisateur);
-                    print("Le fichier est sauvegarder.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
-                    fclose(fp);
-                }
-            }
-            else {
-                print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
+            fp = fopen(ask_fichier("csv"), "w");
+            if (fp == NULL) {
+                setColor(RED);
+                printf("Le fichier n'a pas pu etre ouvert.\n");
+                setDefaultColor();
+            } else {
+
+                save(fp, users, nbr_utilisateur);
+                setColor(GREEN);
+                printf("Le fichier est sauvgarder.\n");
+                setDefaultColor();
+                fclose(fp);
             }
             break;
         case '2': // ajout d'utilisateur
-            if (users_init) {
-                show_menu_Title("ajout Client");
-                user u = input_user();
-                insert_user(&users, &nbr_utilisateur, u);
-            }
-            else {
-                print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
-            }
+            show_menu_Title("ajout Client");
+            user u = input_user();
+            insert_user(&users, &nbr_utilisateur, u);
             break;
         case '3': // suppression d'utilisateur
             break;
@@ -172,19 +164,8 @@ int menu()
                     printf("\n");
                 }
             }
-            else {
-                print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
-            }
             break;
         case '5': // Recherche
-            if (users_init) {
-                char nn[64];
-                input(nn, 64);
-                printf("emplacement : %d\n", recherche_emplacement_existant(users, nbr_utilisateur, nn));
-
-            } else {
-                print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
-            }
             break;
         default:
             break;
@@ -194,7 +175,9 @@ int menu()
         free(users);
     }
 
-    print("exit\n", RED, DEFAULT_BACKGROUND_COLOR);
+    setColor(RED);
+    printf("exit\n");
+    setDefaultColor();
     return EXIT_SUCCESS;
 }
 int main()
