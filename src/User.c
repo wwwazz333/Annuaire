@@ -154,25 +154,27 @@ int recherche_emplacement_existant(user tab[], int taille, char nom[64])
     free(curr_name_lower);
     return -1;
 }
-void recherche_substring(user tab[], user tab_substring_matches[], int tab_key_matches[], int taille, const char* substring, int* taille_tableau_matches)
+void recherche_substring(user tab[], int taille, const char* substring)
 {
-    int j = 0;
 
     char* substring_lower = malloc((strlen(substring) + 1) * sizeof(char));
     char* curr_name_lower = malloc((64 + 1) * sizeof(char));
 
     strtolower(substring_lower, substring, strlen(substring) + 1);
 
-    for (int i = 0; i < taille; i++) {
+    for (int i = 0, j = 0; i < taille; i++) {
         strtolower(curr_name_lower, tab[i].nom, 64);
         if (strstr(curr_name_lower, substring_lower) != NULL) {
-            usercpy(&tab_substring_matches[j], &tab[i]);
-            tab_key_matches[j] = i;
+            if (j % 2 == 0) {
+                setColor(PURPLE);
+            } else {
+                setColor(WHITE);
+            }
+            printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].nom, tab[i].prenom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+            setDefaultColor();
+            printf("\n");
             j++;
         }
-    }
-    if (taille_tableau_matches != NULL) {
-        *taille_tableau_matches = j;
     }
 
     free(substring_lower);

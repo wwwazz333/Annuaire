@@ -200,23 +200,9 @@ int menu()
                 print("nom : ", AQUA, DEFAULT_BACKGROUND_COLOR);
                 input(nn, 64);
                 
-                int tai;
-                user* substing_matches = malloc(nbr_utilisateur * sizeof(user));
-                int* key_matches = malloc(nbr_utilisateur * sizeof(user));
-                recherche_substring(users, substing_matches, key_matches, nbr_utilisateur, nn, &tai);
-                for (int i = 0; i < tai; i++) {
-                    if (i % 2 == 0) {
-                        setColor(PURPLE);
-                    } else {
-                        setColor(WHITE);
-                    }
-                    printf("[%d] %s, %s, %s, %s, %s, %s, %s", key_matches[i] + 1, substing_matches[i].nom, substing_matches[i].prenom, substing_matches[i].ville, substing_matches[i].code_postal, substing_matches[i].no_telephone, substing_matches[i].email, substing_matches[i].metier);
-                    setDefaultColor();
-                    printf("\n");
-                }
-
-                free(substing_matches);
-                free(key_matches);
+                
+                recherche_substring(users, nbr_utilisateur, nn);
+                
 
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
