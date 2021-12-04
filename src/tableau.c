@@ -138,7 +138,7 @@ void print_tab(user* tab, int size_tab)
         } else {
             setColor(WHITE);
         }
-        printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].nom, tab[i].prenom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+        printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
         setDefaultColor();
         printf("\n");
     }

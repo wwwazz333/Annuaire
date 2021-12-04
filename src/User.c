@@ -193,10 +193,10 @@ char* get_arg(user* u, int which_one)
 {
     switch (which_one) {
     case 0:
-        return u->nom;
+        return u->prenom;
         break;
     case 1:
-        return u->prenom;
+        return u->nom;
         break;
     case 2:
         return u->ville;

@@ -1,6 +1,6 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 
 #include "ColorTerminal.h"
 #include "Save.h"
@@ -8,9 +8,9 @@
 #include "Verif.h"
 #include "tableau.h"
 
+#include <string.h>
 #include <sys/time.h>
 #include <time.h>
-#include <string.h>
 
 // TODO : quand trié ???
 // TODO : tri oyalami
@@ -129,8 +129,8 @@ int menu()
                 print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
-                triersur = TRIE_NOM;
+                quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
+                triersur = TRIE_PRENOM;
             }
             break;
         case '1': // Sauvegarde du tableau
@@ -166,10 +166,10 @@ int menu()
                 int id_del;
                 scanf("%d", &id_del);
                 flush();
-                if (del_user(users, id_del-1, nbr_utilisateur) == 0) {
+                if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
 
                     print("suppression effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
-                }else{
+                } else {
                     print("erreur lors de la suppression.\n", RED, DEFAULT_BACKGROUND_COLOR);
                 }
 
@@ -180,13 +180,57 @@ int menu()
         case '4': // Affichage Clients
             if (users_init) {
                 show_menu_Title("Affichage Clients");
+                int rep = -1;
+                while (rep < 0 || rep > 4) {
+                    setDefaultColor();
+                    printf("Sur quoi voulez vous trier :\n");
+                    int i = 0;
+                    show_line_menu("annuler\n", &i);
+                    show_line_menu("nom\n", &i);
+                    show_line_menu("prenom\n", &i);
+                    show_line_menu("code postal\n", &i);
+                    show_line_menu("profession\n", &i);
 
-                printf("Sur quoi voulez vous trier :\n");
-                int i = 0;
-                show_line_menu("NOM\n", &i);
+                    print(">> ", ORANGE, DEFAULT_BACKGROUND_COLOR);
+                    setColor(AQUA);
+                    if (scanf("%d", &rep) != 1) {
+                        rep = -1;
+                    }
+                    flush();
+                    setDefaultColor();
+                }
 
-
-                print_tab(users, nbr_utilisateur);
+                switch (rep) {
+                case 1:
+                    if (triersur != TRIE_NOM) {
+                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
+                        triersur = TRIE_NOM;
+                    }
+                    break;
+                case 2:
+                    if (triersur != TRIE_PRENOM) {
+                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
+                        triersur = TRIE_PRENOM;
+                    }
+                    break;
+                case 3:
+                    if (triersur != TRIE_CODE_POSTAL) {
+                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_CODE_POSTAL);
+                        triersur = TRIE_CODE_POSTAL;
+                    }
+                    break;
+                case 4:
+                    if (triersur != TRIE_METIER) {
+                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_METIER);
+                        triersur = TRIE_METIER;
+                    }
+                    break;
+                default:
+                    break;
+                }
+                if (rep != 0) {
+                    print_tab(users, nbr_utilisateur);
+                }
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
@@ -196,10 +240,8 @@ int menu()
                 char nn[64];
                 print("nom : ", AQUA, DEFAULT_BACKGROUND_COLOR);
                 input(nn, 64);
-                
-                
+
                 recherche_substring(users, nbr_utilisateur, nn);
-                
 
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
@@ -219,6 +261,6 @@ int menu()
 
 int main()
 {
-    
+
     return menu();
 }

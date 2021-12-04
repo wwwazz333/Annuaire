@@ -29,8 +29,8 @@ int readUser(FILE* fp, user* u)
 
     char* first = &ligne[0]; // pareille que first = ligne;
 
-    first = readUntil(first, u->nom, SIZE_NOM, ',');
     first = readUntil(first, u->prenom, SIZE_PRENOM, ',');
+    first = readUntil(first, u->nom, SIZE_NOM, ',');
     first = readUntil(first, u->ville, SIZE_VILLE, ',');
     first = readUntil(first, u->code_postal, SIZE_CODE_POSTAL, ',');
     first = readUntil(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
