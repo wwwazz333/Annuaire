@@ -14,7 +14,6 @@
 
 // TODO : quand trié ???
 // TODO : tri oyalami
-// TODO : strsep ???
 // TODO : mettre tout en lower
 
 /**
@@ -102,6 +101,7 @@ int menu()
     FILE* fp;
     int nbr_utilisateur;
     char* nom_fichier;
+    TrierSur triersur = TRIE_NULL;
 
     char reponse = '\0';
     while (reponse != '6') {
@@ -129,7 +129,8 @@ int menu()
                 print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                quick_sort(users, 0, nbr_utilisateur - 1);
+                quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
+                triersur = TRIE_NOM;
             }
             break;
         case '1': // Sauvegarde du tableau
@@ -179,17 +180,13 @@ int menu()
         case '4': // Affichage Clients
             if (users_init) {
                 show_menu_Title("Affichage Clients");
-                int i;
-                for (i = 0; i < nbr_utilisateur; i++) {
-                    if (i % 2 == 0) {
-                        setColor(PURPLE);
-                    } else {
-                        setColor(WHITE);
-                    }
-                    printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, users[i].nom, users[i].prenom, users[i].ville, users[i].code_postal, users[i].no_telephone, users[i].email, users[i].metier);
-                    setDefaultColor();
-                    printf("\n");
-                }
+
+                printf("Sur quoi voulez vous trier :\n");
+                int i = 0;
+                show_line_menu("NOM\n", &i);
+
+
+                print_tab(users, nbr_utilisateur);
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }

@@ -154,7 +154,7 @@ int recherche_emplacement_existant(user tab[], int taille, char nom[64])
     free(curr_name_lower);
     return -1;
 }
-void recherche_substring(user tab[], int taille, const char* substring)
+void recherche_substring(user tab[], int taille, char* substring)
 {
 
     char* substring_lower = malloc((strlen(substring) + 1) * sizeof(char));
@@ -189,29 +189,30 @@ void usercpy(user* dst, user* src)
     memcpy(dst, src, sizeof(user));
 }
 
-char* get_arg(user u, int chaine)
+char* get_arg(user* u, int which_one)
 {
-    switch (chaine) {
+    switch (which_one) {
     case 0:
-        return u.nom;
+        return u->nom;
         break;
     case 1:
-        return u.prenom;
+        return u->prenom;
         break;
     case 2:
-        return u.ville;
+        return u->ville;
         break;
     case 3:
-        return u.code_postal;
+        return u->code_postal;
         break;
     case 4:
-        return u.no_telephone;
+        return u->no_telephone;
         break;
     case 5:
-        return u.email;
+        return u->email;
         break;
     case 6:
-        return u.metier;
+        return u->metier;
         break;
     }
+    return NULL;
 }
