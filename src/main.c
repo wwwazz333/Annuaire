@@ -96,7 +96,7 @@ void show_menu()
 int menu()
 {
     user* users;
-    int users_init = 0;
+    int users_init = 0; // 1 ssi un fichier à été charger.
     FILE* fp;
     int nbr_utilisateur;
     char* nom_fichier;
@@ -119,21 +119,28 @@ int menu()
             fp = fopen(nom_fichier, "r");
             free(nom_fichier);
             if (fp == NULL) {
-                setColor(RED);
-                printf("Le fichier n'a pas pu etre ouvert.\n");
-                setDefaultColor();
+				print("Le fichier n'a pas pu etre ouvert.\n", RED, DEFAULT_BACKGROUND_COLOR);
             } else {
                 nbr_utilisateur = nombre_utilisateurs(fp);
                 users = malloc(nbr_utilisateur * sizeof(user));
                 load(fp, users, nbr_utilisateur);
                 users_init = 1;
-                setColor(GREEN);
-                printf("Le fichier est charger.\n");
-                setDefaultColor();
+				print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
-                triersur = TRIE_PRENOM;
+				// printf("prenom : %s\t%d\n", get_arg(&users[0], TRIE_PRENOM), get_size_arg(TRIE_PRENOM));
+				// printf("nom : %s\t%d\n", get_arg(&users[0], TRIE_NOM), get_size_arg(TRIE_NOM));
+				// printf("ville : %s\t%d\n", get_arg(&users[0], TRIE_VILLE), get_size_arg(TRIE_VILLE));
+				// printf("code postal : %s\t%d\n", get_arg(&users[0], TRIE_CODE_POSTAL), get_size_arg(TRIE_CODE_POSTAL));
+				// printf("n° phone : %s\t%d\n", get_arg(&users[0], TRIE_NO_TELEPHONE), get_size_arg(TRIE_NO_TELEPHONE));
+				// printf("email : %s\t%d\n", get_arg(&users[0], TRIE_EMAIL), get_size_arg(TRIE_EMAIL));
+				// printf("metier : %s\t%d\n", get_arg(&users[0], TRIE_METIER), get_size_arg(TRIE_METIER));
+
+				oyelami(users, nbr_utilisateur-1, TRIE_PRENOM);
+				// print_tab(users, nbr_utilisateur);
+                // quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
+                // triersur = TRIE_NOM;
+				print_tab(users, nbr_utilisateur);
             }
             break;
         case '1': // Sauvegarde du tableau
@@ -189,8 +196,8 @@ int menu()
                     printf("Sur quoi voulez vous trier :\n");
                     int i = 0;
                     show_line_menu("annuler\n", &i);
-                    show_line_menu("nom\n", &i);
                     show_line_menu("prenom\n", &i);
+                    show_line_menu("nom\n", &i);
                     show_line_menu("code postal\n", &i);
                     show_line_menu("profession\n", &i);
 
@@ -205,15 +212,15 @@ int menu()
 
                 switch (rep) {
                 case 1:
-                    if (triersur != TRIE_NOM) {
-                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
-                        triersur = TRIE_NOM;
+					if (triersur != TRIE_PRENOM) {
+                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
+                        triersur = TRIE_PRENOM;
                     }
                     break;
                 case 2:
-                    if (triersur != TRIE_PRENOM) {
-                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
-                        triersur = TRIE_PRENOM;
+                    if (triersur != TRIE_NOM) {
+                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
+                        triersur = TRIE_NOM;
                     }
                     break;
                 case 3:
@@ -257,10 +264,7 @@ int menu()
     if (users_init) {
         free(users);
     }
-
-    setColor(RED);
-    printf("exit\n");
-    setDefaultColor();
+	print("exit\n", RED, DEFAULT_BACKGROUND_COLOR);
     return EXIT_SUCCESS;
 }
 

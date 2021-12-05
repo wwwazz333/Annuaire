@@ -7,8 +7,6 @@
 #include <string.h>
 
 
-
-
 #define SIZE_PRENOM 64
 #define SIZE_NOM 64
 #define SIZE_VILLE 128
@@ -104,5 +102,6 @@ void recherche_substring(user tab[], int taille, char* substring);
 
 
 char* get_arg(user* u, int which_one);
+int get_size_arg(int which_one);
 
 #endif

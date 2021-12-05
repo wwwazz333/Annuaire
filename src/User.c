@@ -192,27 +192,55 @@ void usercpy(user* dst, user* src)
 char* get_arg(user* u, int which_one)
 {
     switch (which_one) {
-    case 0:
+    case TRIE_PRENOM:
         return u->prenom;
         break;
-    case 1:
+    case TRIE_NOM:
         return u->nom;
         break;
-    case 2:
+    case TRIE_VILLE:
         return u->ville;
         break;
-    case 3:
+    case TRIE_CODE_POSTAL:
         return u->code_postal;
         break;
-    case 4:
+    case TRIE_NO_TELEPHONE:
         return u->no_telephone;
         break;
-    case 5:
+    case TRIE_EMAIL:
         return u->email;
         break;
-    case 6:
+    case TRIE_METIER:
         return u->metier;
         break;
     }
     return NULL;
+}
+
+int get_size_arg(int which_one)
+{
+    switch (which_one) {
+    case TRIE_PRENOM:
+        return SIZE_PRENOM;
+        break;
+    case TRIE_NOM:
+        return SIZE_NOM;
+        break;
+    case TRIE_VILLE:
+        return SIZE_VILLE;
+        break;
+    case TRIE_CODE_POSTAL:
+        return SIZE_CODE_POSTAL;
+        break;
+    case TRIE_NO_TELEPHONE:
+        return SIZE_NO_TELEPHONE;
+        break;
+    case TRIE_EMAIL:
+        return SIZE_EMAIL;
+        break;
+    case TRIE_METIER:
+        return SIZE_METIER;
+        break;
+    }
+    return 0;
 }

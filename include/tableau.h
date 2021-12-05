@@ -24,7 +24,7 @@ typedef enum {
  * @param taille len-1
  * 
  */
-void oyelami(user* tab, int taille, char* tri);
+void oyelami(user* tab, int taille, TrierSur which);
 
 /**
  * @brief tire le tableau tab de l'indice first à last
