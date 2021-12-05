@@ -11,6 +11,31 @@ void permute(user* a, user* b)
     usercpy(b, &temp);
 }
 
+void oyelami(user* tab, int taille, char* tri)
+{
+    int verif_permutation;
+    int i=0, sens=1;
+    int start=1, end=taille;
+    for (i=0;i<=end/2;i++) { //on parcours le tableau dans les deux sens et en même temps
+        if (strcmp((char*)&tab[i].nom, (char*)&tab[end - i].nom) > 0) { // comparaison des chaines opposées
+                permute(&tab[i],&tab[end - i]); // permutation ces deux chaînes opposées
+        }
+    }
+    i=0;
+    do {
+        verif_permutation=0;
+        while (((sens==1) && (i<end)) || ((sens==-1) && (i>start))) {
+            i += sens;
+            if (strcmp((char*)&tab[i].nom, (char*)&tab[i-1].nom) < 0) { // comparaison entre deux chaines successives
+                permute(&tab[i],&tab[i-1]); // permutation des ces deux chaines successives
+                verif_permutation=1;
+            }
+        }
+        if (sens==1) end--; else start++; //changement de sens selon ce qui est déjà trié
+        sens = -sens;
+    } while (verif_permutation==1);
+}
+
 void quick_sort(user* tab, int first, int last)
 {
     if (last <= first) {

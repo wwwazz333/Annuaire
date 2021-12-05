@@ -39,7 +39,6 @@ void cls()
  */
 void show_menu_Title(const char* Title)
 {
-    setDefaultColor();
     printf("\n\n");
     setBackgroundColor(WHITE);
     setColor(PINK);
@@ -97,7 +96,7 @@ void show_menu()
 int menu()
 {
     user* users;
-    int users_init = 0; // 1 ssi un fichier à été charger
+    int users_init = 0;
     FILE* fp;
     int nbr_utilisateur;
     char* nom_fichier;
@@ -120,13 +119,17 @@ int menu()
             fp = fopen(nom_fichier, "r");
             free(nom_fichier);
             if (fp == NULL) {
-                print("Le fichier n'a pas pu etre ouvert.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                setColor(RED);
+                printf("Le fichier n'a pas pu etre ouvert.\n");
+                setDefaultColor();
             } else {
                 nbr_utilisateur = nombre_utilisateurs(fp);
                 users = malloc(nbr_utilisateur * sizeof(user));
                 load(fp, users, nbr_utilisateur);
                 users_init = 1;
-                print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                setColor(GREEN);
+                printf("Le fichier est charger.\n");
+                setDefaultColor();
                 fclose(fp);
 
                 quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
@@ -255,7 +258,9 @@ int menu()
         free(users);
     }
 
-    print("exit\n", RED, DEFAULT_BACKGROUND_COLOR);
+    setColor(RED);
+    printf("exit\n");
+    setDefaultColor();
     return EXIT_SUCCESS;
 }
 
