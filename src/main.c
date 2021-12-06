@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ColorTerminal.h"
+#include "Terminal.h"
 #include "Save.h"
 #include "User.h"
 #include "Verif.h"
@@ -61,6 +61,31 @@ void show_line_menu(const char* text, int* i)
 {
     printf("[%d] %s", (*i)++, text);
 }
+
+int demande_menu_while(const char* demande, char proposition[][128], int nbr_proposition)
+{
+    int rep = -1;
+    while (rep < 0 || rep > nbr_proposition) {
+        setDefaultColor();
+        printf(demande);
+        printf("\n");
+        int i = 0;
+        while (i < nbr_proposition) {
+            show_line_menu(proposition[i], &i);
+            printf("\n");
+        }
+
+        print(">> ", ORANGE, DEFAULT_BACKGROUND_COLOR);
+        setColor(AQUA);
+        if (scanf("%d", &rep) != 1) {
+            rep = -1;
+        }
+        flush();
+        setDefaultColor();
+    }
+    return rep;
+}
+
 /**
  * @brief affiche les posibilité du menu
  *
@@ -72,19 +97,20 @@ void show_menu()
     int i = 0;
     setDefaultColor();
     show_menu_Title("Menu");
-    setColor(GREEN);
-    show_line_menu("Charg\x82 ficher\n", &i); // 0
-    show_line_menu("Sauvgardé; fichier\n", &i); // 1
-    setColor(BLUE);
-    show_line_menu("Ajouté Client\n", &i); // 2
-    show_line_menu("Supprimer Client\n", &i); // 3
-    show_line_menu("Modifier Client\n", &i); // 4
-    setColor(PINK);
-    show_line_menu("Afficher Clients\n", &i); // 5
-    show_line_menu("Rechercher\n", &i); // 6
-    printf("%s", "\x82");
     setColor(RED);
-    show_line_menu("Quitter\n", &i); // 7
+    show_line_menu("Quitter\n", &i); // 0
+    setColor(GREEN);
+    show_line_menu("Charger ficher\n", &i); // 1
+    show_line_menu("Sauvgarder fichier\n", &i); // 2
+    setColor(BLUE);
+    show_line_menu("Ajouter Client\n", &i); // 3
+    show_line_menu("Supprimer Client\n", &i); // 4
+    show_line_menu("Modifier Client\n", &i); // 5
+    setColor(PINK);
+    show_line_menu("Afficher Clients\n", &i); // 6
+    show_line_menu("Rechercher\n", &i); // 7
+    show_line_menu("Rechercher donnee manquantes\n", &i); // 8
+
     setDefaultColor();
 }
 
@@ -106,7 +132,7 @@ int menu()
     TrierSur triersur = TRIE_NULL;
 
     char reponse = '\0';
-    while (reponse != '7') {
+    while (reponse != '0') {
         show_menu();
         print(">> ", ORANGE, DEFAULT_BACKGROUND_COLOR);
         setColor(AQUA);
@@ -116,30 +142,29 @@ int menu()
         flush(); // vide stdin (au cas ou entrer plusieur caractère précédament)
         cls(); // clear le terminal
         switch (reponse) {
-        case '0': // charger un fichier
+        case '1': // charger un fichier
             show_menu_Title("Charger fichier");
             nom_fichier = ask_fichier_existant("csv");
             fp = fopen(nom_fichier, "r");
             free(nom_fichier);
             if (fp == NULL) {
-				print("Le fichier n'a pas pu etre ouvert.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                print("Le fichier n'a pas pu etre ouvert.\n", RED, DEFAULT_BACKGROUND_COLOR);
             } else {
                 nbr_utilisateur = nombre_utilisateurs(fp);
                 users = malloc(nbr_utilisateur * sizeof(user));
                 load(fp, users, nbr_utilisateur);
                 users_init = 1;
-				print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-
-				// oyelami(users, nbr_utilisateur-1, TRIE_PRENOM);
-				// print_tab(users, nbr_utilisateur);
-                quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
+                // oyelami(users, nbr_utilisateur-1, TRIE_PRENOM);
+                // print_tab(users, nbr_utilisateur);
+                quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
                 triersur = TRIE_PRENOM;
-				// print_tab(users, nbr_utilisateur);
+                // print_tab(users, nbr_utilisateur);
             }
             break;
-        case '1': // Sauvegarde du tableau
+        case '2': // Sauvegarde du tableau
             show_menu_Title("Sauvegarde fichier");
             if (users_init) {
                 nom_fichier = ask_fichier("csv");
@@ -156,20 +181,20 @@ int menu()
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
-        case '2': // ajout d'utilisateur
+        case '3': // ajout d'utilisateur
             if (users_init) {
                 show_menu_Title("ajout Client");
                 user u = input_user();
-                insert_user(&users, &nbr_utilisateur, u);
+                insert_user(&users, &nbr_utilisateur, u, triersur);
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
-        case '3': // suppression d'utilisateur
+        case '4': // suppression d'utilisateur
             if (users_init) {
                 show_menu_Title("suppression Client");
                 print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
-                int id_del;
+                int id_del = 0;
                 scanf("%d", &id_del);
                 flush();
                 if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
@@ -183,7 +208,7 @@ int menu()
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
-        case '4':
+        case '5': // modifcation client
             if (users_init) {
                 show_menu_Title("modification Client");
                 print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
@@ -201,56 +226,36 @@ int menu()
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
-        case '5': // Affichage Clients
+        case '6': // Affichage Clients
             if (users_init) {
                 show_menu_Title("Affichage Clients");
-                int rep = -1;
-                while (rep < 0 || rep > 4) {
-                    setDefaultColor();
-                    printf("Sur quoi voulez vous trier :\n");
-                    int i = 0;
-                    show_line_menu("annuler\n", &i);
-                    show_line_menu("prenom\n", &i);
-                    show_line_menu("nom\n", &i);
-                    show_line_menu("code postal\n", &i);
-                    show_line_menu("profession\n", &i);
 
-                    print(">> ", ORANGE, DEFAULT_BACKGROUND_COLOR);
-                    setColor(AQUA);
-                    if (scanf("%d", &rep) != 1) {
-                        rep = -1;
-                    }
-                    flush();
-                    setDefaultColor();
-                }
-
+                char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
+                int rep = demande_menu_while("Sur quoi voulez vous trier :", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                TrierSur desir_trier_sur;
                 switch (rep) {
                 case 1:
-					if (triersur != TRIE_PRENOM) {
-                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
-                        triersur = TRIE_PRENOM;
-                    }
+                    desir_trier_sur = TRIE_PRENOM;
                     break;
                 case 2:
-                    if (triersur != TRIE_NOM) {
-                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
-                        triersur = TRIE_NOM;
-                    }
+                    desir_trier_sur = TRIE_NOM;
                     break;
                 case 3:
-                    if (triersur != TRIE_CODE_POSTAL) {
-                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_CODE_POSTAL);
-                        triersur = TRIE_CODE_POSTAL;
-                    }
+                    desir_trier_sur = TRIE_VILLE;
                     break;
                 case 4:
-                    if (triersur != TRIE_METIER) {
-                        quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_METIER);
-                        triersur = TRIE_METIER;
-                    }
+                    desir_trier_sur = TRIE_CODE_POSTAL;
+                    break;
+                case 5:
+                    desir_trier_sur = TRIE_METIER;
                     break;
                 default:
+                    desir_trier_sur = TRIE_NULL;
                     break;
+                }
+                if (triersur != desir_trier_sur) {
+                    quick_sort_on(users, 0, nbr_utilisateur - 1, desir_trier_sur);
+                    triersur = desir_trier_sur;
                 }
                 if (rep != 0) {
                     print_tab(users, nbr_utilisateur);
@@ -259,17 +264,90 @@ int menu()
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
-        case '6': // Recherche
+        case '7': // Recherche
             if (users_init) {
-                char nn[64];
-                print("nom : ", AQUA, DEFAULT_BACKGROUND_COLOR);
-                input(nn, 64);
+                char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession" };
+                int rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                TrierSur desir_rechercher_sur;
+                switch (rep) {
+                case 1:
+                    desir_rechercher_sur = TRIE_PRENOM;
+                    break;
+                case 2:
+                    desir_rechercher_sur = TRIE_NOM;
+                    break;
+                case 3:
+                    desir_rechercher_sur = TRIE_VILLE;
+                    break;
+                case 4:
+                    desir_rechercher_sur = TRIE_CODE_POSTAL;
+                    break;
+                case 5:
+                    desir_rechercher_sur = TRIE_NO_TELEPHONE;
+                    break;
+                case 6:
+                    desir_rechercher_sur = TRIE_EMAIL;
+                    break;
+                case 7:
+                    desir_rechercher_sur = TRIE_METIER;
+                    break;
+                default:
+                    desir_rechercher_sur = TRIE_NULL;
+                    break;
+                }
+                if (desir_rechercher_sur != TRIE_NULL) {
+                    char* search_string = malloc(get_size_arg(desir_rechercher_sur) * sizeof(char));
+                    print(">> ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                    input(search_string, get_size_arg(desir_rechercher_sur));
 
-                recherche_substring(users, nbr_utilisateur, nn);
+                    recherche_substring(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                }
 
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
+            break;
+        case '8': // Rechercher donnee manquantes
+        if (users_init) {
+            char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession", "tous" };
+            int rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+            TrierSur donner_manquante_rechercher;
+            switch (rep) {
+            case 1:
+                donner_manquante_rechercher = TRIE_PRENOM;
+                break;
+            case 2:
+                donner_manquante_rechercher = TRIE_NOM;
+                break;
+            case 3:
+                donner_manquante_rechercher = TRIE_VILLE;
+                break;
+            case 4:
+                donner_manquante_rechercher = TRIE_CODE_POSTAL;
+                break;
+            case 5:
+                donner_manquante_rechercher = TRIE_NO_TELEPHONE;
+                break;
+            case 6:
+                donner_manquante_rechercher = TRIE_EMAIL;
+                break;
+            case 7:
+                donner_manquante_rechercher = TRIE_METIER;
+                break;
+            case 8:
+                donner_manquante_rechercher = TIRE_TOUS;
+                break;
+            default:
+                donner_manquante_rechercher = TRIE_NULL;
+                break;
+            }
+            if (donner_manquante_rechercher != TRIE_NULL) {
+                if (donner_manquante_rechercher == TIRE_TOUS) {
+                    recherche_tous_manquante(users, nbr_utilisateur);
+                } else {
+                    recherche_string_manquante(users, nbr_utilisateur, donner_manquante_rechercher);
+                }
+            }}
             break;
         default:
             break;
@@ -278,7 +356,7 @@ int menu()
     if (users_init) {
         free(users);
     }
-	print("exit\n", RED, DEFAULT_BACKGROUND_COLOR);
+    print("exit\n", RED, DEFAULT_BACKGROUND_COLOR);
     return EXIT_SUCCESS;
 }
 

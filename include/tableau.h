@@ -12,6 +12,7 @@ typedef enum {
     TRIE_NO_TELEPHONE,
     TRIE_EMAIL,
     TRIE_METIER,
+    TIRE_TOUS,
 	TRIE_NULL
 } TrierSur;
 /**

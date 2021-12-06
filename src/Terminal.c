@@ -1,4 +1,4 @@
-#include "ColorTerminal.h"
+#include "Terminal.h"
 
 #ifdef OS_Windows
 int currTextColor = 15;
@@ -93,6 +93,7 @@ void setDefaultColor()
     setColor(WHITE);
     setBackgroundColor(BLACK);
 }
+
 #else
 void setDefaultColor()
 {
