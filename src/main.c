@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "Terminal.h"
 #include "Save.h"
+#include "Terminal.h"
 #include "User.h"
 #include "Verif.h"
 #include "tableau.h"
@@ -70,7 +70,13 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
         printf("\n");
         int i = 0;
         while (i < nbr_proposition) {
+            if (i % 2 == 0) {
+                setColor(PINK);
+            } else {
+                setColor(PURPLE);
+            }
             show_line_menu(proposition[i], &i);
+            setDefaultColor();
             printf("\n");
         }
 
@@ -108,7 +114,6 @@ void show_menu()
     setColor(PINK);
     show_line_menu("Afficher Clients\n", &i); // 6
     show_line_menu("Rechercher\n", &i); // 7
-    show_line_menu("Rechercher donnee manquantes\n", &i); // 8
 
     setDefaultColor();
 }
@@ -265,86 +270,89 @@ int menu()
             break;
         case '7': // Recherche
             if (users_init) {
-                char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession" };
-                int rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
-                TrierSur desir_rechercher_sur;
-                switch (rep) {
-                case 1:
-                    desir_rechercher_sur = TRIE_PRENOM;
-                    break;
-                case 2:
-                    desir_rechercher_sur = TRIE_NOM;
-                    break;
-                case 3:
-                    desir_rechercher_sur = TRIE_VILLE;
-                    break;
-                case 4:
-                    desir_rechercher_sur = TRIE_CODE_POSTAL;
-                    break;
-                case 5:
-                    desir_rechercher_sur = TRIE_NO_TELEPHONE;
-                    break;
-                case 6:
-                    desir_rechercher_sur = TRIE_EMAIL;
-                    break;
-                case 7:
-                    desir_rechercher_sur = TRIE_METIER;
-                    break;
-                default:
-                    desir_rechercher_sur = TRIE_NULL;
-                    break;
-                }
-                if (desir_rechercher_sur != TRIE_NULL) {
-                    char* search_string = malloc(get_size_arg(desir_rechercher_sur) * sizeof(char));
-                    print(">> ", AQUA, DEFAULT_BACKGROUND_COLOR);
-                    input(search_string, get_size_arg(desir_rechercher_sur));
+                char proposition[][128] = { "Annuler", "Recherche de donnee", "Rechercher de donnee manquante" };
+                int rep = demande_menu_while("Quelle recherche vouslez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                if (rep == 1) {
+                    char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession" };
+                    rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
+                    TrierSur desir_rechercher_sur;
+                    switch (rep) {
+                    case 1:
+                        desir_rechercher_sur = TRIE_PRENOM;
+                        break;
+                    case 2:
+                        desir_rechercher_sur = TRIE_NOM;
+                        break;
+                    case 3:
+                        desir_rechercher_sur = TRIE_VILLE;
+                        break;
+                    case 4:
+                        desir_rechercher_sur = TRIE_CODE_POSTAL;
+                        break;
+                    case 5:
+                        desir_rechercher_sur = TRIE_NO_TELEPHONE;
+                        break;
+                    case 6:
+                        desir_rechercher_sur = TRIE_EMAIL;
+                        break;
+                    case 7:
+                        desir_rechercher_sur = TRIE_METIER;
+                        break;
+                    default:
+                        desir_rechercher_sur = TRIE_NULL;
+                        break;
+                    }
+                    if (desir_rechercher_sur != TRIE_NULL) {
+                        char* search_string = malloc(get_size_arg(desir_rechercher_sur) * sizeof(char));
+                        print(">> ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                        input(search_string, get_size_arg(desir_rechercher_sur));
 
-                    recherche_substring(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                        recherche_substring(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                    }
+                } else if (rep == 2) {
+                    char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession", "tous" };
+                    rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
+                    TrierSur donner_manquante_rechercher;
+                    switch (rep) {
+                    case 1:
+                        donner_manquante_rechercher = TRIE_PRENOM;
+                        break;
+                    case 2:
+                        donner_manquante_rechercher = TRIE_NOM;
+                        break;
+                    case 3:
+                        donner_manquante_rechercher = TRIE_VILLE;
+                        break;
+                    case 4:
+                        donner_manquante_rechercher = TRIE_CODE_POSTAL;
+                        break;
+                    case 5:
+                        donner_manquante_rechercher = TRIE_NO_TELEPHONE;
+                        break;
+                    case 6:
+                        donner_manquante_rechercher = TRIE_EMAIL;
+                        break;
+                    case 7:
+                        donner_manquante_rechercher = TRIE_METIER;
+                        break;
+                    case 8:
+                        donner_manquante_rechercher = TIRE_TOUS;
+                        break;
+                    default:
+                        donner_manquante_rechercher = TRIE_NULL;
+                        break;
+                    }
+                    if (donner_manquante_rechercher != TRIE_NULL) {
+                        if (donner_manquante_rechercher == TIRE_TOUS) {
+                            recherche_tous_manquante(users, nbr_utilisateur);
+                        } else {
+                            recherche_string_manquante(users, nbr_utilisateur, donner_manquante_rechercher);
+                        }
+                    }
                 }
 
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
-            }
-            break;
-        case '8': // Rechercher donnee manquantes
-            char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession", "tous" };
-            int rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
-            TrierSur donner_manquante_rechercher;
-            switch (rep) {
-            case 1:
-                donner_manquante_rechercher = TRIE_PRENOM;
-                break;
-            case 2:
-                donner_manquante_rechercher = TRIE_NOM;
-                break;
-            case 3:
-                donner_manquante_rechercher = TRIE_VILLE;
-                break;
-            case 4:
-                donner_manquante_rechercher = TRIE_CODE_POSTAL;
-                break;
-            case 5:
-                donner_manquante_rechercher = TRIE_NO_TELEPHONE;
-                break;
-            case 6:
-                donner_manquante_rechercher = TRIE_EMAIL;
-                break;
-            case 7:
-                donner_manquante_rechercher = TRIE_METIER;
-                break;
-            case 8:
-                donner_manquante_rechercher = TIRE_TOUS;
-                break;
-            default:
-                donner_manquante_rechercher = TRIE_NULL;
-                break;
-            }
-            if (donner_manquante_rechercher != TRIE_NULL) {
-                if (donner_manquante_rechercher == TIRE_TOUS) {
-                    recherche_tous_manquante(users, nbr_utilisateur);
-                } else {
-                    recherche_string_manquante(users, nbr_utilisateur, donner_manquante_rechercher);
-                }
             }
             break;
         default:
