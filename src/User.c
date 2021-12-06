@@ -50,23 +50,26 @@ int del_user(user tab[], int id, int taille)
     if (id < 0 || id >= taille) {
         return -1;
     }
-    strcpy(tab[id].prenom, "\0");
-    strcpy(tab[id].nom, "\0");
-    strcpy(tab[id].ville, "\0");
-    strcpy(tab[id].code_postal, "\0");
-    strcpy(tab[id].no_telephone, "\0");
-    strcpy(tab[id].email, "\0");
-    strcpy(tab[id].metier, "\0");
+    tab[id].nom[0] = '\0';
+    tab[id].prenom[0] = '\0';
+    tab[id].ville[0] = '\0';
+    tab[id].code_postal[0] = '\0';
+    tab[id].no_telephone[0] = '\0';
+    tab[id].email[0] = '\0';
+    tab[id].metier[0] = '\0';
     return 0;
 }
 
-int insert_user(user* tab[], int* taille, user u)
+int insert_user(user* tab[], int* taille, user u, int which)
 {
+    if (which == TRIE_NULL){
+        print("Erreur : le tableau n'est pas trier...\n", RED, DEFAULT_BACKGROUND_COLOR);
+    }
     if (is_del(u)) {
         printf("Vous ne pouvez pas ajouté un utilisateur vide.\n");
         return EXIT_FAILURE;
     }
-    int index_a_ajouter = recherche_emplacement(*tab, *taille, u.prenom);
+    int index_a_ajouter = recherche_emplacement(*tab, *taille, get_arg(&u, which), which);
     if (index_a_ajouter < 0) {
         return EXIT_FAILURE;
     }
@@ -86,106 +89,56 @@ int insert_user(user* tab[], int* taille, user u)
     return EXIT_SUCCESS;
 }
 
-int modif_user(user tab[], int id, int taille) //GROS BUG SA MERE
-{
-    if (id < 0 || id >= taille) {
-        return -1;
-    }
-    user u;
 
-    print("Entrez le prenom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    input(u.prenom, SIZE_PRENOM);
-    if(u.prenom[0] != '\0') {
-        strcpy(tab[id].prenom, u.prenom);
-    }
-
-    print("Entrez le nom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    input(u.nom, SIZE_NOM);
-    if(u.nom[0] != '\0') {
-        strcpy(tab[id].nom, u.nom);
-    }
-
-    print("Entrez la ville : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    input(u.ville, SIZE_VILLE);
-    if(u.ville[0] != '\0') {
-        strcpy(tab[id].ville, u.ville);
-    }
-
-    print("Entrez le code postal : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    input(u.code_postal, SIZE_CODE_POSTAL);
-    if(u.code_postal[0] != '\0') {
-        strcpy(tab[id].code_postal, u.code_postal);
-    }
-
-    print("Entrez le numero de telephone : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    input(u.no_telephone, SIZE_NO_TELEPHONE);
-    if(u.no_telephone[0] != '\0') {
-        strcpy(tab[id].no_telephone, u.no_telephone);
-    }
-
-    print("Entrez l'email : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    input(u.email, SIZE_EMAIL);
-    if(u.email[0] != '\0') {
-        strcpy(tab[id].email, u.email);
-    }
-
-    print("Entrez le metier : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    input(u.metier, SIZE_METIER);
-    if(u.metier[0] != '\0') {
-        strcpy(tab[id].metier, u.metier);
-    }
-    return 0;
-}
-
-int recherche_emplacement(user tab[], int taille, char nom[64]) // recherche le dernier
+int recherche_emplacement(user tab[], int taille, char* information, int which) // recherche le dernier
 {
     int millieu;
     int gauche = 0;
     int droite = taille - 1;
 
-    char* name_lower = malloc(64 * sizeof(char));
-    char* curr_name_lower = malloc(64 * sizeof(char));
+    char* info_lower = malloc(get_size_arg(which) * sizeof(char));
+    char* curr_info_lower = malloc(get_size_arg(which) * sizeof(char));
 
-    strtolower(name_lower, nom, 64);
+    strtolower(info_lower, information, get_size_arg(which));
 
     while (gauche <= droite) {
         millieu = (droite + gauche) / 2;
-        strtolower(curr_name_lower, tab[millieu].nom, 64);
-        if (strcmp(curr_name_lower, name_lower) < 0) {
+        strtolower(curr_info_lower, get_arg(&tab[millieu], which), get_size_arg(which));
+        if (strcmp(curr_info_lower, info_lower) < 0) {
             gauche = millieu + 1;
-        } else if (strcmp(curr_name_lower, name_lower) > 0) {
+        } else if (strcmp(curr_info_lower, info_lower) > 0) {
             droite = millieu - 1;
         } else { // si égale
             do {
                 millieu++;
-                strtolower(curr_name_lower, tab[millieu].nom, 64);
-            } while (strcmp(curr_name_lower, name_lower) == 0);
+                strtolower(curr_info_lower, get_arg(&tab[millieu], which), get_size_arg(which));
+            } while (strcmp(curr_info_lower, info_lower) == 0);
 
-            free(name_lower);
-            free(curr_name_lower);
+            free(info_lower);
+            free(curr_info_lower);
             return millieu;
         }
     }
 
-    free(name_lower);
-    free(curr_name_lower);
+    free(info_lower);
+    free(curr_info_lower);
     return gauche;
 }
 
-int recherche_emplacement_existant(user tab[], int taille, char nom[64])
+/* int recherche_emplacement_existant(user tab[], int taille, char* information, int which) // sert a rien pour l'instant !!!!!!!!!!!!!
 {
     int millieu;
     int gauche = 0;
     int droite = taille - 1;
 
-    char* name_lower = malloc(64 * sizeof(char));
-    char* curr_name_lower = malloc(64 * sizeof(char));
+    char* name_lower = malloc(get_size_arg(which) * sizeof(char));
+    char* curr_name_lower = malloc(get_size_arg(which) * sizeof(char));
 
-    strtolower(name_lower, nom, 64);
+    strtolower(name_lower, information, get_size_arg(which));
 
     while (gauche <= droite) {
         millieu = (droite + gauche) / 2;
-        strtolower(curr_name_lower, tab[millieu].nom, 64);
+        strtolower(curr_name_lower, get_arg(&tab[millieu], which), get_size_arg(which));
         if (strcmp(curr_name_lower, name_lower) < 0) {
             gauche = millieu + 1;
         } else if (strcmp(curr_name_lower, name_lower) > 0) {
@@ -193,7 +146,7 @@ int recherche_emplacement_existant(user tab[], int taille, char nom[64])
         } else { // si égale cherche le dernier
             while (strcmp(curr_name_lower, name_lower) == 0) {
                 millieu++;
-                strtolower(curr_name_lower, tab[millieu].nom, 64);
+                strtolower(curr_name_lower, get_arg(&tab[millieu], which), get_size_arg(which));
             }
 
             free(name_lower);
@@ -205,8 +158,8 @@ int recherche_emplacement_existant(user tab[], int taille, char nom[64])
     free(name_lower);
     free(curr_name_lower);
     return -1;
-}
-void recherche_substring(user tab[], int taille, char* substring)
+} */
+void recherche_substring(user tab[], int taille, char* substring, int which)
 {
 
     char* substring_lower = malloc((strlen(substring) + 1) * sizeof(char));
@@ -215,7 +168,7 @@ void recherche_substring(user tab[], int taille, char* substring)
     strtolower(substring_lower, substring, strlen(substring) + 1);
     int i,j;
     for (i = 0, j = 0; i < taille; i++) {
-        strtolower(curr_name_lower, tab[i].nom, 64);
+        strtolower(curr_name_lower, get_arg(&tab[i], which), get_size_arg(which));
         if (strstr(curr_name_lower, substring_lower) != NULL) {
             if (j % 2 == 0) {
                 setColor(PURPLE);
@@ -231,6 +184,44 @@ void recherche_substring(user tab[], int taille, char* substring)
 
     free(substring_lower);
     free(curr_name_lower);
+}
+
+void recherche_string(user tab[], int taille, char* string, int which)
+{
+    int size_string_lower = strlen(string) + 1;
+    char* string_lower = malloc(size_string_lower * sizeof(char));
+    char* curr_name_lower = malloc(size_string_lower * sizeof(char));
+    
+    strtolower(string_lower, string, size_string_lower);
+    int i,j;
+    for (i = 0, j = 0; i < taille; i++) {
+        strtolower(curr_name_lower, get_arg(&tab[i], which), size_string_lower);
+        if (strcmp(curr_name_lower, string_lower) == 0L) {
+            if (j % 2 == 0) {
+                setColor(PURPLE);
+            } else {
+                setColor(WHITE);
+            }
+            printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].nom, tab[i].prenom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+            setDefaultColor();
+            printf("\n");
+            j++;
+        }
+    }
+
+    free(string_lower);
+    free(curr_name_lower);
+}
+
+
+
+user* recherche_by_id(user tab[], int taille, int id)
+{
+    if(id >= 0 && id < taille){
+        return NULL;
+    }
+
+    return &tab[id];
 }
 
 void usercpy(user* dst, user* src)
