@@ -94,46 +94,54 @@ int modif_user(user tab[], int id, int taille) //GROS BUG SA MERE
     user u;
 
     print("Entrez le prenom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    setColor(BLUE);
     input(u.prenom, SIZE_PRENOM);
     if(u.prenom[0] != '\0') {
         strcpy(tab[id].prenom, u.prenom);
     }
 
     print("Entrez le nom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    setColor(BLUE);
     input(u.nom, SIZE_NOM);
     if(u.nom[0] != '\0') {
         strcpy(tab[id].nom, u.nom);
     }
 
     print("Entrez la ville : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    setColor(BLUE);
     input(u.ville, SIZE_VILLE);
     if(u.ville[0] != '\0') {
         strcpy(tab[id].ville, u.ville);
     }
 
     print("Entrez le code postal : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    setColor(BLUE);
     input(u.code_postal, SIZE_CODE_POSTAL);
     if(u.code_postal[0] != '\0') {
         strcpy(tab[id].code_postal, u.code_postal);
     }
 
     print("Entrez le numero de telephone : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    setColor(BLUE);
     input(u.no_telephone, SIZE_NO_TELEPHONE);
     if(u.no_telephone[0] != '\0') {
         strcpy(tab[id].no_telephone, u.no_telephone);
     }
 
     print("Entrez l'email : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    setColor(BLUE);
     input(u.email, SIZE_EMAIL);
     if(u.email[0] != '\0') {
         strcpy(tab[id].email, u.email);
     }
 
     print("Entrez le metier : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    setColor(BLUE);
     input(u.metier, SIZE_METIER);
     if(u.metier[0] != '\0') {
         strcpy(tab[id].metier, u.metier);
     }
+    setDefaultColor();
     return 0;
 }
 
