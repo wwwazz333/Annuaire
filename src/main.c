@@ -210,7 +210,7 @@ int menu()
             if (users_init) {
                 show_menu_Title("modification Client");
                 print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
-                int id;
+                int id = 0;
                 scanf("%d", &id);
                 flush();
                 if (modif_user(users, id - 1, nbr_utilisateur) == 0) { // -1 pour l'id car on commence à 0 dans le code
