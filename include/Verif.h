@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "ColorTerminal.h"
+#include "Terminal.h"
 
 
 /**
