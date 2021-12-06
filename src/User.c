@@ -290,7 +290,7 @@ void recherche_string_manquante(user tab[], int taille, int which) // et affiche
         }
     }
     setColor(GREEN);
-    printf("%d resultat(s) trouv%s.\n", count, show_e);
+    printf("%d resultat(s) trouve.\n", count);
     setDefaultColor();
 }
 
@@ -312,7 +312,7 @@ void recherche_tous_manquante(user tab[], int taille) // et affiche
         }
     }
     setColor(GREEN);
-    printf("%d resultat(s) trouv%s.\n", count, show_e);
+    printf("%d resultat(s) trouve.\n", count);
     setDefaultColor();
 }
 
