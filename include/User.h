@@ -68,7 +68,7 @@ void usercpy(user* dst, user* src);
  * @param taille taille du tableau
  * @return int 0 ssi il a pu etre supprimer
  */
-int del_user(user tableau[], int id, int taille);
+int del_user(user tab[], int id, int taille);
 
 /**
  * @brief insert u dans tab au bonne emplacement et agrandi si nécessaire
@@ -81,7 +81,7 @@ int del_user(user tableau[], int id, int taille);
  * @param u 
  * @return int 
  */
-int insert_user(user* tab[], int* taille, user u);
+int insert_user(user* tab[], int* taille, user u, int which);
 
 /**
  * @brief retourne l'emplacement où ajouté l'utilisateur avec pour nom "nom"
@@ -94,11 +94,14 @@ int insert_user(user* tab[], int* taille, user u);
  * @param nom 
  * @return int 
  */
-int recherche_emplacement(user tab[], int taille, char nom[64]);
+int recherche_emplacement(user tab[], int taille, char* information, int which);
 
-int recherche_emplacement_existant(user tab[], int taille, char nom[64]);
+int recherche_emplacement_existant(user tab[], int taille, char* information, int which);
 
-void recherche_substring(user tab[], int taille, char* substring);
+void recherche_substring(user tab[], int taille, char* substring, int which);
+
+
+user* recherche_by_id(user tab[], int taille, int id);
 
 
 char* get_arg(user* u, int which_one);
