@@ -11,6 +11,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <time.h>
+#include <wchar.h>
 
 // TODO : quand trié ???
 // TODO : tri oyalami
@@ -72,15 +73,16 @@ void show_menu()
     setDefaultColor();
     show_menu_Title("Menu");
     setColor(GREEN);
-    show_line_menu("Charger ficher\n", &i); // 0
-    show_line_menu("Sauvgarder fichier\n", &i); // 1
+    show_line_menu("Charg\x82 ficher\n", &i); // 0
+    show_line_menu("Sauvgardé; fichier\n", &i); // 1
     setColor(BLUE);
-    show_line_menu("Ajouter Client\n", &i); // 2
+    show_line_menu("Ajouté Client\n", &i); // 2
     show_line_menu("Supprimer Client\n", &i); // 3
     show_line_menu("Modifier Client\n", &i); // 4
     setColor(PINK);
     show_line_menu("Afficher Clients\n", &i); // 5
     show_line_menu("Rechercher\n", &i); // 6
+    printf("%s", "\x82");
     setColor(RED);
     show_line_menu("Quitter\n", &i); // 7
     setDefaultColor();
