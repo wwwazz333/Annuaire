@@ -128,19 +128,12 @@ int menu()
 				print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-				// printf("prenom : %s\t%d\n", get_arg(&users[0], TRIE_PRENOM), get_size_arg(TRIE_PRENOM));
-				// printf("nom : %s\t%d\n", get_arg(&users[0], TRIE_NOM), get_size_arg(TRIE_NOM));
-				// printf("ville : %s\t%d\n", get_arg(&users[0], TRIE_VILLE), get_size_arg(TRIE_VILLE));
-				// printf("code postal : %s\t%d\n", get_arg(&users[0], TRIE_CODE_POSTAL), get_size_arg(TRIE_CODE_POSTAL));
-				// printf("n° phone : %s\t%d\n", get_arg(&users[0], TRIE_NO_TELEPHONE), get_size_arg(TRIE_NO_TELEPHONE));
-				// printf("email : %s\t%d\n", get_arg(&users[0], TRIE_EMAIL), get_size_arg(TRIE_EMAIL));
-				// printf("metier : %s\t%d\n", get_arg(&users[0], TRIE_METIER), get_size_arg(TRIE_METIER));
 
-				oyelami(users, nbr_utilisateur-1, TRIE_PRENOM);
+				// oyelami(users, nbr_utilisateur-1, TRIE_PRENOM);
 				// print_tab(users, nbr_utilisateur);
-                // quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
-                // triersur = TRIE_NOM;
-				print_tab(users, nbr_utilisateur);
+                quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_NOM);
+                triersur = TRIE_PRENOM;
+				// print_tab(users, nbr_utilisateur);
             }
             break;
         case '1': // Sauvegarde du tableau

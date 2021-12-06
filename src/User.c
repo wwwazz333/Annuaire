@@ -65,7 +65,7 @@ int insert_user(user* tab[], int* taille, user u)
         printf("Vous ne pouvez pas ajouté un utilisateur vide.\n");
         return EXIT_FAILURE;
     }
-    int index_a_ajouter = recherche_emplacement(*tab, *taille, u.nom);
+    int index_a_ajouter = recherche_emplacement(*tab, *taille, u.prenom);
     if (index_a_ajouter < 0) {
         return EXIT_FAILURE;
     }

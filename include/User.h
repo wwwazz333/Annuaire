@@ -19,19 +19,19 @@
  *
  */
 typedef struct {
-    char prenom[64];
-    char nom[64];
+    char prenom[SIZE_PRENOM];
+    char nom[SIZE_NOM];
     //! la ville où habite habite l'utilisateur
-    char ville[128];
+    char ville[SIZE_VILLE];
     //! le code postal de la ville avec 5 chiffres (ex : "69100")
-    char code_postal[6];
+    char code_postal[SIZE_CODE_POSTAL];
     //! numéro de téléphone de l'utilisateur au format 06.01.02.03.04 et
     //! possiblement au format +2296.01.02.03.04
-    char no_telephone[18];
+    char no_telephone[SIZE_NO_TELEPHONE];
     //! l'email de l'utilisateur
-    char email[128];
+    char email[SIZE_EMAIL];
     //! le métier de l'utilisateur (ex : "exemple.exemple@mail.ex")
-    char metier[128];
+    char metier[SIZE_METIER];
 } user;
 
 
