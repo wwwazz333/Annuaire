@@ -198,9 +198,11 @@ int menu()
         case '4': // suppression d'utilisateur
             if (users_init) {
                 show_menu_Title("suppression Client");
-                print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                 int id_del = 0;
+                setColor(AQUA);
                 scanf("%d", &id_del);
+                setDefaultColor();
                 flush();
                 if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
 
@@ -216,9 +218,11 @@ int menu()
         case '5': // modifcation client
             if (users_init) {
                 show_menu_Title("modification Client");
-                print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                 int id = 0;
+                setColor(AQUA);
                 scanf("%d", &id);
+                setDefaultColor();
                 flush();
                 if (modif_user(users, id - 1, nbr_utilisateur) == 0) { // -1 pour l'id car on commence à 0 dans le code
 
@@ -305,6 +309,7 @@ int menu()
                     }
                     if (desir_rechercher_sur != TRIE_NULL) {
                         char* search_string = malloc(get_size_arg(desir_rechercher_sur) * sizeof(char));
+                        print("Votre recherche: ", PINK, DEFAULT_BACKGROUND_COLOR);
                         print(">> ", AQUA, DEFAULT_BACKGROUND_COLOR);
                         input(search_string, get_size_arg(desir_rechercher_sur));
 
