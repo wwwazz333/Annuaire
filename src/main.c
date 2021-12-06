@@ -77,11 +77,12 @@ void show_menu()
     setColor(BLUE);
     show_line_menu("Ajouter Client\n", &i); // 2
     show_line_menu("Supprimer Client\n", &i); // 3
+    show_line_menu("Modifier Client\n", &i); // 4
     setColor(PINK);
-    show_line_menu("Afficher Clients\n", &i); // 4
-    show_line_menu("Rechercher\n", &i); // 5
+    show_line_menu("Afficher Clients\n", &i); // 5
+    show_line_menu("Rechercher\n", &i); // 6
     setColor(RED);
-    show_line_menu("Quitter\n", &i); // 6
+    show_line_menu("Quitter\n", &i); // 7
     setDefaultColor();
 }
 
@@ -103,7 +104,7 @@ int menu()
     TrierSur triersur = TRIE_NULL;
 
     char reponse = '\0';
-    while (reponse != '6') {
+    while (reponse != '7') {
         show_menu();
         print(">> ", ORANGE, DEFAULT_BACKGROUND_COLOR);
         setColor(AQUA);
@@ -180,7 +181,25 @@ int menu()
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
-        case '4': // Affichage Clients
+        case '4':
+            if (users_init) {
+                show_menu_Title("modification Client");
+                print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                int id;
+                scanf("%d", &id);
+                flush();
+                if (modif_user(users, id - 1, nbr_utilisateur) == 0) { // -1 pour l'id car on commence à 0 dans le code
+
+                    print("modification effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                } else {
+                    print("erreur lors de la modification.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                }
+
+            } else {
+                print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
+            }
+            break;
+        case '5': // Affichage Clients
             if (users_init) {
                 show_menu_Title("Affichage Clients");
                 int rep = -1;
@@ -238,7 +257,7 @@ int menu()
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
-        case '5': // Recherche
+        case '6': // Recherche
             if (users_init) {
                 char nn[64];
                 print("nom : ", AQUA, DEFAULT_BACKGROUND_COLOR);

@@ -6,15 +6,16 @@
 user input_user()
 {
     user u;
-    setColor(ORANGE);
-    printf("\nEntrez le nom : ");
-    setColor(AQUA);
-    input(u.nom, SIZE_NOM);
 
     setColor(ORANGE);
     printf("\nEntrez le prenom : ");
     setColor(AQUA);
     input(u.prenom, SIZE_PRENOM);
+
+    setColor(ORANGE);
+    printf("\nEntrez le nom : ");
+    setColor(AQUA);
+    input(u.nom, SIZE_NOM);
 
     setColor(ORANGE);
     printf("\nEntrez la ville : ");
@@ -44,18 +45,18 @@ user input_user()
 
     return u;
 }
-int del_user(user tableau[], int id, int taille)
+int del_user(user tab[], int id, int taille)
 {
     if (id < 0 || id >= taille) {
         return -1;
     }
-    strcpy(tableau[id].nom, "\0");
-    strcpy(tableau[id].prenom, "\0");
-    strcpy(tableau[id].ville, "\0");
-    strcpy(tableau[id].code_postal, "\0");
-    strcpy(tableau[id].no_telephone, "\0");
-    strcpy(tableau[id].email, "\0");
-    strcpy(tableau[id].metier, "\0");
+    strcpy(tab[id].prenom, "\0");
+    strcpy(tab[id].nom, "\0");
+    strcpy(tab[id].ville, "\0");
+    strcpy(tab[id].code_postal, "\0");
+    strcpy(tab[id].no_telephone, "\0");
+    strcpy(tab[id].email, "\0");
+    strcpy(tab[id].metier, "\0");
     return 0;
 }
 
@@ -83,6 +84,57 @@ int insert_user(user* tab[], int* taille, user u)
     }
 
     return EXIT_SUCCESS;
+}
+
+int modif_user(user tab[], int id, int taille) //GROS BUG SA MERE
+{
+    if (id < 0 || id >= taille) {
+        return -1;
+    }
+    user u;
+
+    print("Entrez le prenom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    input(u.prenom, SIZE_PRENOM);
+    if(u.prenom[0] != '\0') {
+        strcpy(tab[id].prenom, u.prenom);
+    }
+
+    print("Entrez le nom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    input(u.nom, SIZE_NOM);
+    if(u.nom[0] != '\0') {
+        strcpy(tab[id].nom, u.nom);
+    }
+
+    print("Entrez la ville : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    input(u.ville, SIZE_VILLE);
+    if(u.ville[0] != '\0') {
+        strcpy(tab[id].ville, u.ville);
+    }
+
+    print("Entrez le code postal : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    input(u.code_postal, SIZE_CODE_POSTAL);
+    if(u.code_postal[0] != '\0') {
+        strcpy(tab[id].code_postal, u.code_postal);
+    }
+
+    print("Entrez le numero de telephone : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    input(u.no_telephone, SIZE_NO_TELEPHONE);
+    if(u.no_telephone[0] != '\0') {
+        strcpy(tab[id].no_telephone, u.no_telephone);
+    }
+
+    print("Entrez l'email : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    input(u.email, SIZE_EMAIL);
+    if(u.email[0] != '\0') {
+        strcpy(tab[id].email, u.email);
+    }
+
+    print("Entrez le metier : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    input(u.metier, SIZE_METIER);
+    if(u.metier[0] != '\0') {
+        strcpy(tab[id].metier, u.metier);
+    }
+    return 0;
 }
 
 int recherche_emplacement(user tab[], int taille, char nom[64]) // recherche le dernier
@@ -161,8 +213,8 @@ void recherche_substring(user tab[], int taille, char* substring)
     char* curr_name_lower = malloc((64 + 1) * sizeof(char));
 
     strtolower(substring_lower, substring, strlen(substring) + 1);
-
-    for (int i = 0, j = 0; i < taille; i++) {
+    int i,j;
+    for (i = 0, j = 0; i < taille; i++) {
         strtolower(curr_name_lower, tab[i].nom, 64);
         if (strstr(curr_name_lower, substring_lower) != NULL) {
             if (j % 2 == 0) {
