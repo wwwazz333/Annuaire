@@ -8,6 +8,7 @@
 #include "Verif.h"
 #include "tableau.h"
 
+#include "gremlins.h"
 #include <string.h>
 #include <sys/time.h>
 #include <time.h>
@@ -70,7 +71,9 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
         printf("\n");
         int i = 0;
         while (i < nbr_proposition) {
-            if (i % 2 == 0) {
+            if (i == 0) {
+                setColor(RED);
+            } else if (i % 2 == 0) {
                 setColor(PINK);
             } else {
                 setColor(PURPLE);
@@ -161,11 +164,8 @@ int menu()
                 print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                // oyelami(users, nbr_utilisateur-1, TRIE_PRENOM);
-                // print_tab(users, nbr_utilisateur);
                 quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
                 triersur = TRIE_PRENOM;
-                // print_tab(users, nbr_utilisateur);
             }
             break;
         case '2': // Sauvegarde du tableau
@@ -189,7 +189,20 @@ int menu()
             if (users_init) {
                 show_menu_Title("ajout Client");
                 user u = input_user();
-                insert_user(&users, &nbr_utilisateur, u, triersur);
+                print_user(u, -1);
+                printf("\n");
+                char proposition[][128] = { "annuler", "ajouter" };
+                int rep = demande_menu_while("voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                if (rep == 1) {
+                    if (triersur == TRIE_NULL) {
+                        oyelami(users, nbr_utilisateur - 1, TRIE_PRENOM);
+                        triersur = TRIE_PRENOM;
+                    }
+                    insert_user(&users, &nbr_utilisateur, u, triersur);
+                    print("client ajouter\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                } else {
+                    print("action annuler\n", RED, DEFAULT_BACKGROUND_COLOR);
+                }
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
@@ -201,13 +214,20 @@ int menu()
                 int id_del = 0;
                 scanf("%d", &id_del);
                 flush();
-                if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
-
-                    print("suppression effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                print_user(users[id_del - 1], id_del - 1);
+                printf("\n");
+                char proposition[][128] = { "annuler", "supprimer" };
+                int rep = demande_menu_while("voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                if (rep == 1) {
+                    if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
+                        triersur = TRIE_NULL;
+                        print("suppression effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                    } else {
+                        print("erreur lors de la suppression.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                    }
                 } else {
-                    print("erreur lors de la suppression.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                    print("action annulee\n", RED, DEFAULT_BACKGROUND_COLOR);
                 }
-
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
@@ -219,11 +239,20 @@ int menu()
                 int id = 0;
                 scanf("%d", &id);
                 flush();
-                if (modif_user(users, id - 1, nbr_utilisateur) == 0) { // -1 pour l'id car on commence à 0 dans le code
 
-                    print("modification effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                print_user(users[id - 1], id - 1);
+                printf("\n");
+                char proposition[][128] = { "annuler", "modifier" };
+                int rep = demande_menu_while("voulez vous vraiment le modifier : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                if (rep == 1) {
+                    if (modif_user(users, id - 1, nbr_utilisateur) == 0) { // -1 pour l'id car on commence à 0 dans le code
+                        print("modification effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                    } else {
+                        print("erreur lors de la modification.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                    }
+                    print("client modifier\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 } else {
-                    print("erreur lors de la modification.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                    print("action annulee\n", RED, DEFAULT_BACKGROUND_COLOR);
                 }
 
             } else {
@@ -354,6 +383,9 @@ int menu()
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
+            break;
+        case '$':
+            show_gremlins_big();
             break;
         default:
             break;

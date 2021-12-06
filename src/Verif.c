@@ -9,8 +9,13 @@ void input(char* str, int sizeof_str)
         // n'est pas "Entrer" et qu'on a pas atteint la fin de la
         // chaine de caractère (-1 car on met '\0' a la fin)
         i++;
-    };
-    str[i] = '\0'; // pour metre '\0' a la fin de la chaine de caractère
+    }
+    if (str[i] != '\n') {
+        while (getchar() != '\n') { // on lit les caractère pour ne pas les mettre dans le prochain champ input
+        }
+    }
+    str[i] = '\0';
+     // pour metre '\0' a la fin de la chaine de caractère
 }
 
 char* ask_fichier(char* extension)
@@ -71,7 +76,7 @@ int is_del(user u)
 void strtolower(char* dst, char* src, int size)
 {
     int i = 0;
-    for (; i < size-1 && src[i] != '\0'; i++) {
+    for (; i < size - 1 && src[i] != '\0'; i++) {
         dst[i] = tolower(src[i]);
     }
     dst[i] = '\0';

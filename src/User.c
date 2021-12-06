@@ -26,6 +26,7 @@ user input_user()
     printf("\nEntrez le code postal : ");
     setColor(AQUA);
     input(u.code_postal, SIZE_CODE_POSTAL);
+    printf("------------code postal : %s\n", u.code_postal);
 
     setColor(ORANGE);
     printf("\nEntrez le numero de telephone : ");
@@ -44,6 +45,11 @@ user input_user()
     setDefaultColor();
 
     return u;
+}
+
+void print_user(user u, int id)
+{
+    printf("[%d] %s, %s, %s, %s, %s, %s, %s", id + 1, u.prenom, u.nom, u.ville, u.code_postal, u.no_telephone, u.email, u.metier);
 }
 int del_user(user tab[], int id, int taille)
 {
@@ -89,8 +95,7 @@ int insert_user(user* tab[], int* taille, user u, int which)
     return EXIT_SUCCESS;
 }
 
-
-int modif_user(user tab[], int id, int taille) //GROS BUG SA MERE
+int modif_user(user tab[], int id, int taille) // GROS BUG SA MERE
 {
     if (id < 0 || id >= taille) {
         return -1;
@@ -100,49 +105,49 @@ int modif_user(user tab[], int id, int taille) //GROS BUG SA MERE
     print("Entrez le prenom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
     setColor(BLUE);
     input(u.prenom, SIZE_PRENOM);
-    if(u.prenom[0] != '\0') {
+    if (u.prenom[0] != '\0') {
         strcpy(tab[id].prenom, u.prenom);
     }
 
     print("Entrez le nom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
     setColor(BLUE);
     input(u.nom, SIZE_NOM);
-    if(u.nom[0] != '\0') {
+    if (u.nom[0] != '\0') {
         strcpy(tab[id].nom, u.nom);
     }
 
     print("Entrez la ville : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
     setColor(BLUE);
     input(u.ville, SIZE_VILLE);
-    if(u.ville[0] != '\0') {
+    if (u.ville[0] != '\0') {
         strcpy(tab[id].ville, u.ville);
     }
 
     print("Entrez le code postal : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
     setColor(BLUE);
     input(u.code_postal, SIZE_CODE_POSTAL);
-    if(u.code_postal[0] != '\0') {
+    if (u.code_postal[0] != '\0') {
         strcpy(tab[id].code_postal, u.code_postal);
     }
 
     print("Entrez le numero de telephone : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
     setColor(BLUE);
     input(u.no_telephone, SIZE_NO_TELEPHONE);
-    if(u.no_telephone[0] != '\0') {
+    if (u.no_telephone[0] != '\0') {
         strcpy(tab[id].no_telephone, u.no_telephone);
     }
 
     print("Entrez l'email : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
     setColor(BLUE);
     input(u.email, SIZE_EMAIL);
-    if(u.email[0] != '\0') {
+    if (u.email[0] != '\0') {
         strcpy(tab[id].email, u.email);
     }
 
     print("Entrez le metier : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
     setColor(BLUE);
     input(u.metier, SIZE_METIER);
-    if(u.metier[0] != '\0') {
+    if (u.metier[0] != '\0') {
         strcpy(tab[id].metier, u.metier);
     }
     setDefaultColor();
@@ -225,7 +230,7 @@ void recherche_substring(user tab[], int taille, char* substring, int which) // 
     char* curr_info_lower = malloc((get_size_arg(which) + 1) * sizeof(char));
 
     strtolower(substring_lower, substring, strlen(substring) + 1);
-    int i,j;
+    int i, j;
     for (i = 0, j = 0; i < taille; i++) {
         strtolower(curr_info_lower, get_arg(&tab[i], which), get_size_arg(which));
         if (strstr(curr_info_lower, substring_lower) != NULL) {
@@ -234,7 +239,8 @@ void recherche_substring(user tab[], int taille, char* substring, int which) // 
             } else {
                 setColor(WHITE);
             }
-            printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+            // printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+            print_user(tab[i], i);
             setDefaultColor();
             printf("\n");
             j++;
@@ -283,7 +289,8 @@ void recherche_string_manquante(user tab[], int taille, int which) // et affiche
             } else {
                 setColor(WHITE);
             }
-            printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+            // printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+            print_user(tab[i], i);
             setDefaultColor();
             printf("\n");
             j++;
@@ -305,7 +312,8 @@ void recherche_tous_manquante(user tab[], int taille) // et affiche
             } else {
                 setColor(WHITE);
             }
-            printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+            // printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+            print_user(tab[i], i);
             setDefaultColor();
             printf("\n");
             j++;
