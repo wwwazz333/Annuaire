@@ -191,7 +191,7 @@ int menu()
             if (users_init) {
                 show_menu_Title("suppression Client");
                 print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
-                int id_del;
+                int id_del = 0;
                 scanf("%d", &id_del);
                 flush();
                 if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
@@ -286,8 +286,37 @@ int menu()
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
             break;
-        case '6': //Rechercher donnee manquantes
-                
+        case '6': // Rechercher donnee manquantes
+            char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession" };
+            int rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+            TrierSur donner_manquante_rechercher;
+            switch (rep) {
+            case 1:
+                donner_manquante_rechercher = TRIE_PRENOM;
+                break;
+            case 2:
+                donner_manquante_rechercher = TRIE_NOM;
+                break;
+            case 3:
+                donner_manquante_rechercher = TRIE_VILLE;
+                break;
+            case 4:
+                donner_manquante_rechercher = TRIE_CODE_POSTAL;
+                break;
+            case 5:
+                donner_manquante_rechercher = TRIE_NO_TELEPHONE;
+                break;
+            case 6:
+                donner_manquante_rechercher = TRIE_EMAIL;
+                break;
+            case 7:
+                donner_manquante_rechercher = TRIE_METIER;
+                break;
+            default:
+                donner_manquante_rechercher = TRIE_NULL;
+                break;
+            }
+            printf("donne\n");
             break;
         default:
             break;

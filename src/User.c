@@ -61,7 +61,7 @@ int del_user(user tab[], int id, int taille)
 
 int insert_user(user* tab[], int* taille, user u, int which)
 {
-    if (which == TRIE_NULL){
+    if (which == TRIE_NULL) {
         print("Erreur : le tableau n'est pas trier...\n", RED, DEFAULT_BACKGROUND_COLOR);
     }
     if (is_del(u)) {
@@ -87,7 +87,6 @@ int insert_user(user* tab[], int* taille, user u, int which)
 
     return EXIT_SUCCESS;
 }
-
 
 int recherche_emplacement(user tab[], int taille, char* information, int which) // recherche le dernier
 {
@@ -158,7 +157,7 @@ int recherche_emplacement(user tab[], int taille, char* information, int which) 
     free(curr_name_lower);
     return -1;
 } */
-void recherche_substring(user tab[], int taille, char* substring, int which)
+void recherche_substring(user tab[], int taille, char* substring, int which) // et affiche
 {
 
     char* substring_lower = malloc((strlen(substring) + 1) * sizeof(char));
@@ -185,17 +184,17 @@ void recherche_substring(user tab[], int taille, char* substring, int which)
     free(curr_name_lower);
 }
 
-void recherche_string(user tab[], int taille, char* string, int which)
+void recherche_string(user tab[], int taille, char* string, int which) // et affiche
 {
     int size_string_lower = strlen(string) + 1;
     char* string_lower = malloc(size_string_lower * sizeof(char));
     char* curr_name_lower = malloc(size_string_lower * sizeof(char));
-    
+
     strtolower(string_lower, string, size_string_lower);
 
     for (int i = 0, j = 0; i < taille; i++) {
         strtolower(curr_name_lower, get_arg(&tab[i], which), size_string_lower);
-        if (strcmp(curr_name_lower, string_lower) == 0L) {
+        if (strcmp(curr_name_lower, string_lower) == 0) {
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
@@ -212,11 +211,9 @@ void recherche_string(user tab[], int taille, char* string, int which)
     free(curr_name_lower);
 }
 
-
-
 user* recherche_by_id(user tab[], int taille, int id)
 {
-    if(id >= 0 && id < taille){
+    if (id >= 0 && id < taille) {
         return NULL;
     }
 
