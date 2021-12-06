@@ -7,6 +7,8 @@
 #include <string.h>
 
 
+
+
 #define SIZE_PRENOM 64
 #define SIZE_NOM 64
 #define SIZE_VILLE 128

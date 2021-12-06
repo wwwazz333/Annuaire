@@ -50,7 +50,7 @@ void show_gremlins_big(){
     printf("                       ,|KQQ@@@@@@@@@@@@@@QH96k6UU666$qKQ@@@@@@@@@@@@@@QQQQ#F;`                     \n");
     printf("                    .L6gNNNBQQ@@@@@@@@Q@@Q9emhk69KKqq$khDQ@@@@@@@@@@@QQQQBNgNMga_                   \n");
     printf("                   _ukNN#BQQQQQ@@@QQQQ#BBj|\\iz{{fuuF]]viiKQQQQQQQ@@@QQQQQN8RMkeFF?                  \n");
-    printf("                 -','';ydN#BQQQ@@QQNgRDDh;:;;>>=*??>>>^;;|g#B#BQQQQ@QQQQ#DPc:''',_,                 \n");
+    printf("                 -','';ydN#BQQQ@@QQNgRDDh;:;;>>=*?""?>>>^;;|g#B#BQQQQ@QQQQ#DPc:''',_,                 \n");
     printf("               .'''','''\"vKQQ@@@QQN&RDdh^::;;:;;;;;;;;::::FggN#QQQQ@QQ#a?;\",,''',:_,-`              \n");
     printf("              ''.',,~,:,::;=m#@@Q#MRRR$>;:::::;;^;:::::_,,:}DMN##BQ@@$\\>;::_,,,'~,,,,::             \n");
     printf("            `',,:;^r:^;;;;;r]mQ@Qg8Rgq?:;_:;;;;::;:;::;::\":;Jg#NNNQQQjL*>;;;>||\\?,,:;;;-            \n");

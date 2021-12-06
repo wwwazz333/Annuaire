@@ -1,4 +1,3 @@
-#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,13 +8,8 @@
 #include "tableau.h"
 
 #include "gremlins.h"
-#include <string.h>
-#include <sys/time.h>
-#include <time.h>
 
-// TODO : quand trié ???
-// TODO : tri oyalami
-// TODO : mettre tout en lower
+
 
 /**
  * @brief efface tous dans le terminal (peut import l'OS)
@@ -26,7 +20,7 @@
  */
 void cls()
 {
-    // system("clear||cls");
+    system("clear||cls");
 }
 
 /**

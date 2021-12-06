@@ -1,7 +1,7 @@
 #include "tableau.h"
 
 #include "Verif.h"
-#include <string.h>
+#include "Terminal.h"
 
 void permute(user* a, user* b)
 {
@@ -9,7 +9,6 @@ void permute(user* a, user* b)
     usercpy(&temp, a);
     usercpy(a, b);
     usercpy(b, &temp);
-    // printf("permute : %s et %s\n", a->nom, b->nom);
 }
 
 void oyelami(user* tab, int taille, TrierSur which)

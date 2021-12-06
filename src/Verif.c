@@ -1,7 +1,5 @@
 #include "Verif.h"
 
-#include <ctype.h>
-
 void input(char* str, int sizeof_str)
 {
     int i = 0;
