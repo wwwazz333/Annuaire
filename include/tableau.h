@@ -2,7 +2,6 @@
 #define _tri_h_
 
 #include "User.h"
-#include "string.h"
 
 typedef enum {
     TRIE_PRENOM,
@@ -12,6 +11,7 @@ typedef enum {
     TRIE_NO_TELEPHONE,
     TRIE_EMAIL,
     TRIE_METIER,
+    TIRE_TOUS,
 	TRIE_NULL
 } TrierSur;
 /**

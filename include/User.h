@@ -7,6 +7,8 @@
 #include <string.h>
 
 
+
+
 #define SIZE_PRENOM 64
 #define SIZE_NOM 64
 #define SIZE_VILLE 128
@@ -58,13 +60,13 @@ user input_user();
 void usercpy(user* dst, user* src);
 
 /**
- * @brief suprime l'utilisateur a l'index ligne
+ * @brief suprime l'utilisateur a l'index id
  * 
- * @pre ligne un index de tableau
- * @post le user a l'index ligne est supprimer (toutes les valeurs à ""), 0 est retourné ssi il a pu être supprimer
+ * @pre id un index de tableau
+ * @post le user a l'index id est supprimer (toutes les valeurs à ""), 0 est retourné ssi il a pu être supprimer
  * 
- * @param tableau le tableau
- * @param ligne l'index a supprimer
+ * @param tab le tableau
+ * @param id l'index a supprimer
  * @param taille taille du tableau
  * @return int 0 ssi il a pu etre supprimer
  */
@@ -84,6 +86,19 @@ int del_user(user tab[], int id, int taille);
 int insert_user(user* tab[], int* taille, user u, int which);
 
 /**
+ * @brief modifie l'utilisateur a l'index ligne
+ * 
+ * @pre ligne un index de tableau
+ * @post on modifie user par son id, si la case est vide, on garde l'ancienne valeur.
+ * 
+ * @param tab le tableau
+ * @param id l'id de l'utilisateur à modifié
+ * @param taille taille du tableau
+ * @return int 0 ssi il a pu etre modifier
+ */
+int modif_user(user tab[], int id, int taille);
+
+/**
  * @brief retourne l'emplacement où ajouté l'utilisateur avec pour nom "nom"
  * 
  * @pre acune
@@ -99,6 +114,8 @@ int recherche_emplacement(user tab[], int taille, char* information, int which);
 int recherche_emplacement_existant(user tab[], int taille, char* information, int which);
 
 void recherche_substring(user tab[], int taille, char* substring, int which);
+void recherche_string_manquante(user tab[], int taille, int which);
+void recherche_tous_manquante(user tab[], int taille);
 
 
 user* recherche_by_id(user tab[], int taille, int id);
@@ -107,4 +124,6 @@ user* recherche_by_id(user tab[], int taille, int id);
 char* get_arg(user* u, int which_one);
 int get_size_arg(int which_one);
 
+
+void print_user(user u, int id);
 #endif
