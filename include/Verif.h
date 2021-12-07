@@ -1,13 +1,12 @@
 #ifndef _VERIF_H_
 #define _VERIF_H_
 
-#include "User.h"
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+#include <ctype.h>
 #include <unistd.h>
 
-#include "ColorTerminal.h"
+#include "Terminal.h"
+#include "User.h"
 
 
 /**

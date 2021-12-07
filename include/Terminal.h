@@ -35,6 +35,7 @@ typedef enum {
 #define bRGBoutput(r, g, b) printf("\033[48;2;%d;%d;%dm", r, g, b);
 #define RESEToutput() printf("\x1b[0m");
 
+
 #endif
 
 void setDefaultColor();
@@ -42,5 +43,6 @@ void setColor(Color color);
 void setBackgroundColor(Color color);
 
 void print(const char* str, Color color, Color background_color);
+
 
 #endif

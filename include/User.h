@@ -7,6 +7,8 @@
 #include <string.h>
 
 
+
+
 #define SIZE_PRENOM 64
 #define SIZE_NOM 64
 #define SIZE_VILLE 128
@@ -112,6 +114,8 @@ int recherche_emplacement(user tab[], int taille, char* information, int which);
 int recherche_emplacement_existant(user tab[], int taille, char* information, int which);
 
 void recherche_substring(user tab[], int taille, char* substring, int which);
+void recherche_string_manquante(user tab[], int taille, int which);
+void recherche_tous_manquante(user tab[], int taille);
 
 
 user* recherche_by_id(user tab[], int taille, int id);
@@ -120,4 +124,6 @@ user* recherche_by_id(user tab[], int taille, int id);
 char* get_arg(user* u, int which_one);
 int get_size_arg(int which_one);
 
+
+void print_user(user u, int id);
 #endif
