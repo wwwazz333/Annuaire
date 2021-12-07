@@ -9,8 +9,6 @@
 
 #include "gremlins.h"
 
-
-
 /**
  * @brief efface tous dans le terminal (peut import l'OS)
  *
@@ -208,9 +206,8 @@ int menu()
                 int id_del = 0;
                 scanf("%d", &id_del);
                 flush();
-                if(is_in_tab(id_del-1, nbr_utilisateur) < 0){
-                    print("l'id n'est pas dans le tableau", RED, DEFAULT_BACKGROUND_COLOR);
-                    printf("\n");
+                if (is_in_tab(id_del - 1, nbr_utilisateur) < 0) {
+                    print("l'id n'est pas dans le tableau\n", RED, DEFAULT_BACKGROUND_COLOR);
                     break;
                 }
                 print_user(users[id_del - 1], id_del - 1);
@@ -238,9 +235,8 @@ int menu()
                 int id = 0;
                 scanf("%d", &id);
                 flush();
-                if(is_in_tab(id-1, nbr_utilisateur) < 0){
-                    print("l'id n'est pas dans le tableau", RED, DEFAULT_BACKGROUND_COLOR);
-                    printf("\n");
+                if (is_in_tab(id - 1, nbr_utilisateur) < 0) {
+                    print("l'id n'est pas dans le tableau\n", RED, DEFAULT_BACKGROUND_COLOR);
                     break;
                 }
                 print_user(users[id - 1], id - 1);
@@ -302,83 +298,66 @@ int menu()
             break;
         case '7': // Recherche
             if (users_init) {
-                char proposition[][128] = { "Annuler", "Recherche de donnee", "Rechercher de donnee manquante" };
+                char proposition[][128] = { "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Rechercher de donnee manquante" };
                 int rep = demande_menu_while("Quelle recherche vouslez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
-                if (rep == 1) {
-                    char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession" };
-                    rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
-                    TrierSur desir_rechercher_sur;
-                    switch (rep) {
-                    case 1:
-                        desir_rechercher_sur = TRIE_PRENOM;
-                        break;
-                    case 2:
-                        desir_rechercher_sur = TRIE_NOM;
-                        break;
-                    case 3:
-                        desir_rechercher_sur = TRIE_VILLE;
-                        break;
-                    case 4:
-                        desir_rechercher_sur = TRIE_CODE_POSTAL;
-                        break;
-                    case 5:
-                        desir_rechercher_sur = TRIE_NO_TELEPHONE;
-                        break;
-                    case 6:
-                        desir_rechercher_sur = TRIE_EMAIL;
-                        break;
-                    case 7:
-                        desir_rechercher_sur = TRIE_METIER;
-                        break;
-                    default:
-                        desir_rechercher_sur = TRIE_NULL;
-                        break;
-                    }
+                if(rep == 0){break;}
+
+                char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession", "tous" };
+                int sous_rep = demande_menu_while("Sur quoi voulez vous rechercher : ",
+                    proposition_bis,
+                    (sizeof(proposition_bis) / (128 * sizeof(char))) - ((rep < 3) ? 1 : 0)); // si Recherche donné alors pas afficher "tous"
+
+                TrierSur desir_rechercher_sur;
+                switch (sous_rep) {
+                case 1:
+                    desir_rechercher_sur = TRIE_PRENOM;
+                    break;
+                case 2:
+                    desir_rechercher_sur = TRIE_NOM;
+                    break;
+                case 3:
+                    desir_rechercher_sur = TRIE_VILLE;
+                    break;
+                case 4:
+                    desir_rechercher_sur = TRIE_CODE_POSTAL;
+                    break;
+                case 5:
+                    desir_rechercher_sur = TRIE_NO_TELEPHONE;
+                    break;
+                case 6:
+                    desir_rechercher_sur = TRIE_EMAIL;
+                    break;
+                case 7:
+                    desir_rechercher_sur = TRIE_METIER;
+                    break;
+                case 8:
+                    desir_rechercher_sur = TIRE_TOUS;
+                    break;
+                default:
+                    desir_rechercher_sur = TRIE_NULL;
+                    break;
+                }
+
+                if (rep == 1 || rep == 2) {
+
                     if (desir_rechercher_sur != TRIE_NULL) {
+
                         char* search_string = malloc(get_size_arg(desir_rechercher_sur) * sizeof(char));
                         print(">> ", AQUA, DEFAULT_BACKGROUND_COLOR);
                         input(search_string, get_size_arg(desir_rechercher_sur));
 
-                        recherche_substring(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                        if (rep == 1) {
+                            recherche_substring(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                        } else {
+                            recherche_string(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                        }
                     }
-                } else if (rep == 2) {
-                    char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession", "tous" };
-                    rep = demande_menu_while("Sur quoi voulez vous rechercher : ", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
-                    TrierSur donner_manquante_rechercher;
-                    switch (rep) {
-                    case 1:
-                        donner_manquante_rechercher = TRIE_PRENOM;
-                        break;
-                    case 2:
-                        donner_manquante_rechercher = TRIE_NOM;
-                        break;
-                    case 3:
-                        donner_manquante_rechercher = TRIE_VILLE;
-                        break;
-                    case 4:
-                        donner_manquante_rechercher = TRIE_CODE_POSTAL;
-                        break;
-                    case 5:
-                        donner_manquante_rechercher = TRIE_NO_TELEPHONE;
-                        break;
-                    case 6:
-                        donner_manquante_rechercher = TRIE_EMAIL;
-                        break;
-                    case 7:
-                        donner_manquante_rechercher = TRIE_METIER;
-                        break;
-                    case 8:
-                        donner_manquante_rechercher = TIRE_TOUS;
-                        break;
-                    default:
-                        donner_manquante_rechercher = TRIE_NULL;
-                        break;
-                    }
-                    if (donner_manquante_rechercher != TRIE_NULL) {
-                        if (donner_manquante_rechercher == TIRE_TOUS) {
+                } else if (rep == 3) {
+                    if (desir_rechercher_sur != TRIE_NULL) {
+                        if (desir_rechercher_sur == TIRE_TOUS) {
                             recherche_tous_manquante(users, nbr_utilisateur);
                         } else {
-                            recherche_string_manquante(users, nbr_utilisateur, donner_manquante_rechercher);
+                            recherche_element_manquant(users, nbr_utilisateur, desir_rechercher_sur);
                         }
                     }
                 }

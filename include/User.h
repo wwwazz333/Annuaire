@@ -114,7 +114,8 @@ int recherche_emplacement(user tab[], int taille, char* information, int which);
 int recherche_emplacement_existant(user tab[], int taille, char* information, int which);
 
 void recherche_substring(user tab[], int taille, char* substring, int which);
-void recherche_string_manquante(user tab[], int taille, int which);
+void recherche_string(user tab[], int taille, char* string, int which);
+void recherche_element_manquant(user tab[], int taille, int which);
 void recherche_tous_manquante(user tab[], int taille);
 
 
