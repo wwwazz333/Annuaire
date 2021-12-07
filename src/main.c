@@ -156,7 +156,7 @@ int menu()
                 print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                quick_sort_on(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
+                quick_sort(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
                 triersur = TRIE_PRENOM;
             }
             break;
@@ -206,7 +206,7 @@ int menu()
                 int id_del = 0;
                 scanf("%d", &id_del);
                 flush();
-                if (is_in_tab(id_del - 1, nbr_utilisateur) < 0) {
+                if (!is_in_tab(id_del - 1, nbr_utilisateur)) {
                     print("l'id n'est pas dans le tableau\n", RED, DEFAULT_BACKGROUND_COLOR);
                     break;
                 }
@@ -235,7 +235,7 @@ int menu()
                 int id = 0;
                 scanf("%d", &id);
                 flush();
-                if (is_in_tab(id - 1, nbr_utilisateur) < 0) {
+                if (!is_in_tab(id - 1, nbr_utilisateur)) {
                     print("l'id n'est pas dans le tableau\n", RED, DEFAULT_BACKGROUND_COLOR);
                     break;
                 }
@@ -286,7 +286,7 @@ int menu()
                     break;
                 }
                 if (triersur != desir_trier_sur) {
-                    quick_sort_on(users, 0, nbr_utilisateur - 1, desir_trier_sur);
+                    quick_sort(users, 0, nbr_utilisateur - 1, desir_trier_sur);
                     triersur = desir_trier_sur;
                 }
                 if (rep != 0) {

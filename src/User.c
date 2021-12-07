@@ -55,7 +55,7 @@ void print_user(user u, int id)
 }
 int del_user(user tab[], int id, int taille)
 {
-    if (is_in_tab(id, taille) < 0) {
+    if (!is_in_tab(id, taille)) {
         return -1;
     }
     tab[id].nom[0] = '\0';
@@ -97,9 +97,9 @@ int insert_user(user* tab[], int* taille, user u, int which)
     return EXIT_SUCCESS;
 }
 
-int modif_user(user tab[], int id, int taille) // GROS BUG SA MERE
+int modif_user(user tab[], int id, int taille)
 {
-    if (is_in_tab(id, taille) < 0) {
+    if (!is_in_tab(id, taille)) {
         return -1;
     }
     user u;

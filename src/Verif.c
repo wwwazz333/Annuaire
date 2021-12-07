@@ -37,6 +37,9 @@ char* ask_fichier(char* extension)
 
 int file_exist(const char* file_path)
 {
+    if (file_path == NULL){
+        return -1;
+    }
     if (access(file_path, F_OK) == 0) {
         return 1;
     } else {
@@ -92,8 +95,5 @@ int string_cmp(const char* s1, const char* s2)
 
 int is_in_tab(int index, int size_max)
 {
-    if(index < 0 || index >= size_max){
-        return -1;
-    }
-    return 0;
+    return (index >= 0 && index < size_max);
 }

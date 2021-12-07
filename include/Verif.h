@@ -13,7 +13,7 @@
  * @brief récuper les caractère entrer et les place dans str
  *
  * @pre aucune
- * @post str contient les caractère taper (sans '\n' mais avec '\0')
+ * @post str contient les caractère taper (sans '\n' mais avec '\0') et le tampon est vide
  * 
  * @param str la chaine a modifier
  * @param sizeof_str la taille max de la chaine
@@ -64,20 +64,37 @@ int file_exist(const char* file_path);
 void flush();
 
 /**
- * @brief 
  * 
  * @pre aucune
  * @post retourne 1 ssi del est vide (supprimer)
  * 
- * @param u 
- * @return int 
  */
 int is_del(user u);
 
+/**
+ * @brief 
+ * 
+ * @pre dst et src non NULL
+ * @post dst contient les caractère de src en minuscule
+ * 
+ */
 void strtolower(char* dst, char* src, int size);
 
+/**
+ * @brief surcouche à strcmp
+ * 
+ * @pre s1 et s2 non NULL
+ * @post retourn 0 si elles sont égale, un négatif si s1 < s2 et positf si s1 > s2. une chaine de caractère vide est toujours plus grande qu'une autre
+ * 
+ */
 int string_cmp(const char* s1, const char* s2);
 
+/**
+ * @brief 
+ * 
+ * @pre aucune
+ * @post retourne 1 ssi index est >= 0 et < size_max
+ */
 int is_in_tab(int index, int size_max);
 
 #endif
