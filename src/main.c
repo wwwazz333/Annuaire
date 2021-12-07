@@ -71,10 +71,13 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
         printf("\n");
         int i = 0;
         while (i < nbr_proposition) {
-            if (i % 2 == 0) {
-                setColor(PINK);
-            } else {
+            if (i==0) {
+                setColor(RED);
+            }
+            else if (i % 2 == 0) {
                 setColor(PURPLE);
+            } else {
+                setColor(BLUE);
             }
             show_line_menu(proposition[i], &i);
             setDefaultColor();
