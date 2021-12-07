@@ -208,6 +208,11 @@ int menu()
                 int id_del = 0;
                 scanf("%d", &id_del);
                 flush();
+                if(is_in_tab(id_del-1, nbr_utilisateur) < 0){
+                    print("l'id n'est pas dans le tableau", RED, DEFAULT_BACKGROUND_COLOR);
+                    printf("\n");
+                    break;
+                }
                 print_user(users[id_del - 1], id_del - 1);
                 printf("\n");
                 char proposition[][128] = { "annuler", "supprimer" };
@@ -233,7 +238,11 @@ int menu()
                 int id = 0;
                 scanf("%d", &id);
                 flush();
-
+                if(is_in_tab(id-1, nbr_utilisateur) < 0){
+                    print("l'id n'est pas dans le tableau", RED, DEFAULT_BACKGROUND_COLOR);
+                    printf("\n");
+                    break;
+                }
                 print_user(users[id - 1], id - 1);
                 printf("\n");
                 char proposition[][128] = { "annuler", "modifier" };

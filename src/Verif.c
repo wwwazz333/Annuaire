@@ -79,3 +79,21 @@ void strtolower(char* dst, char* src, int size)
     }
     dst[i] = '\0';
 }
+
+int string_cmp(const char* s1, const char* s2)
+{
+    if(s1[0] == '\0' || s2[0] == '\0'){
+        return -1*strcmp(s1, s2);
+    }else{
+        return strcmp(s1, s2);
+    }
+}
+
+
+int is_in_tab(int index, int size_max)
+{
+    if(index < 0 || index >= size_max){
+        return -1;
+    }
+    return 0;
+}

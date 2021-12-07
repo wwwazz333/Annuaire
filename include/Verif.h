@@ -76,4 +76,8 @@ int is_del(user u);
 
 void strtolower(char* dst, char* src, int size);
 
+int string_cmp(const char* s1, const char* s2);
+
+int is_in_tab(int index, int size_max);
+
 #endif

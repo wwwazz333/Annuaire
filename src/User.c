@@ -49,11 +49,13 @@ user input_user()
 
 void print_user(user u, int id)
 {
-    printf("[%d] %s, %s, %s, %s, %s, %s, %s", id + 1, u.prenom, u.nom, u.ville, u.code_postal, u.no_telephone, u.email, u.metier);
+    if (!is_del(u)) {
+        printf("[%d] %s, %s, %s, %s, %s, %s, %s", id + 1, u.prenom, u.nom, u.ville, u.code_postal, u.no_telephone, u.email, u.metier);
+    }
 }
 int del_user(user tab[], int id, int taille)
 {
-    if (id < 0 || id >= taille) {
+    if (is_in_tab(id, taille) < 0) {
         return -1;
     }
     tab[id].nom[0] = '\0';
@@ -97,7 +99,7 @@ int insert_user(user* tab[], int* taille, user u, int which)
 
 int modif_user(user tab[], int id, int taille) // GROS BUG SA MERE
 {
-    if (id < 0 || id >= taille) {
+    if (is_in_tab(id, taille) < 0) {
         return -1;
     }
     user u;
@@ -168,15 +170,15 @@ int recherche_emplacement(user tab[], int taille, char* information, int which) 
     while (gauche <= droite) {
         millieu = (droite + gauche) / 2;
         strtolower(curr_info_lower, get_arg(&tab[millieu], which), get_size_arg(which));
-        if (strcmp(curr_info_lower, info_lower) < 0) {
+        if (string_cmp(curr_info_lower, info_lower) < 0) {
             gauche = millieu + 1;
-        } else if (strcmp(curr_info_lower, info_lower) > 0) {
+        } else if (string_cmp(curr_info_lower, info_lower) > 0) {
             droite = millieu - 1;
         } else { // si égale
             do {
                 millieu++;
                 strtolower(curr_info_lower, get_arg(&tab[millieu], which), get_size_arg(which));
-            } while (strcmp(curr_info_lower, info_lower) == 0);
+            } while (string_cmp(curr_info_lower, info_lower) == 0);
 
             free(info_lower);
             free(curr_info_lower);
@@ -189,40 +191,6 @@ int recherche_emplacement(user tab[], int taille, char* information, int which) 
     return gauche;
 }
 
-/* int recherche_emplacement_existant(user tab[], int taille, char* information, int which) // sert a rien pour l'instant !!!!!!!!!!!!!
-{
-    int millieu;
-    int gauche = 0;
-    int droite = taille - 1;
-
-    char* name_lower = malloc(get_size_arg(which) * sizeof(char));
-    char* curr_name_lower = malloc(get_size_arg(which) * sizeof(char));
-
-    strtolower(name_lower, information, get_size_arg(which));
-
-    while (gauche <= droite) {
-        millieu = (droite + gauche) / 2;
-        strtolower(curr_name_lower, get_arg(&tab[millieu], which), get_size_arg(which));
-        if (strcmp(curr_name_lower, name_lower) < 0) {
-            gauche = millieu + 1;
-        } else if (strcmp(curr_name_lower, name_lower) > 0) {
-            droite = millieu - 1;
-        } else { // si égale cherche le dernier
-            while (strcmp(curr_name_lower, name_lower) == 0) {
-                millieu++;
-                strtolower(curr_name_lower, get_arg(&tab[millieu], which), get_size_arg(which));
-            }
-
-            free(name_lower);
-            free(curr_name_lower);
-            return millieu;
-        }
-    }
-
-    free(name_lower);
-    free(curr_name_lower);
-    return -1;
-} */
 void recherche_substring(user tab[], int taille, char* substring, int which) // et affiche
 {
 
@@ -243,7 +211,9 @@ void recherche_substring(user tab[], int taille, char* substring, int which) // 
             print_user(tab[i], i);
             setDefaultColor();
             printf("\n");
-            j++;
+            if (is_del(tab[i])) {
+                j++;
+            }
         }
     }
 
@@ -261,7 +231,7 @@ void recherche_substring(user tab[], int taille, char* substring, int which) // 
 
     for (int i = 0, j = 0; i < taille; i++) {
         strtolower(curr_name_lower, get_arg(&tab[i], which), size_string_lower);
-        if (strcmp(curr_name_lower, string_lower) == 0) {
+        if (string_cmp(curr_name_lower, string_lower) == 0) {
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
@@ -293,7 +263,9 @@ void recherche_string_manquante(user tab[], int taille, int which) // et affiche
             print_user(tab[i], i);
             setDefaultColor();
             printf("\n");
-            j++;
+            if (is_del(tab[i])) {
+                j++;
+            }
         }
     }
     setColor(GREEN);
@@ -316,7 +288,9 @@ void recherche_tous_manquante(user tab[], int taille) // et affiche
             print_user(tab[i], i);
             setDefaultColor();
             printf("\n");
-            j++;
+            if (is_del(tab[i])) {
+                j++;
+            }
         }
     }
     setColor(GREEN);

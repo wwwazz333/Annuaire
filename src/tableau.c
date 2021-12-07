@@ -24,7 +24,7 @@ void oyelami(user* tab, int taille, TrierSur which)
     for (i = 0; i <= end / 2; i++) { // on parcours le tableau dans les deux sens et en même temps
         strtolower(lower_i, get_arg(&tab[i], which), size_of_string);
         strtolower(lower_j, get_arg(&tab[end - i], which), size_of_string);
-        if (strcmp(lower_i, lower_j) > 0) { // comparaison des chaines opposées
+        if (string_cmp(lower_i, lower_j) > 0) { // comparaison des chaines opposées
             permute(&tab[i], &tab[end - i]); // permutation ces deux chaînes opposées
         }
     }
@@ -35,7 +35,7 @@ void oyelami(user* tab, int taille, TrierSur which)
             i += sens;
             strtolower(lower_i, get_arg(&tab[i], which), size_of_string);
             strtolower(lower_j, get_arg(&tab[i - 1], which), size_of_string);
-            if (strcmp(lower_i, lower_j) < 0) { // comparaison entre deux chaines successives
+            if (string_cmp(lower_i, lower_j) < 0) { // comparaison entre deux chaines successives
                 permute(&tab[i], &tab[i - 1]); // permutation des ces deux chaines successives
                 verif_permutation = 1;
             }
@@ -73,18 +73,18 @@ void quick_sort(user* tab, int first, int last)
     while (1) {
         strtolower(lower_i, tab[i].nom, 64);
         strtolower(lower_j, tab[j].nom, 64);
-        while (strcmp(lower_i, lower_last) < 0) {
+        while (string_cmp(lower_i, lower_last) < 0) {
             i++;
             strtolower(lower_i, tab[i].nom, 64);
         }
-        while (strcmp(lower_j, lower_last) > 0) {
+        while (string_cmp(lower_j, lower_last) > 0) {
             j--;
             strtolower(lower_j, tab[j].nom, 64);
         }
         if (j <= i) {
             break;
         }
-        if (strcmp(lower_i, lower_j) == 0) {
+        if (string_cmp(lower_i, lower_j) == 0) {
             i++;
             j--;
             strtolower(lower_i, tab[i].nom, 64);
@@ -127,11 +127,11 @@ void quick_sort_on(user* tab, int first, int last, TrierSur which)
     while (1) {
         strtolower(lower_i, get_arg(&tab[i], which), size_of_string);
         strtolower(lower_j, get_arg(&tab[j], which), size_of_string);
-        while (strcmp(lower_i, lower_last) < 0 && i <= last) {
+        while (string_cmp(lower_i, lower_last) < 0 && i <= last) {
             i++;
             strtolower(lower_i, get_arg(&tab[i], which), size_of_string);
         }
-        while (strcmp(lower_j, lower_last) > 0 && j > i) {
+        while (string_cmp(lower_j, lower_last) > 0 && j > i) {
             j--;
             strtolower(lower_j, get_arg(&tab[j], which), size_of_string);
         }
@@ -139,7 +139,7 @@ void quick_sort_on(user* tab, int first, int last, TrierSur which)
         if (j <= i) {
             break;
         }
-        if (strcmp(lower_i, lower_j) == 0) {
+        if (string_cmp(lower_i, lower_j) == 0) {
             i++;
             j--;
             strtolower(lower_i, get_arg(&tab[i], which), size_of_string);
