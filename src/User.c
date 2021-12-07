@@ -26,7 +26,6 @@ user input_user()
     printf("\nEntrez le code postal : ");
     setColor(AQUA);
     input(u.code_postal, SIZE_CODE_POSTAL);
-    printf("------------code postal : %s\n", u.code_postal);
 
     setColor(YELLOW);
     printf("\nEntrez le numero de telephone : ");

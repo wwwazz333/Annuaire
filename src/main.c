@@ -60,6 +60,7 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
     int rep = -1;
     while (rep < 0 || rep > nbr_proposition) {
         setDefaultColor();
+        setColor(YELLOW);
         printf(demande);
         printf("\n");
         int i = 0;
@@ -110,7 +111,7 @@ void show_menu()
     show_line_menu("Modifier Client\n", &i); // 5
     setColor(PINK);
     show_line_menu("Afficher Clients\n", &i); // 6
-    show_line_menu("Rechercher\n", &i); // 7
+    show_line_menu("Fonctions Recherche\n", &i); // 7
 
     setDefaultColor();
 }
@@ -180,13 +181,15 @@ int menu()
             }
             break;
         case '3': // ajout d'utilisateur
+            show_menu_Title("ajout Client");
             if (users_init) {
-                show_menu_Title("ajout Client");
                 user u = input_user();
+                setColor(PURPLE);
                 print_user(u, -1);
+                setDefaultColor();
                 printf("\n");
                 char proposition[][128] = { "annuler", "ajouter" };
-                int rep = demande_menu_while("voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                int rep = demande_menu_while("Voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (triersur == TRIE_NULL) {
                         oyelami(users, nbr_utilisateur - 1, TRIE_PRENOM);
@@ -202,8 +205,8 @@ int menu()
             }
             break;
         case '4': // suppression d'utilisateur
+            show_menu_Title("suppression Client");
             if (users_init) {
-                show_menu_Title("suppression Client");
                 print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                 int id_del = 0;
                 setColor(AQUA);
@@ -213,7 +216,7 @@ int menu()
                 print_user(users[id_del - 1], id_del - 1);
                 printf("\n");
                 char proposition[][128] = { "annuler", "supprimer" };
-                int rep = demande_menu_while("voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                int rep = demande_menu_while("Voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
                         triersur = TRIE_NULL;
@@ -229,8 +232,8 @@ int menu()
             }
             break;
         case '5': // modifcation client
+            show_menu_Title("modification Client");
             if (users_init) {
-                show_menu_Title("modification Client");
                 print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                 int id = 0;
                 setColor(AQUA);
@@ -258,9 +261,8 @@ int menu()
             }
             break;
         case '6': // Affichage Clients
+            show_menu_Title("Affichage Clients");
             if (users_init) {
-                show_menu_Title("Affichage Clients");
-
                 char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                 int rep = demande_menu_while("Sur quoi voulez vous trier :", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 TrierSur desir_trier_sur;
@@ -296,6 +298,7 @@ int menu()
             }
             break;
         case '7': // Recherche
+            show_menu_Title("Fonctions Recherche");
             if (users_init) {
                 char proposition[][128] = { "Annuler", "Recherche de donnee", "Rechercher de donnee manquante" };
                 int rep = demande_menu_while("Quelle recherche vouslez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
@@ -384,6 +387,7 @@ int menu()
             }
             break;
         case '$':
+            show_menu_Title("Easter Egg - Gremlins");
             show_gremlins();
             break;
         default:
