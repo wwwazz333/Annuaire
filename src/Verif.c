@@ -13,7 +13,7 @@ void input(char* str, int sizeof_str)
         }
     }
     str[i] = '\0';
-     // pour metre '\0' a la fin de la chaine de caractère
+    // pour metre '\0' a la fin de la chaine de caractère
 }
 
 char* ask_fichier(char* extension)
@@ -37,7 +37,7 @@ char* ask_fichier(char* extension)
 
 int file_exist(const char* file_path)
 {
-    if (file_path == NULL){
+    if (file_path == NULL) {
         return -1;
     }
     if (access(file_path, F_OK) == 0) {
@@ -85,13 +85,12 @@ void strtolower(char* dst, char* src, int size)
 
 int string_cmp(const char* s1, const char* s2)
 {
-    if(s1[0] == '\0' || s2[0] == '\0'){
-        return -1*strcmp(s1, s2);
-    }else{
+    if (s1[0] == '\0' || s2[0] == '\0') {
+        return -1 * strcmp(s1, s2);
+    } else {
         return strcmp(s1, s2);
     }
 }
-
 
 int is_in_tab(int index, int size_max)
 {

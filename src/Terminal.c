@@ -1,6 +1,7 @@
 #include "Terminal.h"
 
 #ifdef OS_Windows
+//Pour Windows
 int currTextColor = 15;
 int currBackgroundColor = 0;
 
@@ -95,6 +96,7 @@ void setDefaultColor()
 }
 
 #else
+//Pour Linux
 void setDefaultColor()
 {
     RESEToutput();
@@ -183,7 +185,6 @@ void setBackgroundColor(Color color)
 }
 
 #endif
-
 
 void print(const char* str, Color color, Color background_color)
 {

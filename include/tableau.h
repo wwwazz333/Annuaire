@@ -12,14 +12,14 @@ typedef enum {
     TRIE_EMAIL,
     TRIE_METIER,
     TIRE_TOUS,
-	TRIE_NULL
+    TRIE_NULL
 } TrierSur;
 /**
  * @brief tri le tableau
- * 
+ *
  * @pre tab non NULL
  * @post le tableau tab est trié par l'attribut indiqué par which
- * 
+ *
  * @param tab le tableau a trié
  * @param taille len-1
  * @param which sur quelle attribut trié
@@ -60,10 +60,9 @@ void permute(user* a, user* b);
  */
 void add_space(user** tab, int curr_size, int new_size);
 
-
 /**
  * @brief affiche le tableau de user tab
- * 
+ *
  * @pre aucune
  * @post affiche le contenue de tab avec de la couleur
  */

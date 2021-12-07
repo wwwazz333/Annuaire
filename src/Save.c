@@ -2,8 +2,6 @@
 
 #include "Verif.h"
 
-// TODO : nb_carcactère max d'une ligne : sizeof(user)/sizeof(char) + '\n'
-
 char* readUntil(char* depart, char* dst, int taille_max_dst, char fin)
 {
     long int distance_char_fin = strchr(depart, fin) - depart;

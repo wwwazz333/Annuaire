@@ -1,13 +1,9 @@
 #ifndef _USER_H_
 #define _USER_H_
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
-
 
 #define SIZE_PRENOM 64
 #define SIZE_NOM 64
@@ -36,12 +32,9 @@ typedef struct {
     char metier[SIZE_METIER];
 } user;
 
-
-
 /**
- * @brief demande d'entrer tous les attribu d'un user (nom, prenom, ville,
- * etc...)
- * 
+ * @brief demande d'entrer tous les attribu d'un user (nom, prenom, ville, etc...)
+ *
  * @pre aucune
  * @post retourne le "user" avec les information rendu
  *
@@ -50,10 +43,10 @@ typedef struct {
 user input_user();
 /**
  * @brief copie l'usr src dans dst
- * 
+ *
  * @pre dst et src non NULL
  * @post pour tous les attribue de src et dst => dst.atr = src.atr
- * 
+ *
  * @param dst la destination
  * @param src la source
  */
@@ -61,10 +54,10 @@ void usercpy(user* dst, user* src);
 
 /**
  * @brief suprime l'utilisateur a l'index id
- * 
+ *
  * @pre id un index de tableau
  * @post le user a l'index id est supprimer (toutes les valeurs à ""), 0 est retourné ssi il a pu être supprimer
- * 
+ *
  * @param tab le tableau
  * @param id l'index a supprimer
  * @param taille taille du tableau
@@ -74,23 +67,23 @@ int del_user(user tab[], int id, int taille);
 
 /**
  * @brief insert u dans tab au bonne emplacement et agrandi si nécessaire
- * 
+ *
  * @pre aucune
  * @post u est dans le tableau au bonne endroit
- * 
- * @param tab 
- * @param taille 
- * @param u 
- * @return int 
+ *
+ * @param tab
+ * @param taille
+ * @param u
+ * @return int
  */
 int insert_user(user* tab[], int* taille, user u, int which);
 
 /**
  * @brief modifie l'utilisateur a l'index ligne
- * 
+ *
  * @pre ligne un index de tableau
  * @post on modifie user par son id, si la case est vide, on garde l'ancienne valeur.
- * 
+ *
  * @param tab le tableau
  * @param id l'id de l'utilisateur à modifié
  * @param taille taille du tableau
@@ -100,14 +93,14 @@ int modif_user(user tab[], int id, int taille);
 
 /**
  * @brief retourne l'emplacement où ajouté l'utilisateur avec pour nom "nom"
- * 
+ *
  * @pre acune
  * @post retourne l'index où doit être l'utilisateur qui a pour nom "nom"
- * 
- * @param tab 
- * @param taille 
- * @param nom 
- * @return int 
+ *
+ * @param tab
+ * @param taille
+ * @param nom
+ * @return int
  */
 int recherche_emplacement(user tab[], int taille, char* information, int which);
 
@@ -118,13 +111,10 @@ void recherche_string(user tab[], int taille, char* string, int which);
 void recherche_element_manquant(user tab[], int taille, int which);
 void recherche_tous_manquante(user tab[], int taille);
 
-
 user* recherche_by_id(user tab[], int taille, int id);
-
 
 char* get_arg(user* u, int which_one);
 int get_size_arg(int which_one);
-
 
 void print_user(user u, int id);
 #endif

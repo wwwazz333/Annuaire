@@ -1,11 +1,11 @@
 #include "tableau.h"
 
-#include "Verif.h"
 #include "Terminal.h"
+#include "Verif.h"
 
 void permute(user* a, user* b)
 {
-    if(a == NULL || b == NULL){
+    if (a == NULL || b == NULL) {
         return;
     }
     user temp;
