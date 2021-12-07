@@ -379,7 +379,7 @@ int menu()
             }
             break;
         case '$':
-            show_gremlins_big();
+            show_gremlins();
             break;
         default:
             break;
