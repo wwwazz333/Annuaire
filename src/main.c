@@ -6,7 +6,6 @@
 #include "User.h"
 #include "Verif.h"
 #include "tableau.h"
-
 #include "gremlins.h"
 
 
@@ -65,12 +64,13 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
         printf("\n");
         int i = 0;
         while (i < nbr_proposition) {
-            if (i == 0) {
+            if (i==0) {
                 setColor(RED);
-            } else if (i % 2 == 0) {
-                setColor(PINK);
-            } else {
+            }
+            else if (i % 2 == 0) {
                 setColor(PURPLE);
+            } else {
+                setColor(BLUE);
             }
             show_line_menu(proposition[i], &i);
             setDefaultColor();
@@ -204,9 +204,11 @@ int menu()
         case '4': // suppression d'utilisateur
             if (users_init) {
                 show_menu_Title("suppression Client");
-                print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                 int id_del = 0;
+                setColor(AQUA);
                 scanf("%d", &id_del);
+                setDefaultColor();
                 flush();
                 print_user(users[id_del - 1], id_del - 1);
                 printf("\n");
@@ -229,9 +231,11 @@ int menu()
         case '5': // modifcation client
             if (users_init) {
                 show_menu_Title("modification Client");
-                print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                 int id = 0;
+                setColor(AQUA);
                 scanf("%d", &id);
+                setDefaultColor();
                 flush();
 
                 print_user(users[id - 1], id - 1);
@@ -327,6 +331,7 @@ int menu()
                     }
                     if (desir_rechercher_sur != TRIE_NULL) {
                         char* search_string = malloc(get_size_arg(desir_rechercher_sur) * sizeof(char));
+                        print("Votre recherche: ", PINK, DEFAULT_BACKGROUND_COLOR);
                         print(">> ", AQUA, DEFAULT_BACKGROUND_COLOR);
                         input(search_string, get_size_arg(desir_rechercher_sur));
 
