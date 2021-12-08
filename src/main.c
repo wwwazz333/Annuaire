@@ -156,8 +156,8 @@ int menu()
                 print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                quick_sort(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
-                triersur = TRIE_PRENOM;
+                // quick_sort(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
+                triersur = TRIE_NULL;
             }
             break;
         case '2': // Sauvegarde du tableau
@@ -216,7 +216,8 @@ int menu()
                 int rep = demande_menu_while("voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
-                        triersur = TRIE_NULL;
+                        // triersur = TRIE_NULL;
+                        oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
                         print("suppression effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     } else {
                         print("erreur lors de la suppression.\n", RED, DEFAULT_BACKGROUND_COLOR);
@@ -264,33 +265,36 @@ int menu()
 
                 char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                 int rep = demande_menu_while("Sur quoi voulez vous trier :", proposition, sizeof(proposition) / (128 * sizeof(char)));
-                TrierSur desir_trier_sur;
-                switch (rep) {
-                case 1:
-                    desir_trier_sur = TRIE_PRENOM;
-                    break;
-                case 2:
-                    desir_trier_sur = TRIE_NOM;
-                    break;
-                case 3:
-                    desir_trier_sur = TRIE_VILLE;
-                    break;
-                case 4:
-                    desir_trier_sur = TRIE_CODE_POSTAL;
-                    break;
-                case 5:
-                    desir_trier_sur = TRIE_METIER;
-                    break;
-                default:
-                    desir_trier_sur = TRIE_NULL;
-                    break;
-                }
-                if (triersur != desir_trier_sur) {
-                    quick_sort(users, 0, nbr_utilisateur - 1, desir_trier_sur);
-                    triersur = desir_trier_sur;
-                }
                 if (rep != 0) {
-                    print_tab(users, nbr_utilisateur);
+                    TrierSur desir_trier_sur;
+                    switch (rep) {
+                    case 1:
+                        desir_trier_sur = TRIE_PRENOM;
+                        break;
+                    case 2:
+                        desir_trier_sur = TRIE_NOM;
+                        break;
+                    case 3:
+                        desir_trier_sur = TRIE_VILLE;
+                        break;
+                    case 4:
+                        desir_trier_sur = TRIE_CODE_POSTAL;
+                        break;
+                    case 5:
+                        desir_trier_sur = TRIE_METIER;
+                        break;
+                    default:
+                        desir_trier_sur = TRIE_NULL;
+                        break;
+                    }
+                    if (desir_trier_sur != TRIE_NULL) {
+                        if (triersur != desir_trier_sur) {
+                            quick_sort(users, 0, nbr_utilisateur - 1, desir_trier_sur);
+                            triersur = desir_trier_sur;
+                        }
+
+                        print_tab(users, nbr_utilisateur);
+                    }
                 }
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
@@ -298,9 +302,13 @@ int menu()
             break;
         case '7': // Recherche
             if (users_init) {
-                char proposition[][128] = { "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Rechercher de donnee manquante" };
+                char proposition[][128] = {
+                    "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Rechercher de donnee manquante"
+                };
                 int rep = demande_menu_while("Quelle recherche vouslez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
-                if(rep == 0){break;}
+                if (rep == 0) {
+                    break;
+                }
 
                 char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession", "tous" };
                 int sous_rep = demande_menu_while("Sur quoi voulez vous rechercher : ",
@@ -382,6 +390,5 @@ int menu()
 
 int main()
 {
-
     return menu();
 }
