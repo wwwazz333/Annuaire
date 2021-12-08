@@ -54,6 +54,11 @@ void show_line_menu(const char* text, int* i)
     printf("[%d] %s", (*i)++, text);
 }
 
+/**
+ * @pre demande non NULL
+ * @post retourne la réponse (int) entrer au clavier parmis les propositions
+ * 
+ */
 int demande_menu_while(const char* demande, char proposition[][128], int nbr_proposition)
 {
     int rep = -1;

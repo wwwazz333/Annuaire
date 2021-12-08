@@ -23,7 +23,7 @@ void input(char* str, int sizeof_str);
 /**
  * @brief demande un nom de fichier et rajoute l'extension
  *
- * @pre aucune
+ * @pre extension non NULL
  * @post retourne un char* qui est le nom_du_fichier_entrer_au_clavier.exension
  *
  * @param extension l'extension à ajouté
@@ -34,7 +34,7 @@ char* ask_fichier(char* extension);
 /**
  * @brief demande un nom de fichier existant (sinon re-demande) et rajoute l'extension
  *
- * @pre aucune
+ * @pre extension non NULL
  * @post retourne un char* qui est le nom_du_fichier_entrer_au_clavier.exension
  *
  * @param extension l'extension à ajouté
