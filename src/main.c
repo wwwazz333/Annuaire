@@ -72,7 +72,7 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
                 setColor(RED);
             }
             else if (i % 2 == 0) {
-                setColor(PURPLE);
+                setColor(PINK);
             } else {
                 setColor(BLUE);
             }
