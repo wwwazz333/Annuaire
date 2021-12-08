@@ -121,6 +121,8 @@ void add_space(user** tab, int curr_size, int new_size)
 void print_tab(user* tab, int size_tab)
 {
     int i;
+    setDefaultColor();
+    printf("\n");
     for (i = 0; i < size_tab; i++) {
         if (i % 2 == 0) {
             setColor(PURPLE);
