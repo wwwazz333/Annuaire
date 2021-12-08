@@ -5,8 +5,8 @@
 #include "Terminal.h"
 #include "User.h"
 #include "Verif.h"
-#include "tableau.h"
 #include "gremlins.h"
+#include "tableau.h"
 
 /**
  * @brief efface tous dans le terminal (peut import l'OS)
@@ -56,7 +56,7 @@ void show_line_menu(const char* text, int* i)
 /**
  * @pre demande non NULL
  * @post retourne la réponse (int) entrer au clavier parmis les propositions
- * 
+ *
  */
 int demande_menu_while(const char* demande, char proposition[][128], int nbr_proposition)
 {
@@ -68,10 +68,9 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
         printf("\n");
         int i = 0;
         while (i < nbr_proposition) {
-            if (i==0) {
+            if (i == 0) {
                 setColor(RED);
-            }
-            else if (i % 2 == 0) {
+            } else if (i % 2 == 0) {
                 setColor(PINK);
             } else {
                 setColor(BLUE);
@@ -198,8 +197,9 @@ int menu()
                         oyelami(users, nbr_utilisateur - 1, TRIE_PRENOM);
                         triersur = TRIE_PRENOM;
                     }
-                    insert_user(&users, &nbr_utilisateur, u, triersur);
-                    print("client ajouter\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                    if (insert_user(&users, &nbr_utilisateur, u, triersur) == EXIT_SUCCESS) {
+                        print("client ajouter\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                    }
                 } else {
                     print("action annuler\n", RED, DEFAULT_BACKGROUND_COLOR);
                 }
@@ -315,10 +315,24 @@ int menu()
             show_menu_Title("Fonctions Recherche");
             if (users_init) {
                 char proposition[][128] = {
-                    "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Rechercher de donnee manquante"
+                    "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Rechercher de donnee manquante", "Recherche par identifiant"
                 };
                 int rep = demande_menu_while("Quelle recherche vouslez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 0) {
+                    break;
+                } else if (rep == 4) {
+                    print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+                    int id = 0;
+                    setColor(AQUA);
+                    scanf("%d", &id);
+                    setDefaultColor();
+                    flush();
+                    if (!is_in_tab(id - 1, nbr_utilisateur)) {
+                        print("l'id n'est pas dans le tableau\n", RED, DEFAULT_BACKGROUND_COLOR);
+                    } else {
+                        print_user(users[id - 1], id - 1);
+                        printf("\n");
+                    }
                     break;
                 }
 
