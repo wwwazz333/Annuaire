@@ -73,7 +73,7 @@ int insert_user(user* tab[], int* taille, user u, int which)
         print("Erreur : le tableau n'est pas trier...\n", RED, DEFAULT_BACKGROUND_COLOR);
     }
     if (is_del(u)) {
-        printf("Vous ne pouvez pas ajouté un utilisateur vide.\n");
+        print("Ajout d'utilisateur vide impossible\n", RED, DEFAULT_BACKGROUND_COLOR);
         return EXIT_FAILURE;
     }
     int index_a_ajouter = recherche_emplacement(*tab, *taille, get_arg(&u, which), which);
