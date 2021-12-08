@@ -6,7 +6,6 @@
 #include "User.h"
 #include "Verif.h"
 #include "tableau.h"
-
 #include "gremlins.h"
 
 /**
@@ -64,16 +63,18 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
     int rep = -1;
     while (rep < 0 || rep > nbr_proposition) {
         setDefaultColor();
+        setColor(YELLOW);
         printf(demande);
         printf("\n");
         int i = 0;
         while (i < nbr_proposition) {
-            if (i == 0) {
+            if (i==0) {
                 setColor(RED);
-            } else if (i % 2 == 0) {
-                setColor(PINK);
-            } else {
+            }
+            else if (i % 2 == 0) {
                 setColor(PURPLE);
+            } else {
+                setColor(BLUE);
             }
             show_line_menu(proposition[i], &i);
             setDefaultColor();
@@ -113,7 +114,7 @@ void show_menu()
     show_line_menu("Modifier Client\n", &i); // 5
     setColor(PINK);
     show_line_menu("Afficher Clients\n", &i); // 6
-    show_line_menu("Rechercher\n", &i); // 7
+    show_line_menu("Fonctions Recherche\n", &i); // 7
 
     setDefaultColor();
 }
@@ -183,13 +184,15 @@ int menu()
             }
             break;
         case '3': // ajout d'utilisateur
+            show_menu_Title("ajout Client");
             if (users_init) {
-                show_menu_Title("ajout Client");
                 user u = input_user();
+                setColor(PURPLE);
                 print_user(u, -1);
+                setDefaultColor();
                 printf("\n");
                 char proposition[][128] = { "annuler", "ajouter" };
-                int rep = demande_menu_while("voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                int rep = demande_menu_while("Voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (triersur == TRIE_NULL) {
                         oyelami(users, nbr_utilisateur - 1, TRIE_PRENOM);
@@ -205,11 +208,13 @@ int menu()
             }
             break;
         case '4': // suppression d'utilisateur
+            show_menu_Title("suppression Client");
             if (users_init) {
-                show_menu_Title("suppression Client");
-                print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                 int id_del = 0;
+                setColor(AQUA);
                 scanf("%d", &id_del);
+                setDefaultColor();
                 flush();
                 if (!is_in_tab(id_del - 1, nbr_utilisateur)) {
                     print("l'id n'est pas dans le tableau\n", RED, DEFAULT_BACKGROUND_COLOR);
@@ -218,7 +223,7 @@ int menu()
                 print_user(users[id_del - 1], id_del - 1);
                 printf("\n");
                 char proposition[][128] = { "annuler", "supprimer" };
-                int rep = demande_menu_while("voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                int rep = demande_menu_while("Voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
                         // triersur = TRIE_NULL;
@@ -235,11 +240,13 @@ int menu()
             }
             break;
         case '5': // modifcation client
+            show_menu_Title("modification Client");
             if (users_init) {
-                show_menu_Title("modification Client");
-                print("id : ", AQUA, DEFAULT_BACKGROUND_COLOR);
+                print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                 int id = 0;
+                setColor(AQUA);
                 scanf("%d", &id);
+                setDefaultColor();
                 flush();
                 if (!is_in_tab(id - 1, nbr_utilisateur)) {
                     print("l'id n'est pas dans le tableau\n", RED, DEFAULT_BACKGROUND_COLOR);
@@ -265,9 +272,8 @@ int menu()
             }
             break;
         case '6': // Affichage Clients
+            show_menu_Title("Affichage Clients");
             if (users_init) {
-                show_menu_Title("Affichage Clients");
-
                 char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                 int rep = demande_menu_while("Sur quoi voulez vous trier :", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep != 0) {
@@ -306,6 +312,7 @@ int menu()
             }
             break;
         case '7': // Recherche
+            show_menu_Title("Fonctions Recherche");
             if (users_init) {
                 char proposition[][128] = {
                     "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Rechercher de donnee manquante"
@@ -356,6 +363,7 @@ int menu()
                     if (desir_rechercher_sur != TRIE_NULL) {
 
                         char* search_string = malloc(get_size_arg(desir_rechercher_sur) * sizeof(char));
+                        print("Votre recherche: ", PINK, DEFAULT_BACKGROUND_COLOR);
                         print(">> ", AQUA, DEFAULT_BACKGROUND_COLOR);
                         input(search_string, get_size_arg(desir_rechercher_sur));
 
@@ -380,6 +388,7 @@ int menu()
             }
             break;
         case '$':
+            show_menu_Title("Easter Egg - Gremlins");
             show_gremlins();
             break;
         default:
