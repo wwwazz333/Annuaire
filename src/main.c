@@ -133,7 +133,8 @@ int menu()
     FILE* fp;
     int nbr_utilisateur;
     char* nom_fichier;
-    TrierSur triersur = TRIE_NULL;
+    TrierSur triersur;
+    triersur = TRIE_NULL;
 
     char reponse = '\0';
     while (reponse != '0') {
@@ -161,8 +162,8 @@ int menu()
                 print("Le fichier est charger.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 fclose(fp);
 
-                // quick_sort(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
-                triersur = TRIE_NULL;
+                quick_sort(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
+                triersur = TRIE_PRENOM;
             }
             break;
         case '2': // Sauvegarde du tableau
@@ -193,10 +194,10 @@ int menu()
                 char proposition[][128] = { "annuler", "ajouter" };
                 int rep = demande_menu_while("Voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
-                    if (triersur == TRIE_NULL) {
-                        oyelami(users, nbr_utilisateur - 1, TRIE_PRENOM);
-                        triersur = TRIE_PRENOM;
-                    }
+                    // if (triersur == TRIE_NULL) {
+                    //     oyelami(users, nbr_utilisateur - 1, TRIE_PRENOM);
+                    //     triersur = TRIE_PRENOM;
+                    // }
                     if (insert_user(&users, &nbr_utilisateur, u, triersur) == EXIT_SUCCESS) {
                         print("client ajouter\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     }
@@ -226,7 +227,6 @@ int menu()
                 int rep = demande_menu_while("Voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
-                        // triersur = TRIE_NULL;
                         oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
                         print("suppression effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     } else {

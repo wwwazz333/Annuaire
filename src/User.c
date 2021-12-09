@@ -76,7 +76,31 @@ int insert_user(user* tab[], int* taille, user u, int which)
         printf("Vous ne pouvez pas ajouté un utilisateur vide.\n");
         return EXIT_FAILURE;
     }
-    int index_a_ajouter = recherche_emplacement(*tab, *taille, get_arg(&u, which), which);
+    int insert_locate;
+    if(!is_del((*tab)[(*taille)-1])){
+        insert_locate = *taille;
+        add_space(tab, *taille, *taille + 1);
+        permute(&(*tab)[insert_locate], &u);
+        (*taille)++;
+    }else{
+        insert_locate = *taille-1;
+        permute(&(*tab)[insert_locate], &u);
+    }
+
+    char* info_lower = malloc((get_size_arg(which)) * sizeof(char));
+    char* curr_info_lower = malloc(get_size_arg(which) * sizeof(char));
+
+    strtolower(info_lower, get_arg(&(*tab)[insert_locate], which), get_size_arg(which));
+    strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate-1], which), get_size_arg(which));
+
+    while(insert_locate > 0 && string_cmp(info_lower, curr_info_lower) < 0){
+        permute(&(*tab)[insert_locate], &(*tab)[insert_locate-1]);
+        insert_locate--;
+        strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate-1], which), get_size_arg(which));
+    }
+    free(info_lower);
+    free(curr_info_lower);
+    /* int index_a_ajouter = recherche_emplacement(*tab, *taille, get_arg(&u, which), which);
     if (index_a_ajouter < 0) {
         return EXIT_FAILURE;
     }
@@ -91,7 +115,7 @@ int insert_user(user* tab[], int* taille, user u, int which)
         add_space(tab, *taille, *taille + 1);
         permute(&(*tab)[*taille], &u);
         (*taille)++;
-    }
+    } */
 
     return EXIT_SUCCESS;
 }
