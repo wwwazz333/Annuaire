@@ -68,4 +68,14 @@ void add_space(user** tab, int curr_size, int new_size);
  */
 void print_tab(user* tab, int size_tab);
 
+/**
+ * @brief affiche le tableau de user tab sectionner par section
+ *
+ * @pre aucune
+ * @post affiche le contenue de tab avec de la couleur et sectionner par section
+ * 
+ * @param section valeur par laquelle l'affichage est divisé
+ */
+void print_tab_sect(user* tab, int size_tab, int section);
+
 #endif
