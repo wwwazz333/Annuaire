@@ -266,7 +266,6 @@ int menu()
                 } else {
                     print("action annulee\n", RED, DEFAULT_BACKGROUND_COLOR);
                 }
-
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
@@ -396,7 +395,6 @@ int menu()
                         }
                     }
                 }
-
             } else {
                 print("vous n'avez pas charger de fichier.\n", RED, DEFAULT_BACKGROUND_COLOR);
             }
