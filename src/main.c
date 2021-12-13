@@ -170,6 +170,9 @@ int menu()
             show_menu_Title("Sauvegarde fichier");
             if (users_init) {
                 nom_fichier = ask_fichier("csv");
+                setColor(GREEN);
+                printf("%d utilisateur(s) a sauvegarder.\n", nbr_utilisateur);
+                setDefaultColor();
                 char proposition[][128] = { "annuler", "sauvegarder" };
                 int rep = demande_menu_while("voulez vous vraiment sauvegarder ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep==1) {
