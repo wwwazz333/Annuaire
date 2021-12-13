@@ -77,13 +77,13 @@ int insert_user(user* tab[], int* taille, user u, int which)
         return EXIT_FAILURE;
     }
     int insert_locate;
-    if(!is_del((*tab)[(*taille)-1])){
+    if (!is_del((*tab)[(*taille) - 1])) {
         insert_locate = *taille;
         add_space(tab, *taille, *taille + 1);
         permute(&(*tab)[insert_locate], &u);
         (*taille)++;
-    }else{
-        insert_locate = *taille-1;
+    } else {
+        insert_locate = *taille - 1;
         permute(&(*tab)[insert_locate], &u);
     }
 
@@ -91,12 +91,12 @@ int insert_user(user* tab[], int* taille, user u, int which)
     char* curr_info_lower = malloc(get_size_arg(which) * sizeof(char));
 
     strtolower(info_lower, get_arg(&(*tab)[insert_locate], which), get_size_arg(which));
-    strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate-1], which), get_size_arg(which));
+    strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate - 1], which), get_size_arg(which));
 
-    while(insert_locate > 0 && string_cmp(info_lower, curr_info_lower) < 0){
-        permute(&(*tab)[insert_locate], &(*tab)[insert_locate-1]);
+    while (insert_locate > 0 && string_cmp(info_lower, curr_info_lower) < 0) {
+        permute(&(*tab)[insert_locate], &(*tab)[insert_locate - 1]);
         insert_locate--;
-        strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate-1], which), get_size_arg(which));
+        strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate - 1], which), get_size_arg(which));
     }
     free(info_lower);
     free(curr_info_lower);
@@ -120,62 +120,37 @@ int insert_user(user* tab[], int* taille, user u, int which)
     return EXIT_SUCCESS;
 }
 
-int modif_user(user tab[], int id, int taille)
+int modif_user(user* to_modif)
 {
-    if (!is_in_tab(id, taille)) {
-        return -1;
-    }
-    user u;
+    user u = input_user();
 
-    print("Entrez le prenom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    setColor(BLUE);
-    input(u.prenom, SIZE_PRENOM);
     if (u.prenom[0] != '\0') {
-        strcpy(tab[id].prenom, u.prenom);
+        strcpy(to_modif->prenom, u.prenom);
     }
 
-    print("Entrez le nom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    setColor(BLUE);
-    input(u.nom, SIZE_NOM);
     if (u.nom[0] != '\0') {
-        strcpy(tab[id].nom, u.nom);
+        strcpy(to_modif->nom, u.nom);
     }
 
-    print("Entrez la ville : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    setColor(BLUE);
-    input(u.ville, SIZE_VILLE);
     if (u.ville[0] != '\0') {
-        strcpy(tab[id].ville, u.ville);
+        strcpy(to_modif->ville, u.ville);
     }
 
-    print("Entrez le code postal : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    setColor(BLUE);
-    input(u.code_postal, SIZE_CODE_POSTAL);
     if (u.code_postal[0] != '\0') {
-        strcpy(tab[id].code_postal, u.code_postal);
+        strcpy(to_modif->code_postal, u.code_postal);
     }
 
-    print("Entrez le numero de telephone : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    setColor(BLUE);
-    input(u.no_telephone, SIZE_NO_TELEPHONE);
     if (u.no_telephone[0] != '\0') {
-        strcpy(tab[id].no_telephone, u.no_telephone);
+        strcpy(to_modif->no_telephone, u.no_telephone);
     }
 
-    print("Entrez l'email : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    setColor(BLUE);
-    input(u.email, SIZE_EMAIL);
     if (u.email[0] != '\0') {
-        strcpy(tab[id].email, u.email);
+        strcpy(to_modif->email, u.email);
     }
 
-    print("Entrez le metier : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
-    setColor(BLUE);
-    input(u.metier, SIZE_METIER);
     if (u.metier[0] != '\0') {
-        strcpy(tab[id].metier, u.metier);
+        strcpy(to_modif->metier, u.metier);
     }
-    setDefaultColor();
     return 0;
 }
 
@@ -289,7 +264,7 @@ void recherche_element_manquant(user tab[], int taille, int which) // et affiche
     count = 0;
     for (i = 0, j = 0; i < taille; i++) {
         if (get_arg(&tab[i], which)[0] == '\0') {
-            
+
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
@@ -315,7 +290,7 @@ void recherche_tous_manquante(user tab[], int taille) // et affiche
     count = 0;
     for (i = 0, j = 0; i < taille; i++) {
         if (get_arg(&tab[i], TRIE_PRENOM)[0] == '\0' || get_arg(&tab[i], TRIE_NOM)[0] == '\0' || get_arg(&tab[i], TRIE_VILLE)[0] == '\0' || get_arg(&tab[i], TRIE_CODE_POSTAL)[0] == '\0' || get_arg(&tab[i], TRIE_NO_TELEPHONE)[0] == '\0' || get_arg(&tab[i], TRIE_EMAIL)[0] == '\0' || get_arg(&tab[i], TRIE_METIER)[0] == '\0') {
-            
+
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
