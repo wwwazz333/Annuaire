@@ -170,13 +170,17 @@ int menu()
             show_menu_Title("Sauvegarde fichier");
             if (users_init) {
                 nom_fichier = ask_fichier("csv");
-                fp = fopen(nom_fichier, "w");
-                free(nom_fichier);
+                char proposition[][128] = { "annuler", "sauvegarder" };
+                int rep = demande_menu_while("voulez vous vraiment sauvegarder ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                if (rep==1) {
+                    fp = fopen(nom_fichier, "w");
+                    free(nom_fichier);
+                }
                 if (fp == NULL) {
                     print("Le fichier n'a pas pu etre enregister.\n", RED, DEFAULT_BACKGROUND_COLOR);
-                } else {
+                } else if (rep==1) {
                     save(fp, users, nbr_utilisateur);
-                    print("Le fichier est sauvgarder.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                    print("Le fichier est sauvegarder.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     fclose(fp);
                 }
             } else {
@@ -275,7 +279,6 @@ int menu()
             if (users_init) {
                 char proposition[][128] = { "annuler", "Affichage complet", "Affichage sectionner" };
                 int rep = demande_menu_while("Quelle methode d'affichage choississez vous: ", proposition, sizeof(proposition) / (128 * sizeof(char)));
-
                 char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                 int rep_bis = demande_menu_while("Sur quoi voulez vous trier :", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
                 if (rep_bis != 0) {
