@@ -1,5 +1,5 @@
 #include "gremlins.h"
-#include "terminal.h"
+#include "Terminal.h"
 
 void show_gremlins()
 {
