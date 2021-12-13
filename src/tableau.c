@@ -131,11 +131,11 @@ void print_tab(user* tab, int size_tab)
         }
         print_user(tab[i], i);
         setDefaultColor();
-        printf("\n");
     }
 }
 
-void print_tab_sect(user* tab, int size_tab, int section) {
+void print_tab_sect(user* tab, int size_tab, int section)
+{
     int i;
     setDefaultColor();
     printf("\n");
@@ -147,18 +147,16 @@ void print_tab_sect(user* tab, int size_tab, int section) {
         }
         print_user(tab[i], i);
         setDefaultColor();
-        printf("\n");
-        if ((i+1)%(section) == 0 && i !=0) {
+        if ((i + 1) % (section) == 0 && i != 0) {
             setColor(YELLOW);
-            printf("\n[%d/%d] ",i+1,size_tab);
+            printf("\n[%d/%d] ", i + 1, size_tab);
             print("Appuyer sur Entrer pour continuer ou 0 pour quitter... ", GREY, DEFAULT_BACKGROUND_COLOR);
             int c;
             setColor(AQUA);
-            while((c = getchar()) != '\n' && c != '0'){}
+            while ((c = getchar()) != '\n' && c != '0') { }
             setDefaultColor();
-            if (c=='0') {
-                print("Annulation",RED,DEFAULT_BACKGROUND_COLOR);
-                printf("\n");
+            if (c == '0') {
+                print("Annulation\n", RED, DEFAULT_BACKGROUND_COLOR);
                 break;
             }
         }

@@ -49,7 +49,7 @@ user input_user()
 void print_user(user u, int id)
 {
     if (!is_del(u)) {
-        printf("[%d] %s, %s, %s, %s, %s, %s, %s", id + 1, u.prenom, u.nom, u.ville, u.code_postal, u.no_telephone, u.email, u.metier);
+        printf("[%d] %s, %s, %s, %s, %s, %s, %s\n", id + 1, u.prenom, u.nom, u.ville, u.code_postal, u.no_telephone, u.email, u.metier);
     }
 }
 int del_user(user tab[], int id, int taille)
@@ -208,7 +208,6 @@ void recherche_substring(user tab[], int taille, char* substring, int which) // 
             }
             print_user(tab[i], i);
             setDefaultColor();
-            printf("\n");
             if (!is_del(tab[i])) {
                 j++;
                 count++;
@@ -243,7 +242,6 @@ void recherche_string(user tab[], int taille, char* string, int which) // et aff
             }
             print_user(tab[i], i);
             setDefaultColor();
-            printf("\n");
             if (!is_del(tab[i])) {
                 j++;
                 count++;
@@ -272,7 +270,6 @@ void recherche_element_manquant(user tab[], int taille, int which) // et affiche
             }
             print_user(tab[i], i);
             setDefaultColor();
-            printf("\n");
             if (!is_del(tab[i])) {
                 j++;
                 count++;
@@ -298,7 +295,6 @@ void recherche_tous_manquante(user tab[], int taille) // et affiche
             }
             print_user(tab[i], i);
             setDefaultColor();
-            printf("\n");
             if (!is_del(tab[i])) {
                 j++;
                 count++;

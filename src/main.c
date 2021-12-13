@@ -190,7 +190,6 @@ int menu()
                 setColor(PURPLE);
                 print_user(u, -1);
                 setDefaultColor();
-                printf("\n");
                 char proposition[][128] = { "annuler", "ajouter" };
                 int rep = demande_menu_while("Voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
@@ -222,7 +221,6 @@ int menu()
                     break;
                 }
                 print_user(users[id_del - 1], id_del - 1);
-                printf("\n");
                 char proposition[][128] = { "annuler", "supprimer" };
                 int rep = demande_menu_while("Voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
@@ -254,7 +252,7 @@ int menu()
                     break;
                 }
                 print_user(users[id], id);
-                printf("\n");
+
                 char proposition[][128] = { "annuler", "modifier" };
                 int rep = demande_menu_while("voulez vous modifier celui-ci ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
@@ -262,7 +260,7 @@ int menu()
                     usercpy(&temp, &users[id]);
                     modif_user(&temp);
                     print_user(temp, id);
-                    printf("\n");
+
                     rep = demande_menu_while("voulez vous modifier l'utilisateur par celui-ci ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                     if (rep == 1) {
                         usercpy(&users[id], &temp);
@@ -345,7 +343,6 @@ int menu()
                         print("l'id n'est pas dans le tableau\n", RED, DEFAULT_BACKGROUND_COLOR);
                     } else {
                         print_user(users[id - 1], id - 1);
-                        printf("\n");
                     }
                     break;
                 }
