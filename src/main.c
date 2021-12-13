@@ -329,7 +329,7 @@ int menu()
                 char proposition[][128] = {
                     "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Recherche de donnee exacte", "Rechercher de donnee manquante", "Recherche par identifiant"
                 };
-                int rep = demande_menu_while("Quelle recherche vouslez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                int rep = demande_menu_while("Quelle recherche voulez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 0) {
                     break;
                 } else if (rep == 5) {
