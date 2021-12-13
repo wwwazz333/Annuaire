@@ -6,6 +6,9 @@ void input(char* str, int sizeof_str)
     while ((str[i] = getchar()) != '\n' && i < sizeof_str - 1) { // on attribut str[i] un caractère au clavier tant que se
         // n'est pas "Entrer" et qu'on a pas atteint la fin de la
         // chaine de caractère (-1 car on met '\0' a la fin)
+        if (str[i]==',') {
+            i--;
+        }
         i++;
     }
     if (str[i] != '\n') {

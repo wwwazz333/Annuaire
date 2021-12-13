@@ -61,7 +61,7 @@ void show_line_menu(const char* text, int* i)
 int demande_menu_while(const char* demande, char proposition[][128], int nbr_proposition)
 {
     int rep = -1;
-    while (rep < 0 || rep > nbr_proposition) {
+    while (rep < 0 || rep >= nbr_proposition) {
         setDefaultColor();
         setColor(YELLOW);
         printf(demande);
@@ -255,14 +255,14 @@ int menu()
                 print_user(users[id - 1], id - 1);
                 printf("\n");
                 char proposition[][128] = { "annuler", "modifier" };
-                int rep = demande_menu_while("voulez vous vraiment le modifier : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                int rep = demande_menu_while("voulez vous modifier celui-ci ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (modif_user(users, id - 1, nbr_utilisateur) == 0) { // -1 pour l'id car on commence à 0 dans le code
+                        oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
                         print("modification effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     } else {
                         print("erreur lors de la modification.\n", RED, DEFAULT_BACKGROUND_COLOR);
                     }
-                    print("client modifier\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                 } else {
                     print("action annulee\n", RED, DEFAULT_BACKGROUND_COLOR);
                 }
@@ -273,9 +273,12 @@ int menu()
         case '6': // Affichage Clients
             show_menu_Title("Affichage Clients");
             if (users_init) {
-                char proposition[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
-                int rep = demande_menu_while("Sur quoi voulez vous trier :", proposition, sizeof(proposition) / (128 * sizeof(char)));
-                if (rep != 0) {
+                char proposition[][128] = { "annuler", "Affichage complet", "Affichage sectionner" };
+                int rep = demande_menu_while("Quelle methode d'affichage choississez vous: ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+
+                char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
+                int rep_bis = demande_menu_while("Sur quoi voulez vous trier :", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
+                if (rep_bis != 0) {
                     TrierSur desir_trier_sur;
                     switch (rep) {
                     case 1:
@@ -303,7 +306,12 @@ int menu()
                             triersur = desir_trier_sur;
                         }
 
-                        print_tab(users, nbr_utilisateur);
+                        if (rep==1) {
+                            print_tab(users, nbr_utilisateur);
+                        }
+                        else if (rep==2) {
+                            print_tab_sect(users, nbr_utilisateur, 500);
+                        }
                     }
                 }
             } else {
