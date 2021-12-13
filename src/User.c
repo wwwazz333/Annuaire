@@ -100,22 +100,6 @@ int insert_user(user* tab[], int* taille, user u, int which)
     }
     free(info_lower);
     free(curr_info_lower);
-    /* int index_a_ajouter = recherche_emplacement(*tab, *taille, get_arg(&u, which), which);
-    if (index_a_ajouter < 0) {
-        return EXIT_FAILURE;
-    }
-
-    while (index_a_ajouter < *taille && !is_del(u)) {
-        permute(&(*tab)[index_a_ajouter], &u);
-
-        index_a_ajouter++;
-    }
-
-    if (!is_del(u)) {
-        add_space(tab, *taille, *taille + 1);
-        permute(&(*tab)[*taille], &u);
-        (*taille)++;
-    } */
 
     return EXIT_SUCCESS;
 }
@@ -189,52 +173,29 @@ int recherche_emplacement(user tab[], int taille, char* information, int which) 
     return gauche;
 }
 
-void recherche_substring(user tab[], int taille, char* substring, int which) // et affiche
+int recherche_substr_cmp(char* s1, char* s2)
 {
-
-    char* substring_lower = malloc((strlen(substring) + 1) * sizeof(char));
-    char* curr_info_lower = malloc((get_size_arg(which) + 1) * sizeof(char));
-
-    strtolower(substring_lower, substring, strlen(substring) + 1);
-    int i, j, count;
-    count = 0;
-    for (i = 0, j = 0; i < taille; i++) {
-        strtolower(curr_info_lower, get_arg(&tab[i], which), get_size_arg(which));
-        if (strstr(curr_info_lower, substring_lower) != NULL) {
-            if (j % 2 == 0) {
-                setColor(PURPLE);
-            } else {
-                setColor(WHITE);
-            }
-            print_user(tab[i], i);
-            setDefaultColor();
-            if (!is_del(tab[i])) {
-                j++;
-                count++;
-            }
-        }
-    }
-    setColor(GREEN);
-    printf("%d resultat(s) trouve.\n", count);
-    setDefaultColor();
-
-    free(substring_lower);
-    free(curr_info_lower);
+    return strstr(s1, s2) != NULL;
+}
+int recherche_str_cmp(char* s1, char* s2)
+{
+    return string_cmp(s1, s2) == 0;
+}
+int recherche_element_cmp(char* s1, char* s2)
+{
+    return s1[0] == '\0';
 }
 
-void recherche_string(user tab[], int taille, char* string, int which) // et affiche
+void recherche_in_tab(user tab[], int taille, char* string, int which, int size_wanted_for_which, int (*func)(char*, char*))
 {
-    int size_string_lower = strlen(string) + 1;
-    char* string_lower = malloc(size_string_lower * sizeof(char));
-    char* curr_name_lower = malloc(size_string_lower * sizeof(char));
-
-    strtolower(string_lower, string, size_string_lower);
-
+    char* curr_info_lower = malloc(size_wanted_for_which * sizeof(char));
+    char* string_lower = malloc(size_wanted_for_which * sizeof(char));
+    strtolower(string_lower, string, size_wanted_for_which);
     int i, j, count;
     count = 0;
     for (i = 0, j = 0; i < taille; i++) {
-        strtolower(curr_name_lower, get_arg(&tab[i], which), size_string_lower);
-        if (string_cmp(curr_name_lower, string_lower) == 0) {
+        strtolower(curr_info_lower, get_arg(&tab[i], which), size_wanted_for_which);
+        if (func(curr_info_lower, string_lower)) {
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
@@ -253,32 +214,27 @@ void recherche_string(user tab[], int taille, char* string, int which) // et aff
     setDefaultColor();
 
     free(string_lower);
-    free(curr_name_lower);
+    free(curr_info_lower);
+}
+
+void recherche_substring(user tab[], int taille, char* substring, int which) // et affiche
+{
+    recherche_in_tab(tab, taille, substring, which, get_size_arg(which) + 1, recherche_substr_cmp);
+}
+
+void recherche_string(user tab[], int taille, char* string, int which) // et affiche
+{
+    recherche_in_tab(tab, taille, string, which, strlen(string) + 1, recherche_str_cmp);
+}
+
+void recherche_exacte(user tab[], int taille, char* string, int which) // et affiche
+{
+    recherche_in_tab(tab, taille, string, which, get_size_arg(which) + 1, recherche_str_cmp);
 }
 
 void recherche_element_manquant(user tab[], int taille, int which) // et affiche
 {
-    int i, j, count;
-    count = 0;
-    for (i = 0, j = 0; i < taille; i++) {
-        if (get_arg(&tab[i], which)[0] == '\0') {
-
-            if (j % 2 == 0) {
-                setColor(PURPLE);
-            } else {
-                setColor(WHITE);
-            }
-            print_user(tab[i], i);
-            setDefaultColor();
-            if (!is_del(tab[i])) {
-                j++;
-                count++;
-            }
-        }
-    }
-    setColor(GREEN);
-    printf("%d resultat(s) trouve.\n", count);
-    setDefaultColor();
+    recherche_in_tab(tab, taille, "NULL", which, 2, recherche_element_cmp);
 }
 
 void recherche_tous_manquante(user tab[], int taille) // et affiche

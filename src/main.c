@@ -17,7 +17,7 @@
  */
 void cls()
 {
-    system("clear||cls");
+    // system("clear||cls");
 }
 
 /**
@@ -327,12 +327,12 @@ int menu()
             show_menu_Title("Fonctions Recherche");
             if (users_init) {
                 char proposition[][128] = {
-                    "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Rechercher de donnee manquante", "Recherche par identifiant"
+                    "Annuler", "Recherche de donnee", "Recherche de donnee qui commence par ...", "Recherche de donnee exacte", "Rechercher de donnee manquante", "Recherche par identifiant"
                 };
                 int rep = demande_menu_while("Quelle recherche vouslez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 0) {
                     break;
-                } else if (rep == 4) {
+                } else if (rep == 5) {
                     print("id utilisateur: ", YELLOW, DEFAULT_BACKGROUND_COLOR);
                     int id = 0;
                     setColor(AQUA);
@@ -350,7 +350,7 @@ int menu()
                 char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "numero telephone", "email", "profession", "tous" };
                 int sous_rep = demande_menu_while("Sur quoi voulez vous rechercher : ",
                     proposition_bis,
-                    (sizeof(proposition_bis) / (128 * sizeof(char))) - ((rep < 3) ? 1 : 0)); // si Recherche donné alors pas afficher "tous"
+                    (sizeof(proposition_bis) / (128 * sizeof(char))) - ((rep < 4) ? 1 : 0)); // si Recherche donné alors pas afficher "tous"
 
                 TrierSur desir_rechercher_sur;
                 switch (sous_rep) {
@@ -383,7 +383,7 @@ int menu()
                     break;
                 }
 
-                if (rep == 1 || rep == 2) {
+                if (rep <= 3) {
 
                     if (desir_rechercher_sur != TRIE_NULL) {
 
@@ -394,11 +394,13 @@ int menu()
 
                         if (rep == 1) {
                             recherche_substring(users, nbr_utilisateur, search_string, desir_rechercher_sur);
-                        } else {
+                        } else if(rep == 2) {
                             recherche_string(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                        }else{
+                            recherche_exacte(users, nbr_utilisateur, search_string, desir_rechercher_sur);
                         }
                     }
-                } else if (rep == 3) {
+                } else if (rep == 4) {
                     if (desir_rechercher_sur != TRIE_NULL) {
                         if (desir_rechercher_sur == TIRE_TOUS) {
                             recherche_tous_manquante(users, nbr_utilisateur);
