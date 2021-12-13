@@ -8,6 +8,7 @@
 #include "Terminal.h"
 #include "User.h"
 
+
 /**
  * @brief récuper les caractère entrer et les place dans str
  *
@@ -86,7 +87,10 @@ void strtolower(char* dst, char* src, int size);
  * @post retourn 0 si elles sont égale, un négatif si s1 < s2 et positf si s1 > s2. une chaine de caractère vide est toujours plus grande qu'une autre
  *
  */
-int string_cmp(const char* s1, const char* s2);
+int string_cmp(const char* p1, const char* p2);
+
+int stringstring(const char* haystack, const char* needle);
+char* stringchr(register const char* s, int c);
 
 /**
  * @brief

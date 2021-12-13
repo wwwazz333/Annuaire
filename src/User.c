@@ -173,34 +173,37 @@ int recherche_emplacement(user tab[], int taille, char* information, int which) 
     return gauche;
 }
 
-int recherche_substr_cmp(char* s1, char* s2)
-{
-    return strstr(s1, s2) != NULL;
-}
-int recherche_str_cmp(char* s1, char* s2)
+int recherche_str_cmp(const char* s1, const char* s2)
 {
     return string_cmp(s1, s2) == 0;
 }
-int recherche_element_cmp(char* s1, char* s2)
+int recherche_element_cmp(const char* s1, const char* s2)
 {
     return s1[0] == '\0';
 }
 
-void recherche_in_tab(user tab[], int taille, char* string, int which, int size_wanted_for_which, int (*func)(char*, char*))
+void recherche_in_tab(user tab[], int taille, char* string, int which, int size_wanted_for_which, int (*func_compare)(const char*, const char*))
 {
-    char* curr_info_lower = malloc(size_wanted_for_which * sizeof(char));
-    char* string_lower = malloc(size_wanted_for_which * sizeof(char));
-    strtolower(string_lower, string, size_wanted_for_which);
-    int i, j, count;
+
+    // string[size_wanted_for_which-1] = '\0';
+    int i, j, count, test_compare;
+    char c_save;
     count = 0;
     for (i = 0, j = 0; i < taille; i++) {
-        strtolower(curr_info_lower, get_arg(&tab[i], which), size_wanted_for_which);
-        if (func(curr_info_lower, string_lower)) {
+        c_save = get_arg(&tab[i], which)[size_wanted_for_which-1];
+        if(size_wanted_for_which-1 >= get_size_arg(which)){
+            fprintf(stderr, "trop grand : %d\t%d\n", size_wanted_for_which-1, get_size_arg(which));
+        }
+        get_arg(&tab[i], which)[size_wanted_for_which-1] = '\0';
+        test_compare = func_compare(get_arg(&tab[i], which), string);
+        get_arg(&tab[i], which)[size_wanted_for_which-1] = c_save;
+        if (test_compare) {
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
                 setColor(WHITE);
             }
+            
             print_user(tab[i], i);
             setDefaultColor();
             if (!is_del(tab[i])) {
@@ -212,24 +215,21 @@ void recherche_in_tab(user tab[], int taille, char* string, int which, int size_
     setColor(GREEN);
     printf("%d resultat(s) trouve.\n", count);
     setDefaultColor();
-
-    free(string_lower);
-    free(curr_info_lower);
 }
 
 void recherche_substring(user tab[], int taille, char* substring, int which) // et affiche
 {
-    recherche_in_tab(tab, taille, substring, which, get_size_arg(which) + 1, recherche_substr_cmp);
+    recherche_in_tab(tab, taille, substring, which, get_size_arg(which), stringstring);
 }
 
 void recherche_string(user tab[], int taille, char* string, int which) // et affiche
 {
-    recherche_in_tab(tab, taille, string, which, strlen(string) + 1, recherche_str_cmp);
+    recherche_in_tab(tab, taille, string, which, strlen(string), recherche_str_cmp);
 }
 
 void recherche_exacte(user tab[], int taille, char* string, int which) // et affiche
 {
-    recherche_in_tab(tab, taille, string, which, get_size_arg(which) + 1, recherche_str_cmp);
+    recherche_in_tab(tab, taille, string, which, get_size_arg(which), recherche_str_cmp);
 }
 
 void recherche_element_manquant(user tab[], int taille, int which) // et affiche
