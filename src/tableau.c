@@ -129,7 +129,7 @@ void print_tab(user* tab, int size_tab)
         } else {
             setColor(WHITE);
         }
-        printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+        print_user(tab[i], i);
         setDefaultColor();
         printf("\n");
     }
@@ -145,7 +145,7 @@ void print_tab_sect(user* tab, int size_tab, int section) {
         } else {
             setColor(WHITE);
         }
-        printf("[%d] %s, %s, %s, %s, %s, %s, %s", i + 1, tab[i].prenom, tab[i].nom, tab[i].ville, tab[i].code_postal, tab[i].no_telephone, tab[i].email, tab[i].metier);
+        print_user(tab[i], i);
         setDefaultColor();
         printf("\n");
         if ((i+1)%(section) == 0 && i !=0) {

@@ -255,9 +255,10 @@ int menu()
                 print_user(users[id - 1], id - 1);
                 printf("\n");
                 char proposition[][128] = { "annuler", "modifier" };
-                int rep = demande_menu_while("voulez vous vraiment le modifier : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                int rep = demande_menu_while("voulez vous modifier celui-ci ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (modif_user(users, id - 1, nbr_utilisateur) == 0) { // -1 pour l'id car on commence à 0 dans le code
+                        oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
                         print("modification effectuer.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     } else {
                         print("erreur lors de la modification.\n", RED, DEFAULT_BACKGROUND_COLOR);
