@@ -17,13 +17,13 @@
  */
 void cls()
 {
-    // system("clear||cls");
+    system("clear||cls");
 }
 
 /**
- * @brief affiche un Titre d'une séction
+ * @brief affiche un Titre d'une section
  *
- * @param Title chaine de charactère a afficher
+ * @param Title chaine de character a afficher
  *
  * @pre aucune
  * @post affiche le Titre entré
@@ -92,10 +92,10 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
 }
 
 /**
- * @brief affiche les posibilité du menu
+ * @brief affiche les possibilité du menu
  *
  * @pre aucune
- * @post affiche les posibilité du menu
+ * @post affiche les possibilité du menu
  */
 void show_menu()
 {
@@ -106,7 +106,7 @@ void show_menu()
     show_line_menu("Quitter\n", &i); // 0
     setColor(GREEN);
     show_line_menu("Charger ficher\n", &i); // 1
-    show_line_menu("Sauvgarder fichier\n", &i); // 2
+    show_line_menu("Sauvegarder fichier\n", &i); // 2
     setColor(BLUE);
     show_line_menu("Ajouter Client\n", &i); // 3
     show_line_menu("Supprimer Client\n", &i); // 4
@@ -173,10 +173,10 @@ int menu()
                 fp = fopen(nom_fichier, "w");
                 free(nom_fichier);
                 if (fp == NULL) {
-                    print("Le fichier n'a pas pu etre enregister.\n", RED, DEFAULT_BACKGROUND_COLOR);
+                    print("Le fichier n'a pas pu etre enregistrer.\n", RED, DEFAULT_BACKGROUND_COLOR);
                 } else {
                     save(fp, users, nbr_utilisateur);
-                    print("Le fichier est sauvgarder.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
+                    print("Le fichier est sauvegarder.\n", GREEN, DEFAULT_BACKGROUND_COLOR);
                     fclose(fp);
                 }
             } else {
@@ -222,7 +222,7 @@ int menu()
                 }
                 print_user(users[id_del - 1], id_del - 1);
                 char proposition[][128] = { "annuler", "supprimer" };
-                int rep = demande_menu_while("Voulez vous vraiment le suprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                int rep = demande_menu_while("Voulez vous vraiment le supprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
                         oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
