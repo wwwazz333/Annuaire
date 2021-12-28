@@ -1,7 +1,7 @@
 #include "Terminal.h"
 
 #ifdef OS_Windows
-//Pour Windows
+// Pour Windows
 int currTextColor = 15;
 int currBackgroundColor = 0;
 
@@ -96,7 +96,7 @@ void setDefaultColor()
 }
 
 #else
-//Pour Linux
+// Pour Linux
 void setDefaultColor()
 {
     RESEToutput();
@@ -186,10 +186,13 @@ void setBackgroundColor(Color color)
 
 #endif
 
-void print(const char* str, Color color, Color background_color)
+void print(Color color, Color background_color, const char* str, ...)
 {
+    va_list ap;
+
     setColor(color);
     setBackgroundColor(background_color);
-    printf("%s", str);
+    va_start(ap, str);
+    vfprintf(stdout, str, ap);
     setDefaultColor();
 }

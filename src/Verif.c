@@ -46,9 +46,9 @@ int file_exist(const char* file_path)
     if (access(file_path, F_OK) == 0) {
         return 1;
     } else {
-        print("Fichier inexistant", RED, DEFAULT_BACKGROUND_COLOR);
+        print(RED, DEFAULT_BACKGROUND_COLOR, "Fichier inexistant");
         printf(" - ");
-        print("Pensez peut etre a ne pas preciser l'extension de fichier\n", GREY, DEFAULT_BACKGROUND_COLOR);
+        print(GREY, DEFAULT_BACKGROUND_COLOR, "Pensez peut etre a ne pas preciser l'extension de fichier\n");
         return 0;
     }
 }
