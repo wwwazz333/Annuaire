@@ -2,6 +2,8 @@
 #define _COLOR_H_
 
 #include <stdio.h>
+#include <stdarg.h>
+
 
 /* 
 Ce fichier permet de gérer les différent affichage entre Linux et Windows
@@ -65,7 +67,7 @@ void setBackgroundColor(Color color);
  * @pre str ne contien pas de "\n" sauf si background_color==DEFAULT_BACKGROUND_COLOR
  * @post met la couleur du fond de texte (background) à background_color et la couleur du texte à color puis affiche str
  */
-void print(const char* str, Color color, Color background_color);
+void print(Color color, Color background_color, const char* str, ...);
 
 
 #endif
