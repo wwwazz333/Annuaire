@@ -211,20 +211,20 @@ void recherche_in_tab(user tab[], int taille, char* string, int which, int size_
     char c_save;
     count = 0;
     for (i = 0, j = 0; i < taille; i++) {
-        c_save = get_arg(&tab[i], which)[size_wanted_for_which-1];
-        if(size_wanted_for_which-1 >= get_size_arg(which)){
-            fprintf(stderr, "trop grand : %d\t%d\n", size_wanted_for_which-1, get_size_arg(which));
+        c_save = get_arg(&tab[i], which)[size_wanted_for_which - 1];
+        if (size_wanted_for_which - 1 >= get_size_arg(which)) {
+            fprintf(stderr, "trop grand : %d\t%d\n", size_wanted_for_which - 1, get_size_arg(which));
         }
-        get_arg(&tab[i], which)[size_wanted_for_which-1] = '\0';
+        get_arg(&tab[i], which)[size_wanted_for_which - 1] = '\0';
         test_compare = func_compare(get_arg(&tab[i], which), string);
-        get_arg(&tab[i], which)[size_wanted_for_which-1] = c_save;
+        get_arg(&tab[i], which)[size_wanted_for_which - 1] = c_save;
         if (test_compare) {
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
                 setColor(WHITE);
             }
-            
+
             print_user(tab[i], i);
             setDefaultColor();
             if (!is_del(tab[i])) {

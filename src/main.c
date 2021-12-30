@@ -193,10 +193,6 @@ int menu()
                 char proposition[][128] = { "annuler", "ajouter" };
                 int rep = demande_menu_while("Voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
-                    // if (triersur == TRIE_NULL) {
-                    //     oyelami(users, nbr_utilisateur - 1, TRIE_PRENOM);
-                    //     triersur = TRIE_PRENOM;
-                    // }
                     if (insert_user(&users, &nbr_utilisateur, u, triersur) == EXIT_SUCCESS) {
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "client ajouter\n");
                     }
@@ -394,9 +390,9 @@ int menu()
 
                         if (rep == 1) {
                             recherche_substring(users, nbr_utilisateur, search_string, desir_rechercher_sur);
-                        } else if(rep == 2) {
+                        } else if (rep == 2) {
                             recherche_string(users, nbr_utilisateur, search_string, desir_rechercher_sur);
-                        }else{
+                        } else {
                             recherche_exacte(users, nbr_utilisateur, search_string, desir_rechercher_sur);
                         }
                     }
