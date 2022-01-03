@@ -28,5 +28,5 @@ void show_gremlins()
     printf("                :]oueuz\"  `>joeyai-               \n");
     printf("                     `      ` ..                  \n");
 
-    print("                Virgile MB & Loic P                ", PINK, DEFAULT_BACKGROUND_COLOR);
+    print(PINK, DEFAULT_BACKGROUND_COLOR, "                Virgile MB & Loic P                ");
 }

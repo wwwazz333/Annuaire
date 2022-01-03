@@ -49,7 +49,7 @@ user input_user()
 void print_user(user u, int id)
 {
     if (!is_del(u)) {
-        printf("[%d] %s, %s, %s, %s, %s, %s, %s", id + 1, u.prenom, u.nom, u.ville, u.code_postal, u.no_telephone, u.email, u.metier);
+        printf("[%d] %s, %s, %s, %s, %s, %s, %s\n", id + 1, u.prenom, u.nom, u.ville, u.code_postal, u.no_telephone, u.email, u.metier);
     }
 }
 int del_user(user tab[], int id, int taille)
@@ -70,20 +70,20 @@ int del_user(user tab[], int id, int taille)
 int insert_user(user* tab[], int* taille, user u, int which)
 {
     if (which == TRIE_NULL) {
-        print("Erreur : le tableau n'est pas trier...\n", RED, DEFAULT_BACKGROUND_COLOR);
+        print(RED, DEFAULT_BACKGROUND_COLOR, "Erreur : le tableau n'est pas trier...\n");
     }
     if (is_del(u)) {
-        print("Ajout d'utilisateur vide impossible\n", RED, DEFAULT_BACKGROUND_COLOR);
+        print(RED, DEFAULT_BACKGROUND_COLOR, "Ajout d'utilisateur vide impossible\n");
         return EXIT_FAILURE;
     }
     int insert_locate;
-    if(!is_del((*tab)[(*taille)-1])){
+    if (!is_del((*tab)[(*taille) - 1])) {
         insert_locate = *taille;
         add_space(tab, *taille, *taille + 1);
         permute(&(*tab)[insert_locate], &u);
         (*taille)++;
-    }else{
-        insert_locate = *taille-1;
+    } else {
+        insert_locate = *taille - 1;
         permute(&(*tab)[insert_locate], &u);
     }
 
@@ -91,91 +91,71 @@ int insert_user(user* tab[], int* taille, user u, int which)
     char* curr_info_lower = malloc(get_size_arg(which) * sizeof(char));
 
     strtolower(info_lower, get_arg(&(*tab)[insert_locate], which), get_size_arg(which));
-    strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate-1], which), get_size_arg(which));
+    strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate - 1], which), get_size_arg(which));
 
-    while(insert_locate > 0 && string_cmp(info_lower, curr_info_lower) < 0){
-        permute(&(*tab)[insert_locate], &(*tab)[insert_locate-1]);
+    while (insert_locate > 0 && string_cmp(info_lower, curr_info_lower) < 0) {
+        permute(&(*tab)[insert_locate], &(*tab)[insert_locate - 1]);
         insert_locate--;
-        strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate-1], which), get_size_arg(which));
+        strtolower(curr_info_lower, get_arg(&(*tab)[insert_locate - 1], which), get_size_arg(which));
     }
     free(info_lower);
     free(curr_info_lower);
-    /* int index_a_ajouter = recherche_emplacement(*tab, *taille, get_arg(&u, which), which);
-    if (index_a_ajouter < 0) {
-        return EXIT_FAILURE;
-    }
-
-    while (index_a_ajouter < *taille && !is_del(u)) {
-        permute(&(*tab)[index_a_ajouter], &u);
-
-        index_a_ajouter++;
-    }
-
-    if (!is_del(u)) {
-        add_space(tab, *taille, *taille + 1);
-        permute(&(*tab)[*taille], &u);
-        (*taille)++;
-    } */
 
     return EXIT_SUCCESS;
 }
 
-int modif_user(user tab[], int id, int taille)
+int modif_user(user* to_modif)
 {
-    if (!is_in_tab(id, taille)) {
-        return -1;
-    }
-    user u;
+    user u = input_user();
 
-    print("Entrez le prenom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "Entrez le prenom : ");
     setColor(BLUE);
     input(u.prenom, SIZE_PRENOM);
     if (u.prenom[0] != '\0') {
-        strcpy(tab[id].prenom, u.prenom);
+        strcpy(to_modif->prenom, u.prenom);
     }
 
-    print("Entrez le nom : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "Entrez le nom : ");
     setColor(BLUE);
     input(u.nom, SIZE_NOM);
     if (u.nom[0] != '\0') {
-        strcpy(tab[id].nom, u.nom);
+        strcpy(to_modif->nom, u.nom);
     }
 
-    print("Entrez la ville : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "Entrez la ville : ");
     setColor(BLUE);
     input(u.ville, SIZE_VILLE);
     if (u.ville[0] != '\0') {
-        strcpy(tab[id].ville, u.ville);
+        strcpy(to_modif->ville, u.ville);
     }
 
-    print("Entrez le code postal : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "Entrez le code postal : ");
     setColor(BLUE);
     input(u.code_postal, SIZE_CODE_POSTAL);
     if (u.code_postal[0] != '\0') {
-        strcpy(tab[id].code_postal, u.code_postal);
+        strcpy(to_modif->code_postal, u.code_postal);
     }
 
-    print("Entrez le numero de telephone : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "Entrez le numero de telephone : ");
     setColor(BLUE);
     input(u.no_telephone, SIZE_NO_TELEPHONE);
     if (u.no_telephone[0] != '\0') {
-        strcpy(tab[id].no_telephone, u.no_telephone);
+        strcpy(to_modif->no_telephone, u.no_telephone);
     }
 
-    print("Entrez l'email : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "Entrez l'email : ");
     setColor(BLUE);
     input(u.email, SIZE_EMAIL);
     if (u.email[0] != '\0') {
-        strcpy(tab[id].email, u.email);
+        strcpy(to_modif->email, u.email);
     }
 
-    print("Entrez le metier : ", YELLOW, DEFAULT_BACKGROUND_COLOR);
+    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "Entrez le metier : ");
     setColor(BLUE);
     input(u.metier, SIZE_METIER);
     if (u.metier[0] != '\0') {
-        strcpy(tab[id].metier, u.metier);
+        strcpy(to_modif->metier, u.metier);
     }
-    setDefaultColor();
     return 0;
 }
 
@@ -214,26 +194,39 @@ int recherche_emplacement(user tab[], int taille, char* information, int which) 
     return gauche;
 }
 
-void recherche_substring(user tab[], int taille, char* substring, int which) // et affiche
+int recherche_str_cmp(const char* s1, const char* s2)
+{
+    return string_cmp(s1, s2) == 0;
+}
+int recherche_element_cmp(const char* s1, const char* s2)
+{
+    return s1[0] == '\0';
+}
+
+void recherche_in_tab(user tab[], int taille, char* string, int which, int size_wanted_for_which, int (*func_compare)(const char*, const char*))
 {
 
-    char* substring_lower = malloc((strlen(substring) + 1) * sizeof(char));
-    char* curr_info_lower = malloc((get_size_arg(which) + 1) * sizeof(char));
-
-    strtolower(substring_lower, substring, strlen(substring) + 1);
-    int i, j, count;
+    // string[size_wanted_for_which-1] = '\0';
+    int i, j, count, test_compare;
+    char c_save;
     count = 0;
     for (i = 0, j = 0; i < taille; i++) {
-        strtolower(curr_info_lower, get_arg(&tab[i], which), get_size_arg(which));
-        if (strstr(curr_info_lower, substring_lower) != NULL) {
+        c_save = get_arg(&tab[i], which)[size_wanted_for_which - 1];
+        if (size_wanted_for_which - 1 >= get_size_arg(which)) {
+            fprintf(stderr, "trop grand : %d\t%d\n", size_wanted_for_which - 1, get_size_arg(which));
+        }
+        get_arg(&tab[i], which)[size_wanted_for_which - 1] = '\0';
+        test_compare = func_compare(get_arg(&tab[i], which), string);
+        get_arg(&tab[i], which)[size_wanted_for_which - 1] = c_save;
+        if (test_compare) {
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
                 setColor(WHITE);
             }
+
             print_user(tab[i], i);
             setDefaultColor();
-            printf("\n");
             if (!is_del(tab[i])) {
                 j++;
                 count++;
@@ -243,70 +236,26 @@ void recherche_substring(user tab[], int taille, char* substring, int which) // 
     setColor(GREEN);
     printf("%d resultat(s) trouve.\n", count);
     setDefaultColor();
+}
 
-    free(substring_lower);
-    free(curr_info_lower);
+void recherche_substring(user tab[], int taille, char* substring, int which) // et affiche
+{
+    recherche_in_tab(tab, taille, substring, which, get_size_arg(which), stringstring);
 }
 
 void recherche_string(user tab[], int taille, char* string, int which) // et affiche
 {
-    int size_string_lower = strlen(string) + 1;
-    char* string_lower = malloc(size_string_lower * sizeof(char));
-    char* curr_name_lower = malloc(size_string_lower * sizeof(char));
+    recherche_in_tab(tab, taille, string, which, strlen(string), recherche_str_cmp);
+}
 
-    strtolower(string_lower, string, size_string_lower);
-
-    int i, j, count;
-    count = 0;
-    for (i = 0, j = 0; i < taille; i++) {
-        strtolower(curr_name_lower, get_arg(&tab[i], which), size_string_lower);
-        if (string_cmp(curr_name_lower, string_lower) == 0) {
-            if (j % 2 == 0) {
-                setColor(PURPLE);
-            } else {
-                setColor(WHITE);
-            }
-            print_user(tab[i], i);
-            setDefaultColor();
-            printf("\n");
-            if (!is_del(tab[i])) {
-                j++;
-                count++;
-            }
-        }
-    }
-    setColor(GREEN);
-    printf("%d resultat(s) trouve.\n", count);
-    setDefaultColor();
-
-    free(string_lower);
-    free(curr_name_lower);
+void recherche_exacte(user tab[], int taille, char* string, int which) // et affiche
+{
+    recherche_in_tab(tab, taille, string, which, get_size_arg(which), recherche_str_cmp);
 }
 
 void recherche_element_manquant(user tab[], int taille, int which) // et affiche
 {
-    int i, j, count;
-    count = 0;
-    for (i = 0, j = 0; i < taille; i++) {
-        if (get_arg(&tab[i], which)[0] == '\0') {
-            
-            if (j % 2 == 0) {
-                setColor(PURPLE);
-            } else {
-                setColor(WHITE);
-            }
-            print_user(tab[i], i);
-            setDefaultColor();
-            printf("\n");
-            if (!is_del(tab[i])) {
-                j++;
-                count++;
-            }
-        }
-    }
-    setColor(GREEN);
-    printf("%d resultat(s) trouve.\n", count);
-    setDefaultColor();
+    recherche_in_tab(tab, taille, "NULL", which, 2, recherche_element_cmp);
 }
 
 void recherche_tous_manquante(user tab[], int taille) // et affiche
@@ -315,7 +264,7 @@ void recherche_tous_manquante(user tab[], int taille) // et affiche
     count = 0;
     for (i = 0, j = 0; i < taille; i++) {
         if (get_arg(&tab[i], TRIE_PRENOM)[0] == '\0' || get_arg(&tab[i], TRIE_NOM)[0] == '\0' || get_arg(&tab[i], TRIE_VILLE)[0] == '\0' || get_arg(&tab[i], TRIE_CODE_POSTAL)[0] == '\0' || get_arg(&tab[i], TRIE_NO_TELEPHONE)[0] == '\0' || get_arg(&tab[i], TRIE_EMAIL)[0] == '\0' || get_arg(&tab[i], TRIE_METIER)[0] == '\0') {
-            
+
             if (j % 2 == 0) {
                 setColor(PURPLE);
             } else {
@@ -323,7 +272,6 @@ void recherche_tous_manquante(user tab[], int taille) // et affiche
             }
             print_user(tab[i], i);
             setDefaultColor();
-            printf("\n");
             if (!is_del(tab[i])) {
                 j++;
                 count++;

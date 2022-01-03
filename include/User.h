@@ -82,14 +82,10 @@ int insert_user(user* tab[], int* taille, user u, int which);
  * @brief modifie l'utilisateur a l'index ligne
  *
  * @pre ligne un index de tableau
- * @post on modifie user par son id, si la case est vide, on garde l'ancienne valeur.
+ * @post on modifie user un nouveau user, si la case est vide, on garde l'ancienne valeur.
  *
- * @param tab le tableau
- * @param id l'id de l'utilisateur à modifié
- * @param taille taille du tableau
- * @return int 0 ssi il a pu etre modifier
  */
-int modif_user(user tab[], int id, int taille);
+int modif_user(user* replace_by);
 
 /**
  * @brief retourne l'emplacement où ajouté l'utilisateur avec pour nom "nom"
@@ -106,8 +102,10 @@ int recherche_emplacement(user tab[], int taille, char* information, int which);
 
 int recherche_emplacement_existant(user tab[], int taille, char* information, int which);
 
+void recherche_in_tab(user tab[], int taille, char* string, int which, int size_wanted_for_which, int (*func_compare)(const char*, const char*));
 void recherche_substring(user tab[], int taille, char* substring, int which);
 void recherche_string(user tab[], int taille, char* string, int which);
+void recherche_exacte(user tab[], int taille, char* string, int which);
 void recherche_element_manquant(user tab[], int taille, int which);
 void recherche_tous_manquante(user tab[], int taille);
 
