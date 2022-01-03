@@ -48,9 +48,9 @@ void setColor(Color color)
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), currTextColor + 16 * currBackgroundColor);
 }
 
-void setBackgroundColor(Color color)
+void setBackgroundColor(Color background_color)
 {
-    switch (color) {
+    switch (background_color) {
     case RED:
         currBackgroundColor = 4;
         break;
@@ -143,9 +143,9 @@ void setColor(Color color)
     }
 }
 
-void setBackgroundColor(Color color)
+void setBackgroundColor(Color background_color)
 {
-    switch (color) {
+    switch (background_color) {
     case RED:
         bRGBoutput(197, 15, 31);
         break;

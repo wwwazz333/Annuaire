@@ -37,20 +37,17 @@ int readUser(FILE* fp, user* u)
 
     return EXIT_SUCCESS;
 }
-int load(FILE* fp, user* users, int taille_user)
+int load(FILE* fp, user tab[])
 {
     if (fp == NULL) {
         return EXIT_FAILURE;
     }
     int nb = nombre_utilisateurs(fp);
-    if (nb > taille_user) {
-        return 2; // autre type d'erreur
-    }
     fseek(fp, 0, SEEK_SET);
     int i = 0;
     while (i < nb) {
-        readUser(fp, &users[i]);
-        if (!is_del(users[i])) {
+        readUser(fp, &tab[i]);
+        if (!is_del(tab[i])) {
             i++;
         }
     }
@@ -87,13 +84,13 @@ int writeUser(FILE* fp, user* u)
 
     return EXIT_SUCCESS;
 }
-int save(FILE* fp, user* users, int nombre_user)
+void save(FILE* fp, user tab[], int nombre_users)
 {
     fseek(fp, 0, SEEK_SET);
     int i;
-    for (i = 0; i < nombre_user; i++) {
-        if (!is_del(users[i])) {
-            writeUser(fp, &users[i]);
+    for (i = 0; i < nombre_users; i++) {
+        if (!is_del(tab[i])) {
+            writeUser(fp, &tab[i]);
         }
     }
 

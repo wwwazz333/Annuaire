@@ -131,7 +131,7 @@ int menu()
     user* users;
     int users_init = 0; // 1 ssi un fichier à été charger.
     FILE* fp;
-    int nbr_utilisateur;
+    int nbr_utilisateurs;
     char* nom_fichier;
     TrierSur triersur;
     triersur = TRIE_NULL;
@@ -155,14 +155,14 @@ int menu()
             if (fp == NULL) {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre ouvert.\n");
             } else {
-                nbr_utilisateur = nombre_utilisateurs(fp);
-                users = malloc(nbr_utilisateur * sizeof(user));
-                load(fp, users, nbr_utilisateur);
+                nbr_utilisateurs = nombre_utilisateurs(fp);
+                users = malloc(nbr_utilisateurs * sizeof(user));
+                load(fp, users);
                 users_init = 1;
                 print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est charg%s\n", E);
                 fclose(fp);
 
-                quick_sort(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
+                quick_sort(users, 0, nbr_utilisateurs - 1, TRIE_PRENOM);
                 triersur = TRIE_PRENOM;
             }
             break;
@@ -171,7 +171,7 @@ int menu()
             if (users_init) {
                 nom_fichier = ask_fichier("csv");
                 setColor(GREEN);
-                printf("%d utilisateur(s) a sauvegarder.\n", nbr_utilisateur);
+                printf("%d utilisateur(s) a sauvegarder.\n", nbr_utilisateurs);
                 setDefaultColor();
                 char proposition[][128] = { "annuler", "sauvegarder" };
                 int rep = demande_menu_while("voulez vous vraiment sauvegarder ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
@@ -182,7 +182,7 @@ int menu()
                 if (fp == NULL) {
                     print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre enregister.\n");
                 } else {
-                    save(fp, users, nbr_utilisateur);
+                    save(fp, users, nbr_utilisateurs);
                     print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvgarder.\n");
                     fclose(fp);
                 }
@@ -200,7 +200,7 @@ int menu()
                 char proposition[][128] = { "annuler", "ajouter" };
                 int rep = demande_menu_while("Voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
-                    if (insert_user(&users, &nbr_utilisateur, u, triersur) == EXIT_SUCCESS) {
+                    if (insert_user(&users, &nbr_utilisateurs, u, triersur) == EXIT_SUCCESS) {
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "client ajouter\n");
                     }
                 } else {
@@ -219,7 +219,7 @@ int menu()
                 scanf("%d", &id_del);
                 setDefaultColor();
                 flush();
-                if (!is_in_tab(id_del - 1, nbr_utilisateur)) {
+                if (!is_in_tab(id_del - 1, nbr_utilisateurs)) {
                     print(RED, DEFAULT_BACKGROUND_COLOR, "l'id n'est pas dans le tableau\n");
                     break;
                 }
@@ -227,8 +227,8 @@ int menu()
                 char proposition[][128] = { "annuler", "supprimer" };
                 int rep = demande_menu_while("Voulez vous vraiment le supprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
-                    if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
-                        oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
+                    if (del_user(users, id_del - 1, nbr_utilisateurs) == 0) {
+                        oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectuer.\n");
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la suppression.\n");
@@ -250,7 +250,7 @@ int menu()
                 id--;
                 setDefaultColor();
                 flush();
-                if (!is_in_tab(id - 1, nbr_utilisateur)) {
+                if (!is_in_tab(id - 1, nbr_utilisateurs)) {
                     print(RED, DEFAULT_BACKGROUND_COLOR, "l'id n'est pas dans le tableau\n");
                     break;
                 }
@@ -267,7 +267,7 @@ int menu()
                     rep = demande_menu_while("voulez vous modifier l'utilisateur par celui-ci ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                     if (rep == 1) {
                         usercpy(&users[id], &temp);
-                        oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
+                        oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "modification effectuer.\n");
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la modification.\n");
@@ -311,14 +311,14 @@ int menu()
                     }
                     if (desir_trier_sur != TRIE_NULL) {
                         if (triersur != desir_trier_sur) {
-                            quick_sort(users, 0, nbr_utilisateur - 1, desir_trier_sur);
+                            quick_sort(users, 0, nbr_utilisateurs - 1, desir_trier_sur);
                             triersur = desir_trier_sur;
                         }
 
                         if (rep == 1) {
-                            print_tab(users, nbr_utilisateur);
+                            print_tab(users, nbr_utilisateurs);
                         } else if (rep == 2) {
-                            print_tab_sect(users, nbr_utilisateur, 500);
+                            print_tab_sect(users, nbr_utilisateurs, 500);
                         }
                     }
                 }
@@ -342,7 +342,7 @@ int menu()
                     scanf("%d", &id);
                     setDefaultColor();
                     flush();
-                    if (!is_in_tab(id - 1, nbr_utilisateur)) {
+                    if (!is_in_tab(id - 1, nbr_utilisateurs)) {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "l'id n'est pas dans le tableau\n");
                     } else {
                         print_user(users[id - 1], id - 1);
@@ -396,19 +396,19 @@ int menu()
                         input(search_string, get_size_arg(desir_rechercher_sur));
 
                         if (rep == 1) {
-                            recherche_substring(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                            recherche_substring(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
                         } else if (rep == 2) {
-                            recherche_string(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                            recherche_string(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
                         } else {
-                            recherche_exacte(users, nbr_utilisateur, search_string, desir_rechercher_sur);
+                            recherche_exacte(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
                         }
                     }
                 } else if (rep == 4) {
                     if (desir_rechercher_sur != TRIE_NULL) {
                         if (desir_rechercher_sur == TIRE_TOUS) {
-                            recherche_tous_manquante(users, nbr_utilisateur);
+                            recherche_tous_manquante(users, nbr_utilisateurs);
                         } else {
-                            recherche_element_manquant(users, nbr_utilisateur, desir_rechercher_sur);
+                            recherche_element_manquant(users, nbr_utilisateurs, desir_rechercher_sur);
                         }
                     }
                 }

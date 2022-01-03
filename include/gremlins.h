@@ -3,7 +3,12 @@
 
 #include <stdio.h>
 
+/**
+ * @brief Affiche un magnifique Gremlins.
+ *
+ * @pre aucun
+ * @post Affiche un Gremlins dans la console
+ */
 void show_gremlins();
-void show_gremlins_big();
 
 #endif
