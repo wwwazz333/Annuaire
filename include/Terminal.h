@@ -17,6 +17,15 @@ Ce fichier permet de gérer les différent affichage entre Linux et Windows
 #include <conio.h>
 #include <windows.h>
 #define OS_Windows
+#define E L"\u00E9"
+
+#endif
+#ifndef OS_Windows
+//Pour Linux
+#define RGBoutput(r, g, b) printf("\033[38;2;%d;%d;%dm", r, g, b);
+#define bRGBoutput(r, g, b) printf("\033[48;2;%d;%d;%dm", r, g, b);
+#define RESEToutput() printf("\x1b[0m");
+#define E "é"
 
 #endif
 //Pour les 2
@@ -37,15 +46,6 @@ typedef enum {
     DEFAULT_BACKGROUND_COLOR
 } Color;
 
-#ifndef OS_Windows
-//Pour Linux
-#define RGBoutput(r, g, b) printf("\033[38;2;%d;%d;%dm", r, g, b);
-#define bRGBoutput(r, g, b) printf("\033[48;2;%d;%d;%dm", r, g, b);
-#define RESEToutput() printf("\x1b[0m");
-
-
-#endif
-//Pour les 2
 
 /**
  * @pre aucune

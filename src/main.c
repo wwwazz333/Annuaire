@@ -159,7 +159,7 @@ int menu()
                 users = malloc(nbr_utilisateur * sizeof(user));
                 load(fp, users, nbr_utilisateur);
                 users_init = 1;
-                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est charger.\n");
+                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est charg%s\n", E);
                 fclose(fp);
 
                 quick_sort(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
