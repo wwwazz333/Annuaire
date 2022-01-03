@@ -283,12 +283,8 @@ int menu()
             show_menu_Title("Affichage Clients");
             if (users_init) {
                 char proposition[][128] = { "annuler", "Affichage complet", "Affichage sectionner" };
-<<<<<<< HEAD
-                int rep = demande_menu_while("Quelle methode d'affichage choississez vous: ", proposition, sizeof(proposition) / (128 * sizeof(char)));
-=======
                 int rep = demande_menu_while("Quelle methode d'affichage choisissez vous: ", proposition, sizeof(proposition) / (128 * sizeof(char)));
 
->>>>>>> 1d93b3827545089eda63a68b70be0bc668552fe7
                 char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                 int rep_bis = demande_menu_while("Sur quoi voulez vous trier :", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
                 if (rep_bis != 0) {
