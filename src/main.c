@@ -135,9 +135,10 @@ int menu()
     char* nom_fichier;
     TrierSur triersur;
     triersur = TRIE_NULL;
+    int issave = 1;
 
     char reponse = '\0';
-    while (reponse != '0') {
+    while (reponse != '0' || issave == 0) {
         show_menu();
         print(ORANGE, DEFAULT_BACKGROUND_COLOR, ">> ");
         setColor(AQUA);
@@ -147,6 +148,11 @@ int menu()
         flush(); // vide stdin (au cas ou entrer plusieur caractère précédament)
         cls(); // clear le terminal
         switch (reponse) {
+        case '0':
+            if(issave==0) {
+                print(RED,DEFAULT_BACKGROUND_COLOR,"Veuillez sauvegarder");
+            }
+            break;
         case '1': // charger un fichier
             show_menu_Title("Charger fichier");
             nom_fichier = ask_fichier_existant("csv");
@@ -183,8 +189,9 @@ int menu()
                     print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre enregister.\n");
                 } else {
                     save(fp, users, nbr_utilisateurs);
-                    print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvgarder.\n");
+                    print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvegarder.\n");
                     fclose(fp);
+                    issave = 1;
                 }
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
@@ -201,7 +208,8 @@ int menu()
                 int rep = demande_menu_while("Voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (insert_user(&users, &nbr_utilisateurs, u, triersur) == EXIT_SUCCESS) {
-                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "client ajouter\n");
+                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "client ajout%s\n", E);
+                        issave=0;
                     }
                 } else {
                     print(RED, DEFAULT_BACKGROUND_COLOR, "action annuler\n");
@@ -230,17 +238,18 @@ int menu()
                     if (del_user(users, id_del - 1, nbr_utilisateurs) == 0) {
                         oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectuer.\n");
+                        issave=0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la suppression.\n");
                     }
                 } else {
-                    print(RED, DEFAULT_BACKGROUND_COLOR, "action annulee\n");
+                    print(RED, DEFAULT_BACKGROUND_COLOR, "action annul%se\n", E);
                 }
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
             }
             break;
-        case '5': // modifcation client
+        case '5': // modification client
             show_menu_Title("modification Client");
             if (users_init) {
                 print(YELLOW, DEFAULT_BACKGROUND_COLOR, "id utilisateur: ");
@@ -269,6 +278,7 @@ int menu()
                         usercpy(&users[id], &temp);
                         oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "modification effectuer.\n");
+                        issave= 0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la modification.\n");
                     }
