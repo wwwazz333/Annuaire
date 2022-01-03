@@ -17,7 +17,7 @@ Ce fichier permet de gérer les différent affichage entre Linux et Windows
 #include <conio.h>
 #include <windows.h>
 #define OS_Windows
-#define E L"\u00E9"
+#define E "\x82"
 
 #endif
 #ifndef OS_Windows
@@ -49,7 +49,7 @@ typedef enum {
 
 /**
  * @pre aucune
- * @post les couleurs qui seront afficher quand on écrira seraon blanche pour le texte et noir pour le fond (normalement les couleur de base)
+ * @post les couleurs qui seront afficher quand on écrira seront blanche pour le texte et noir pour le fond (normalement les couleur de base)
  */
 void setDefaultColor();
 /**
