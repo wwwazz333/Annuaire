@@ -335,19 +335,6 @@ int menu()
                 int rep = demande_menu_while("Quelle recherche voulez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 0) {
                     break;
-                } else if (rep == 4) {
-                    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "id utilisateur: ");
-                    int id = 0;
-                    setColor(AQUA);
-                    scanf("%d", &id);
-                    setDefaultColor();
-                    flush();
-                    if (!is_in_tab(id - 1, nbr_utilisateur)) {
-                        print(RED, DEFAULT_BACKGROUND_COLOR, "l'id n'est pas dans le tableau\n");
-                    } else {
-                        print_user(users[id - 1], id - 1);
-                    }
-                    break;
                 } else if (rep == 5) {
                     print(YELLOW, DEFAULT_BACKGROUND_COLOR, "id utilisateur: ");
                     int id = 0;
