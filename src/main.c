@@ -17,7 +17,7 @@
  */
 void cls()
 {
-    system("clear||cls");
+    //system("clear||cls");
 }
 
 /**
@@ -175,7 +175,7 @@ int menu()
                 setDefaultColor();
                 char proposition[][128] = { "annuler", "sauvegarder" };
                 int rep = demande_menu_while("voulez vous vraiment sauvegarder ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
-                if (rep==1) {
+                if (rep == 1) {
                     fp = fopen(nom_fichier, "w");
                     free(nom_fichier);
                 }
@@ -287,9 +287,9 @@ int menu()
 
                 char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                 int rep_bis = demande_menu_while("Sur quoi voulez vous trier :", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
-                if (rep_bis != 0) {
+                if (rep != 0) {
                     TrierSur desir_trier_sur;
-                    switch (rep) {
+                    switch (rep_bis) {
                     case 1:
                         desir_trier_sur = TRIE_PRENOM;
                         break;
@@ -347,6 +347,19 @@ int menu()
                     } else {
                         print_user(users[id - 1], id - 1);
                     }
+                    break;
+                } else if (rep == 5) {
+                    print(YELLOW, DEFAULT_BACKGROUND_COLOR, "id utilisateur: ");
+                    int id = 0;
+                    setColor(AQUA);
+                    scanf("%d", &id);
+                    setDefaultColor();
+                    flush();
+                    if (!is_in_tab(id - 1, nbr_utilisateur)) {
+                        print(RED, DEFAULT_BACKGROUND_COLOR, "l'id n'est pas dans le tableau\n");
+                        break;
+                    }
+                    print_user(users[id], id);
                     break;
                 }
 

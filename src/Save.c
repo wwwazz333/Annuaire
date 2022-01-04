@@ -64,10 +64,10 @@ int writeUser(FILE* fp, user* u)
         return EXIT_FAILURE;
     }
 
-    fputs(u->nom, fp);
+    fputs(u->prenom, fp);
     fputc(',', fp);
 
-    fputs(u->prenom, fp);
+    fputs(u->nom, fp);
     fputc(',', fp);
 
     fputs(u->ville, fp);

@@ -33,86 +33,171 @@ typedef struct {
 } user;
 
 /**
- * @brief demande d'entrer tous les attribu d'un user (nom, prenom, ville, etc...)
+ * @brief demande d'entrer tous les attribues d'un user (nom, prenom, ville, etc...)
  *
  * @pre aucune
- * @post retourne le "user" avec les information rendu
+ * @post retourne le "user" avec les information donnée sans virgule
  *
- * @return le "user" avec les information rendu
+ * @return la variable u
  */
 user input_user();
+
 /**
- * @brief copie l'usr src dans dst
+ * @brief copie l'usr "src" dans "dst"
  *
- * @pre dst et src non NULL
- * @post pour tous les attribue de src et dst => dst.atr = src.atr
+ * @pre aucune
+ * @post pour tous les attribue de "src" et "dst" => dst.atr = src.atr
  *
- * @param dst la destination
- * @param src la source
+ * @param dst le "user" destination
+ * @param src le "user" source
  */
 void usercpy(user* dst, user* src);
 
 /**
- * @brief suprime l'utilisateur a l'index id
+ * @brief supprime l'utilisateur a l'index "id"
  *
- * @pre id un index de tableau
- * @post le user a l'index id est supprimer (toutes les valeurs à ""), 0 est retourné ssi il a pu être supprimer
+ * @pre aucune
+ * @post le "user" a l'index "id" est supprimer (toutes les valeurs à ""), 0 est retourné ssi il a pu être supprimer
  *
  * @param tab le tableau
- * @param id l'index a supprimer
- * @param taille taille du tableau
- * @return int 0 ssi il a pu etre supprimer
+ * @param id l'index a supprimer (véritable index du tableau)
+ * @param taille la taille de "tab"
  */
 int del_user(user tab[], int id, int taille);
 
 /**
- * @brief insert u dans tab au bonne emplacement et agrandi si nécessaire
+ * @brief insert "u" dans "tab" au bonne emplacement et agrandi si nécessaire
  *
  * @pre aucune
- * @post u est dans le tableau au bonne endroit
+ * @post "u" est dans "tab" au bonne endroit et retourne EXIT_SUCCESS ssi aucune erreur
  *
- * @param tab
- * @param taille
- * @param u
- * @return int
+ * @param tab le tableau
+ * @param taille la taille de "tab"
+ * @param u le "user" à ajouter
+ * @param which sur quelle paramètre est trié "tab"
  */
 int insert_user(user* tab[], int* taille, user u, int which);
 
 /**
- * @brief modifie l'utilisateur a l'index ligne
+ * @brief modifie l'utilisateur "replace_by"
  *
  * @pre ligne un index de tableau
- * @post on modifie user un nouveau user, si la case est vide, on garde l'ancienne valeur.
+ * @post on modifie "replace_by" par de nouvelle donnée entrer. Si la case est vide, on garde l'ancienne valeur. Retourne EXIT_SUCCESS ssi aucune erreur
  *
  */
 int modif_user(user* replace_by);
 
+
 /**
- * @brief retourne l'emplacement où ajouté l'utilisateur avec pour nom "nom"
- *
- * @pre acune
- * @post retourne l'index où doit être l'utilisateur qui a pour nom "nom"
- *
- * @param tab
- * @param taille
- * @param nom
- * @return int
+ * @brief affiche selon certaine condition.
+ * 
+ * @pre "func_compare" retourne un int et prend en paramètre 2 const char* (les chaine de caractère à comparer)
+ * @post affiche les "user" qui réponde à la condition de "func_compare" entre la valeur de sont paramètre "which" et de "string". Si il y a une erreur ne fait rien.
+ * 
+ * @param tab le tableau
+ * @param taille la taille de "tab"
+ * @param string la chaine de caractères à rechercher
+ * @param which quelle paramètre rechercher
+ * @param size_wanted_for_which la taille du paramètre "which"
+ * @param func_compare la fonction qui servira de condition pour l'affichage
  */
-int recherche_emplacement(user tab[], int taille, char* information, int which);
-
-int recherche_emplacement_existant(user tab[], int taille, char* information, int which);
-
 void recherche_in_tab(user tab[], int taille, char* string, int which, int size_wanted_for_which, int (*func_compare)(const char*, const char*));
+
+/**
+ * @brief affiche tous les "user" qui on pour sous-chaine "substring" au paramètre "which".
+ * 
+ * @pre aucune
+ * @post affiche tous les "user" qui on pour sous-chaine "substring" au paramètre "which". Si il y a une erreur ne fait rien.
+ * 
+ * @param tab le tableau
+ * @param taille la taille de "tab"
+ * @param substring la sous-chaine de caractère à rechercher
+ * @param which quelle paramètre rechercher
+ */
 void recherche_substring(user tab[], int taille, char* substring, int which);
+
+/**
+ * @brief affiche tous les "user" qui commencent par la chaine "string" au paramètre "which".
+ * 
+ * @pre aucune
+ * @post affiche tous les "user" qui commencent par la chaine "string" au paramètre "which". Si il y a une erreur ne fait rien.
+ * 
+ * @param tab le tableau
+ * @param taille la taille de "tab"
+ * @param string la sous-chaine de caractère à rechercher
+ * @param which quelle paramètre rechercher
+ */
 void recherche_string(user tab[], int taille, char* string, int which);
+
+/**
+ * @brief affiche tous les "user" qui on la chaine "string" au paramètre "which".
+ * 
+ * @pre aucune
+ * @post affiche tous les "user" qui on la chaine "string" au paramètre "which". Si il y a une erreur ne fait rien.
+ * 
+ * @param tab le tableau
+ * @param taille la taille de "tab"
+ * @param string la sous-chaine de caractère à rechercher
+ * @param which quelle paramètre rechercher
+ */
 void recherche_exacte(user tab[], int taille, char* string, int which);
+
+/**
+ * @brief affiche tous les "user" à qui il manque le paramètre which.
+ * 
+ * @pre aucune
+ * @post affiche tous les "user" qui on la chaine vide au paramètre "which". Si il y a une erreur ne fait rien.
+ * 
+ * @param tab le tableau
+ * @param taille la taille de "tab"
+ * @param which quelle paramètre rechercher
+ */
 void recherche_element_manquant(user tab[], int taille, int which);
+
+
+/**
+ * @brief affiche tous les "user" à qui il manque un paramètre.
+ * 
+ * @pre aucune
+ * @post affiche tous les "user" qui on au moins une chaine vide a un des paramètres. Si il y a une erreur ne fait rien.
+ * 
+ * @param tab le tableau
+ * @param taille la taille de "tab"
+ * @param which quelle paramètre rechercher
+ */
 void recherche_tous_manquante(user tab[], int taille);
 
-user* recherche_by_id(user tab[], int taille, int id);
-
+/**
+ * @brief retourne le paramètre "which_one" de "u".
+ * 
+ * @pre aucune
+ * @post retourne la chaine de caractère qui correspond à la valeur du paramètre "which_one" de "u".
+ * 
+ * @param u pointeur sur le "user" voulu
+ * @param which_one quelle paramètre retourner
+ * @return la chaine de caractère
+ */
 char* get_arg(user* u, int which_one);
+
+/**
+ * @brief retourne la taille du paramètre "which_one".
+ * 
+ * @pre aucune
+ * @post retourne la taille du paramètre "which_one".
+ * 
+ * @param which_one quelle paramètre
+ * @return taille du paramètre "which_one"
+ */
 int get_size_arg(int which_one);
 
+/**
+ * @brief Affiche le "user" s'il n'est pas supprimé.
+ * 
+ * @pre aucune
+ * @post Affiche le "user" s'il n'est pas supprimé avec l'index donnée (au format classique donc index+1). 
+ * 
+ * @param u le "user" à afficher.
+ * @param id l'index de "user" serre uniquement à l'affichage
+ */
 void print_user(user u, int id);
 #endif
