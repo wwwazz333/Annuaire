@@ -24,7 +24,9 @@ int readUser(FILE* fp, user* u)
     if (fgets(ligne, TAILLE_MAX_LIGNE, fp) == NULL) {
         return EOF;
     }
-
+    if (strlen(ligne) < 7) {
+        return EXIT_FAILURE;
+    }
     char* first = &ligne[0]; // pareille que first = ligne;
 
     first = readUntil(first, u->prenom, SIZE_PRENOM, ',');
@@ -49,8 +51,8 @@ int load(FILE* fp, user* users, int taille_user)
     fseek(fp, 0, SEEK_SET);
     int i = 0;
     while (i < nb) {
-        readUser(fp, &users[i]);
-        if (!is_del(users[i])) {
+        printf("%d\n", i);
+        if (readUser(fp, &users[i]) == EXIT_SUCCESS && !is_del(users[i])) {
             i++;
         }
     }
@@ -110,7 +112,7 @@ int nombre_utilisateurs(FILE* fp)
 
     char str[TAILLE_MAX_LIGNE]; // sizeof(user)/sizeof(char) = 536
     while (fgets(str, TAILLE_MAX_LIGNE, fp) != NULL) {
-        if (str[6] != '\n') {
+        if (/*str[6] != '\n'*/ strlen(str) > 7) {
             nb_ligne++;
         }
     }
