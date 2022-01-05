@@ -24,16 +24,18 @@ int readUser(FILE* fp, user* u)
     if (fgets(ligne, TAILLE_MAX_LIGNE, fp) == NULL) {
         return EOF;
     }
+    if (ligne[0] != '\n') {
 
-    char* first = &ligne[0]; // pareille que first = ligne;
+        char* first = &ligne[0]; // pareille que first = ligne;
 
-    first = readUntil(first, u->prenom, SIZE_PRENOM, ',');
-    first = readUntil(first, u->nom, SIZE_NOM, ',');
-    first = readUntil(first, u->ville, SIZE_VILLE, ',');
-    first = readUntil(first, u->code_postal, SIZE_CODE_POSTAL, ',');
-    first = readUntil(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
-    first = readUntil(first, u->email, SIZE_EMAIL, ',');
-    first = readUntil(first, u->metier, SIZE_METIER, '\n');
+        first = readUntil(first, u->prenom, SIZE_PRENOM, ',');
+        first = readUntil(first, u->nom, SIZE_NOM, ',');
+        first = readUntil(first, u->ville, SIZE_VILLE, ',');
+        first = readUntil(first, u->code_postal, SIZE_CODE_POSTAL, ',');
+        first = readUntil(first, u->no_telephone, SIZE_NO_TELEPHONE, ',');
+        first = readUntil(first, u->email, SIZE_EMAIL, ',');
+        first = readUntil(first, u->metier, SIZE_METIER, '\n');
+    }
 
     return EXIT_SUCCESS;
 }
