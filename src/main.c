@@ -7,6 +7,7 @@
 #include "Verif.h"
 #include "gremlins.h"
 #include "tableau.h"
+#include "Timer.h"
 
 /**
  * @brief efface tous dans le terminal (peut import l'OS)
@@ -150,6 +151,9 @@ int menu()
         case '1': // charger un fichier
             show_menu_Title("Charger fichier");
             nom_fichier = ask_fichier_existant("csv");
+
+            Clock(START);
+
             fp = fopen(nom_fichier, "r");
             free(nom_fichier);
             if (fp == NULL) {
@@ -165,6 +169,7 @@ int menu()
                 quick_sort(users, 0, nbr_utilisateur - 1, TRIE_PRENOM);
                 triersur = TRIE_PRENOM;
             }
+            Clock(END);
             break;
         case '2': // Sauvegarde du tableau
             show_menu_Title("Sauvegarde fichier");
