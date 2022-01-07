@@ -16,6 +16,6 @@
  * 
  * @param what_do 
  */
-double Clock(int what_do);
+long Clock(int what_do);
 
 #endif

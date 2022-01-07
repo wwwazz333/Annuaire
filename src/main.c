@@ -322,7 +322,7 @@ int menu()
                         desir_trier_sur = TRIE_NULL;
                         break;
                     }
-                    suseconds_t time_spend = 0;
+                    long time_spend = 0;
                     if (desir_trier_sur != TRIE_NULL) {
                         if (triersur != desir_trier_sur) {
                             quick_sort(users, 0, nbr_utilisateur - 1, desir_trier_sur);
@@ -335,7 +335,7 @@ int menu()
                         } else if (rep == 2) {
                             print_tab_sect(users, nbr_utilisateur, 500);
                         }
-                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.2lf milli-seconds (pour le trie et non l'affichage)\n", time_spend/1000.0f);// re-affiche le temps écouler l'hors du tire et non de l'affichage
+                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-seconds (pour le trie et non l'affichage)\n", time_spend/1000.0f);// re-affiche le temps écouler l'hors du tire et non de l'affichage
                     }
                     
                 }
