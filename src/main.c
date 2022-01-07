@@ -18,7 +18,7 @@
  */
 void cls()
 {
-    //system("clear||cls");
+    system("clear||cls");
 }
 
 /**
