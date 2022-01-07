@@ -48,7 +48,7 @@ user input_user()
 
 void print_user(user u, int id)
 {
-    if (!is_del(u)) {
+    if (!is_del(u) || 1) {
         printf("[%d] %s, %s, %s, %s, %s, %s, %s\n", id + 1, u.prenom, u.nom, u.ville, u.code_postal, u.no_telephone, u.email, u.metier);
     }
 }

@@ -171,7 +171,7 @@ int menu()
             if (users_init) {
                 nom_fichier = ask_fichier("csv");
                 setColor(GREEN);
-                printf("%d utilisateur(s) a sauvegarder.\n", nbr_utilisateur);
+                printf("%d utilisateur(s) a sauvegarder.\n", nbr_utilisateur - get_nombre_user_del(users, nbr_utilisateur));
                 setDefaultColor();
                 char proposition[][128] = { "annuler", "sauvegarder" };
                 int rep = demande_menu_while("voulez vous vraiment sauvegarder ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
@@ -228,7 +228,8 @@ int menu()
                 int rep = demande_menu_while("Voulez vous vraiment le supprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
                     if (del_user(users, id_del - 1, nbr_utilisateur) == 0) {
-                        oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
+                        // oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
+                        move_user_to_end(users, nbr_utilisateur, id_del-1);
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectuer.\n");
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la suppression.\n");

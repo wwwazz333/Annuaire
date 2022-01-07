@@ -78,4 +78,24 @@ void print_tab(user* tab, int size_tab);
  */
 void print_tab_sect(user* tab, int size_tab, int section);
 
+/**
+ * @brief donne le nombre de "user" supprimer
+ * 
+ * @pre aucune
+ * @post retourne le nombre de "user" supprimer ou -1 si il y a une erreur
+ */
+int get_nombre_user_del(user* tab, int size_tab);
+
+/**
+ * @brief déplace le "user" de l'index "index" à la fin de "tab"
+ * 
+ * @pre aucune
+ * @post le "user" de l'index "index" est à la fin de "tab"
+ * 
+ * @param tab le tableau
+ * @param size_tab la taille de "tab"
+ * @param index l'index du "user" à déplacer
+ */
+void move_user_to_end(user* tab, int size_tab, int index);
+
 #endif
