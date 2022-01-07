@@ -162,19 +162,14 @@ void recherche_in_tab(user tab[], int taille, char* string, int which, int size_
     }
     int i, j, count, test_compare;
     char c_save;
-    char* chaine_de_comparaison = malloc(size_wanted_for_which);// ici à del
+    char* ptr_chaine_compare;
     count = 0;
     for (i = 0, j = 0; i < taille; i++) {
-        // c_save = get_arg(&tab[i], which)[size_wanted_for_which - 1];
-        if (size_wanted_for_which - 1 >= get_size_arg(which)) {
-            fprintf(stderr, "trop grand : %d\t%d\n", size_wanted_for_which - 1, get_size_arg(which));
-        }
-        strcpy(chaine_de_comparaison, get_arg(&tab[i], which));
-        // get_arg(&tab[i], which)[size_wanted_for_which - 1] = '\0';
-        chaine_de_comparaison[size_wanted_for_which] = '\0';
-        test_compare = func_compare(/* get_arg(&tab[i], which) */chaine_de_comparaison, string);
-        printf("%s : %lu \t%s : %lu\n", chaine_de_comparaison, strlen(chaine_de_comparaison), string, strlen(string));
-        // get_arg(&tab[i], which)[size_wanted_for_which - 1] = c_save;
+        ptr_chaine_compare = get_arg(&tab[i], which);
+        c_save = ptr_chaine_compare[size_wanted_for_which];
+        ptr_chaine_compare[size_wanted_for_which] = '\0';
+        test_compare = func_compare(ptr_chaine_compare, string);
+        ptr_chaine_compare[size_wanted_for_which] = c_save;
         if (test_compare) {
             if (j % 2 == 0) {
                 setColor(PURPLE);
@@ -193,7 +188,6 @@ void recherche_in_tab(user tab[], int taille, char* string, int which, int size_
     setColor(GREEN);
     printf("%d r%ssultat(s) trouve.\n", count, E);
     setDefaultColor();
-    free(chaine_de_comparaison); // ici à del
 }
 
 void recherche_substring(user tab[], int taille, char* substring, int which) // et affiche

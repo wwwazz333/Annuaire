@@ -335,7 +335,7 @@ int menu()
                         } else if (rep == 2) {
                             print_tab_sect(users, nbr_utilisateur, 500);
                         }
-                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%lu micro-seconds (du trie, pas de l'affichage)\n", time_spend);// re-affiche le temps écouler l'hors du tire et non de l'affichage
+                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.2lf milli-seconds (pour le trie et non l'affichage)\n", time_spend/1000.0f);// re-affiche le temps écouler l'hors du tire et non de l'affichage
                     }
                     
                 }

@@ -12,10 +12,10 @@
  * @brief lance ou arrete un chrono
  * 
  * @pre what_do vaut START (0) ou END (1)
- * @post si "what_do" vaut START alors lance le chrono, si "what_do" vaut END affiche le temps écouler depuis le derner Clock(START) et retourne le timer
+ * @post si "what_do" vaut START alors lance le chrono, si "what_do" vaut END affiche le temps écouler depuis le derner Clock(START) (en milli-seconds) et retourne le timer (en micro-seconds)
  * 
  * @param what_do 
  */
-suseconds_t Clock(int what_do);
+double Clock(int what_do);
 
 #endif
