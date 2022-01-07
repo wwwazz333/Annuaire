@@ -12,6 +12,9 @@ WINDOWS = no
 
 all : $(EXEC)
 
+realse : 
+	$(CC) $(SRCDIR)/*.c -Iinclude -O2 -o main
+
 $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	$(CC) $(FLAGS) -o $@ -c $<
 
