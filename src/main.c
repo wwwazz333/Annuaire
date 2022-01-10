@@ -411,7 +411,7 @@ int menu()
                         print(RED, DEFAULT_BACKGROUND_COLOR, "l'id n'est pas dans le tableau\n");
                         break;
                     }
-                    print_user(users[id], id);
+                    print_user(users[id-1], id-1);
                     Clock(END);//affiche le timer
                     break;
                 }
