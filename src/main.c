@@ -7,6 +7,7 @@
 #include "Verif.h"
 #include "gremlins.h"
 #include "tableau.h"
+#include "Timer.h"
 
 /**
  * @brief efface tous dans le terminal (peut import l'OS)
@@ -156,6 +157,7 @@ int menu()
         case '1': // charger un fichier
             show_menu_Title("Charger fichier");
             nom_fichier = ask_fichier_existant("csv");
+            Clock(START);//démarage du timer
             fp = fopen(nom_fichier, "r");
             free(nom_fichier);
             if (fp == NULL) {
@@ -171,17 +173,19 @@ int menu()
                 quick_sort(users, 0, nbr_utilisateurs - 1, TRIE_PRENOM);
                 triersur = TRIE_PRENOM;
             }
+            Clock(END);//affiche le timer
             break;
         case '2': // Sauvegarde du tableau
             show_menu_Title("Sauvegarde fichier");
             if (users_init) {
                 nom_fichier = ask_fichier("csv");
                 setColor(GREEN);
-                printf("%d utilisateur(s) a sauvegarder.\n", nbr_utilisateurs);
+                printf("%d utilisateur(s) a sauvegarder.\n", nbr_utilisateurs - get_nombre_user_del(users, nbr_utilisateurs));
                 setDefaultColor();
                 char proposition[][128] = { "annuler", "sauvegarder" };
                 int rep = demande_menu_while("voulez vous vraiment sauvegarder ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
-                if (rep==1) {
+                Clock(START);//démarage du timer
+                if (rep == 1) {
                     fp = fopen(nom_fichier, "w");
                     free(nom_fichier);
                 }
@@ -193,6 +197,7 @@ int menu()
                     fclose(fp);
                     issave = 1;
                 }
+                Clock(END);//affiche le timer
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
             }
@@ -206,6 +211,7 @@ int menu()
                 setDefaultColor();
                 char proposition[][128] = { "annuler", "ajouter" };
                 int rep = demande_menu_while("Voulez vous vraiment l'ajouter : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                Clock(START);//démarage du timer
                 if (rep == 1) {
                     if (insert_user(&users, &nbr_utilisateurs, u, triersur) == EXIT_SUCCESS) {
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "client ajout%s\n", E);
@@ -214,6 +220,7 @@ int menu()
                 } else {
                     print(RED, DEFAULT_BACKGROUND_COLOR, "action annuler\n");
                 }
+                Clock(END);//affiche le timer
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
             }
@@ -234,9 +241,11 @@ int menu()
                 print_user(users[id_del - 1], id_del - 1);
                 char proposition[][128] = { "annuler", "supprimer" };
                 int rep = demande_menu_while("Voulez vous vraiment le supprimer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                Clock(START);//démarage du timer
                 if (rep == 1) {
                     if (del_user(users, id_del - 1, nbr_utilisateurs) == 0) {
-                        oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
+                        // oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
+                        move_user_to_end(users, nbr_utilisateurs, id_del-1);
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectuer.\n");
                         issave=0;
                     } else {
@@ -245,6 +254,7 @@ int menu()
                 } else {
                     print(RED, DEFAULT_BACKGROUND_COLOR, "action annul%se\n", E);
                 }
+                Clock(END);//affiche le timer
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
             }
@@ -274,6 +284,7 @@ int menu()
                     print_user(temp, id);
 
                     rep = demande_menu_while("voulez vous modifier l'utilisateur par celui-ci ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                    Clock(START);//démarage du timer
                     if (rep == 1) {
                         usercpy(&users[id], &temp);
                         oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
@@ -282,6 +293,7 @@ int menu()
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la modification.\n");
                     }
+                    Clock(END);//affiche le timer
                 } else {
                     print(RED, DEFAULT_BACKGROUND_COLOR, "action annulee\n");
                 }
@@ -297,9 +309,10 @@ int menu()
 
                 char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                 int rep_bis = demande_menu_while("Sur quoi voulez vous trier :", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
-                if (rep_bis != 0) {
+                Clock(START);//démarage du timer
+                if (rep != 0) {
                     TrierSur desir_trier_sur;
-                    switch (rep) {
+                    switch (rep_bis) {
                     case 1:
                         desir_trier_sur = TRIE_PRENOM;
                         break;
@@ -319,18 +332,22 @@ int menu()
                         desir_trier_sur = TRIE_NULL;
                         break;
                     }
+                    long time_spend = 0;
                     if (desir_trier_sur != TRIE_NULL) {
                         if (triersur != desir_trier_sur) {
                             quick_sort(users, 0, nbr_utilisateurs - 1, desir_trier_sur);
                             triersur = desir_trier_sur;
                         }
+                        time_spend = Clock(END);//affiche le timer et le sauvegarde
 
                         if (rep == 1) {
                             print_tab(users, nbr_utilisateurs);
                         } else if (rep == 2) {
                             print_tab_sect(users, nbr_utilisateurs, 500);
                         }
+                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-seconds (pour le trie et non l'affichage)\n", time_spend/1000.0f);// re-affiche le temps écouler l'hors du tire et non de l'affichage
                     }
+                    
                 }
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
@@ -345,18 +362,20 @@ int menu()
                 int rep = demande_menu_while("Quelle recherche voulez vous effectuer : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 0) {
                     break;
-                } else if (rep == 4) {
+                } else if (rep == 5) {
                     print(YELLOW, DEFAULT_BACKGROUND_COLOR, "id utilisateur: ");
                     int id = 0;
                     setColor(AQUA);
                     scanf("%d", &id);
                     setDefaultColor();
                     flush();
+                    Clock(START);//démarage du timer
                     if (!is_in_tab(id - 1, nbr_utilisateurs)) {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "l'id n'est pas dans le tableau\n");
-                    } else {
-                        print_user(users[id - 1], id - 1);
+                        break;
                     }
+                    print_user(users[id], id);
+                    Clock(END);//affiche le timer
                     break;
                 }
 
@@ -366,6 +385,7 @@ int menu()
                     (sizeof(proposition_bis) / (128 * sizeof(char))) - ((rep < 4) ? 1 : 0)); // si Recherche donné alors pas afficher "tous"
 
                 TrierSur desir_rechercher_sur;
+                Clock(START);//démarage du timer
                 switch (sous_rep) {
                 case 1:
                     desir_rechercher_sur = TRIE_PRENOM;
@@ -422,6 +442,7 @@ int menu()
                         }
                     }
                 }
+                Clock(END);//affiche le timer
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
             }

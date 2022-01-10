@@ -138,3 +138,26 @@ void print_tab_sect(user* tab, int size_tab, int section)
         }
     }
 }
+
+int get_nombre_user_del(user* tab, int size_tab)
+{
+    if (tab == NULL) {
+        return -1;
+    }
+    int counter = 0;
+    while (size_tab > 0 && is_del(tab[--size_tab])) {
+        counter++;
+    }
+    return counter;
+}
+
+void move_user_to_end(user* tab, int size_tab, int index)
+{
+    if (tab == NULL) {
+        return;
+    }
+    for (; index < size_tab-1; index++) {
+        if(is_del(tab[index+1])){return;}
+        permute(&tab[index], &tab[index + 1]);
+    }
+}

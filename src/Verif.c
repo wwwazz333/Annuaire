@@ -79,6 +79,7 @@ int is_del(user u)
 
 void strtolower(char* dst, char* src, int size)
 {
+    if(src == NULL){return;}
     int i = 0;
     for (; i < size - 1 && src[i] != '\0'; i++) {
         dst[i] = tolower(src[i]);
