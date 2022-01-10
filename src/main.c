@@ -129,8 +129,10 @@ void show_menu()
  * @param save_nom_fichier sauvegarde du nom de fichier ouvert
  * @param users Annuaire d'utilisateurs
  * @param nbr_utilisateurs le nombre d'utilisateurs du tableau
+ * @param users_init Pour librérer l'espace lorsqu'on quitte
+ * 
  */
-void ask_save(int issave, char save_nom_fichier[50], user* users, int nbr_utilisateurs) {
+void ask_save(int issave, char save_nom_fichier[50], user* users, int nbr_utilisateurs, int users_init) {
     FILE* fp;
     if(issave==0) {
         print(RED,DEFAULT_BACKGROUND_COLOR,"Fichier non sauvegarder\n\n");
@@ -138,6 +140,9 @@ void ask_save(int issave, char save_nom_fichier[50], user* users, int nbr_utilis
         int rep = demande_menu_while("Voulez vous d'abord enregistrer ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
         switch (rep) {
             case 0:
+                if (users_init) {
+                    free(users);
+                }
                 print(RED, DEFAULT_BACKGROUND_COLOR, "exit\n");
                 exit(EXIT_SUCCESS);
             case 1:
@@ -149,6 +154,9 @@ void ask_save(int issave, char save_nom_fichier[50], user* users, int nbr_utilis
                 save(fp, users, nbr_utilisateurs);
                 print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvegarder.\n");
                 fclose(fp);
+                if (users_init) {
+                    free(users);
+                }
                 exit(EXIT_SUCCESS);
             case 2:
                 print(ORANGE, DEFAULT_BACKGROUND_COLOR, "Annuler\n");
@@ -189,7 +197,7 @@ int menu()
         cls(); // clear le terminal
         switch (reponse) {
         case '0':
-            ask_save(issave, save_nom_fichier, users, nbr_utilisateurs);
+            ask_save(issave, save_nom_fichier, users, nbr_utilisateurs, users_init);
             break;
         case '1': // charger un fichier
             show_menu_Title("Charger fichier");
