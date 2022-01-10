@@ -19,7 +19,7 @@
 typedef struct {
     char prenom[SIZE_PRENOM];
     char nom[SIZE_NOM];
-    //! la ville où habite habite l'utilisateur
+    //! la ville où habite l'utilisateur
     char ville[SIZE_VILLE];
     //! le code postal de la ville avec 5 chiffres (ex : "69100")
     char code_postal[SIZE_CODE_POSTAL];

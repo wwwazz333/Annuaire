@@ -12,7 +12,7 @@ WINDOWS = no
 
 all : $(EXEC)
 
-realse : 
+release : 
 	$(CC) $(SRCDIR)/*.c -Iinclude -O2 -o main
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c

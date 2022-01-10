@@ -100,8 +100,6 @@ void save(FILE* fp, user tab[], int nombre_users)
             writeUser(fp, &tab[i]);
         }
     }
-
-    return EXIT_SUCCESS;
 }
 
 int nombre_utilisateurs(FILE* fp)
