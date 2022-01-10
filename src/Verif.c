@@ -79,7 +79,9 @@ int is_del(user u)
 
 void strtolower(char* dst, char* src, int size)
 {
-    if(src == NULL){return;}
+    if (src == NULL) {
+        return;
+    }
     int i = 0;
     for (; i < size - 1 && src[i] != '\0'; i++) {
         dst[i] = tolower(src[i]);
@@ -121,7 +123,7 @@ int is_in_tab(int index, int size_max)
     return (index >= 0 && index < size_max);
 }
 
-int stringstring(const char* haystack, const char* needle) //inspirer de strstr trouver ici : https://code.woboq.org/userspace/glibc/string/strstr.c.html
+int stringstring(const char* haystack, const char* needle) // inspirer de strstr trouver ici : https://code.woboq.org/userspace/glibc/string/strstr.c.html
 {
     if (needle[0] == '\0')
         return haystack != NULL;
@@ -132,6 +134,7 @@ int stringstring(const char* haystack, const char* needle) //inspirer de strstr 
     if (haystack == NULL) {
         return 0;
     }
+    const char* save_needle = needle;
     while (tolower(*haystack) == tolower(*needle) && *haystack != '\0' && *needle != '\0') {
         haystack++;
         needle++;
@@ -141,7 +144,7 @@ int stringstring(const char* haystack, const char* needle) //inspirer de strstr 
     } else if (*haystack == '\0') {
         return 0;
     } else {
-        return stringstring(haystack, needle);
+        return stringstring(haystack, save_needle);
     }
 }
 char* stringchr(register const char* s, int c) // https://code.woboq.org/gcc/libiberty/strchr.c.html et modifier
