@@ -120,6 +120,44 @@ void show_menu()
 }
 
 /**
+ * @brief Demande de sauvegarder avant de quitter le fichier
+ *
+ * @pre aucune
+ * @post sauvegarde, quitte ou annule l'action
+ * 
+ * @param issave fichier deja sauvegarder ou non
+ * @param save_nom_fichier sauvegarde du nom de fichier ouvert
+ * @param users Annuaire d'utilisateurs
+ * @param nbr_utilisateurs le nombre d'utilisateurs du tableau
+ */
+void ask_save(int issave, char save_nom_fichier[50], user* users, int nbr_utilisateurs) {
+    FILE* fp;
+    if(issave==0) {
+        print(RED,DEFAULT_BACKGROUND_COLOR,"Fichier non sauvegarder\n\n");
+        char proposition[][128] = { "Ne pas Enregrister","Enregistrer", "Annuler" };
+        int rep = demande_menu_while("Voulez vous d'abord enregistrer ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+        switch (rep) {
+            case 0:
+                print(RED, DEFAULT_BACKGROUND_COLOR, "exit\n");
+                exit(EXIT_SUCCESS);
+            case 1:
+                fp = fopen(save_nom_fichier, "w");
+                if (fp == NULL) {
+                    print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre ouvert.\n");
+                    break;
+                }
+                save(fp, users, nbr_utilisateurs);
+                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvegarder.\n");
+                fclose(fp);
+                exit(EXIT_SUCCESS);
+            case 2:
+                print(ORANGE, DEFAULT_BACKGROUND_COLOR, "Annuler\n");
+                break;
+        }
+    }
+}
+
+/**
  * @brief affiche et gère le menu
  *
  * @pre aucune
@@ -134,6 +172,7 @@ int menu()
     FILE* fp;
     int nbr_utilisateurs;
     char* nom_fichier;
+    char save_nom_fichier[50];
     TrierSur triersur;
     triersur = TRIE_NULL;
     int issave = 1;
@@ -150,16 +189,14 @@ int menu()
         cls(); // clear le terminal
         switch (reponse) {
         case '0':
-            if(issave==0) {
-                print(RED,DEFAULT_BACKGROUND_COLOR,"Veuillez sauvegarder");
-            }
+            ask_save(issave, save_nom_fichier, users, nbr_utilisateurs);
             break;
         case '1': // charger un fichier
             show_menu_Title("Charger fichier");
             nom_fichier = ask_fichier_existant("csv");
+            strcpy(save_nom_fichier, nom_fichier);
             Clock(START);//démarage du timer
             fp = fopen(nom_fichier, "r");
-            free(nom_fichier);
             if (fp == NULL) {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre ouvert.\n");
             } else {
