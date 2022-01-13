@@ -294,7 +294,7 @@ int menu()
                     if (del_user(users, id_del - 1, nbr_utilisateurs) == 0) {
                         // oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
                         move_user_to_end(users, nbr_utilisateurs, id_del-1);
-                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectu%s.\n", E);
+                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectu%se.\n", E);
                         issave=0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la suppression.\n");
@@ -337,7 +337,7 @@ int menu()
                     if (rep == 1) {
                         usercpy(&users[id], &temp);
                         oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
-                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "modification effectu%s.\n", E);
+                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "modification effectu%se.\n", E);
                         issave= 0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "action annul%se\n", E);
