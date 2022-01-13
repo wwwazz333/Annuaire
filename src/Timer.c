@@ -11,7 +11,7 @@ long Clock(int what_do)
         struct timeval stop;
         gettimeofday(&stop, NULL);
 		long time_spend = (stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec;
-        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-seconds\n", time_spend/1000.0f);
+        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-secondes\n", time_spend/1000.0f);
 		return time_spend;
     }
 

@@ -106,15 +106,15 @@ void show_menu()
     setColor(RED);
     show_line_menu("Quitter\n", &i); // 0
     setColor(GREEN);
-    show_line_menu("Charger ficher\n", &i); // 1
-    show_line_menu("Sauvegarder fichier\n", &i); // 2
+    show_line_menu("Charger un ficher\n", &i); // 1
+    show_line_menu("Sauvegarder un fichier\n", &i); // 2
     setColor(BLUE);
-    show_line_menu("Ajouter Client\n", &i); // 3
-    show_line_menu("Supprimer Client\n", &i); // 4
-    show_line_menu("Modifier Client\n", &i); // 5
+    show_line_menu("Ajouter un Client\n", &i); // 3
+    show_line_menu("Supprimer un Client\n", &i); // 4
+    show_line_menu("Modifier un Client\n", &i); // 5
     setColor(PINK);
-    show_line_menu("Afficher Clients\n", &i); // 6
-    show_line_menu("Fonctions Recherche\n", &i); // 7
+    show_line_menu("Affichage des Clients\n", &i); // 6
+    show_line_menu("Fonctions de Recherches\n", &i); // 7
 
     setDefaultColor();
 }
@@ -135,7 +135,7 @@ void show_menu()
 void ask_save(int issave, char save_nom_fichier[50], user* users, int nbr_utilisateurs, int users_init) {
     FILE* fp;
     if(issave==0) {
-        print(RED,DEFAULT_BACKGROUND_COLOR,"Fichier non sauvegarder\n\n");
+        print(RED,DEFAULT_BACKGROUND_COLOR,"Fichier non sauvegard%s\n\n", E);
         char proposition[][128] = { "Ne pas Enregrister","Enregistrer", "Annuler" };
         int rep = demande_menu_while("Voulez vous d'abord enregistrer ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
         switch (rep) {
@@ -152,7 +152,7 @@ void ask_save(int issave, char save_nom_fichier[50], user* users, int nbr_utilis
                     break;
                 }
                 save(fp, users, nbr_utilisateurs);
-                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvegarder.\n");
+                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvegard%s\n", E);
                 fclose(fp);
                 if (users_init) {
                     free(users);
@@ -212,7 +212,7 @@ int menu()
                 users = malloc(nbr_utilisateurs * sizeof(user));
                 load(fp, users);
                 users_init = 1;
-                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est charg%s\n", E);
+                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier a bien %st%s charg%s\n", E, E, E);
                 fclose(fp);
 
                 quick_sort(users, 0, nbr_utilisateurs - 1, TRIE_PRENOM);
@@ -225,7 +225,7 @@ int menu()
             if (users_init) {
                 nom_fichier = ask_fichier("csv");
                 setColor(GREEN);
-                printf("%d utilisateur(s) a sauvegarder.\n", nbr_utilisateurs - get_nombre_user_del(users, nbr_utilisateurs));
+                printf("%d utilisateur(s) a sauvegard%s.\n", nbr_utilisateurs - get_nombre_user_del(users, nbr_utilisateurs), E);
                 setDefaultColor();
                 char proposition[][128] = { "annuler", "sauvegarder" };
                 int rep = demande_menu_while("voulez vous vraiment sauvegarder ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
@@ -233,18 +233,21 @@ int menu()
                 if (rep == 1) {
                     fp = fopen(nom_fichier, "w");
                     free(nom_fichier);
+                    if (fp == NULL) {
+                        print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre enregist%s\n", E);
+                    } else {
+                        save(fp, users, nbr_utilisateurs);
+                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvegard%s\n", E);
+                        fclose(fp);
+                        issave = 1;
+                    }
                 }
-                if (fp == NULL) {
-                    print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre enregister.\n");
-                } else {
-                    save(fp, users, nbr_utilisateurs);
-                    print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier est sauvegarder.\n");
-                    fclose(fp);
-                    issave = 1;
+                else {
+                    print(RED, DEFAULT_BACKGROUND_COLOR, "action annul%se\n", E);
                 }
                 Clock(END);//affiche le timer
             } else {
-                print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
+                print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charg%s de fichier.\n", E);
             }
             break;
         case '3': // ajout d'utilisateur
@@ -291,7 +294,7 @@ int menu()
                     if (del_user(users, id_del - 1, nbr_utilisateurs) == 0) {
                         // oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
                         move_user_to_end(users, nbr_utilisateurs, id_del-1);
-                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectuer.\n");
+                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectu%s.\n", E);
                         issave=0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la suppression.\n");
@@ -323,6 +326,7 @@ int menu()
                 char proposition[][128] = { "annuler", "modifier" };
                 int rep = demande_menu_while("voulez vous modifier celui-ci ? : ", proposition, sizeof(proposition) / (128 * sizeof(char)));
                 if (rep == 1) {
+                    print(GREY, DEFAULT_BACKGROUND_COLOR, "Appuyer sur ENTRER pour ne pas modifier l'information\n");
                     user temp;
                     usercpy(&temp, &users[id]);
                     modif_user(&temp);
@@ -333,24 +337,24 @@ int menu()
                     if (rep == 1) {
                         usercpy(&users[id], &temp);
                         oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
-                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "modification effectuer.\n");
+                        print(GREEN, DEFAULT_BACKGROUND_COLOR, "modification effectu%s.\n", E);
                         issave= 0;
                     } else {
-                        print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la modification.\n");
+                        print(RED, DEFAULT_BACKGROUND_COLOR, "action annul%se\n", E);
                     }
                     Clock(END);//affiche le timer
                 } else {
-                    print(RED, DEFAULT_BACKGROUND_COLOR, "action annulee\n");
+                    print(RED, DEFAULT_BACKGROUND_COLOR, "action annul%se\n", E);
                 }
             } else {
-                print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
+                print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charg%s de fichier.\n", E);
             }
             break;
         case '6': // Affichage Clients
             show_menu_Title("Affichage Clients");
             if (users_init) {
-                char proposition[][128] = { "annuler", "Affichage complet", "Affichage sectionner" };
-                int rep = demande_menu_while("Quelle methode d'affichage choisissez vous: ", proposition, sizeof(proposition) / (128 * sizeof(char)));
+                char proposition[][128] = { "annuler", "Affichage complet", "Affichage par section" };
+                int rep = demande_menu_while("Quelle methode d'affichage choisissez-vous: ", proposition, sizeof(proposition) / (128 * sizeof(char)));
 
                 char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                 int rep_bis = demande_menu_while("Sur quoi voulez vous trier :", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
@@ -390,7 +394,7 @@ int menu()
                         } else if (rep == 2) {
                             print_tab_sect(users, nbr_utilisateurs, 500);
                         }
-                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-seconds (pour le trie et non l'affichage)\n", time_spend/1000.0f);// re-affiche le temps écouler l'hors du tire et non de l'affichage
+                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-secondes (pour le trie et non l'affichage)\n", time_spend/1000.0f);// re-affiche le temps écouler l'hors du trie et non de l'affichage
                     }
                     
                 }
@@ -416,7 +420,7 @@ int menu()
                     flush();
                     Clock(START);//démarage du timer
                     if (!is_in_tab(id - 1, nbr_utilisateurs)) {
-                        print(RED, DEFAULT_BACKGROUND_COLOR, "l'id n'est pas dans le tableau\n");
+                        print(RED, DEFAULT_BACKGROUND_COLOR, "l'ID n'est pas dans le tableau\n");
                         break;
                     }
                     print_user(users[id-1], id-1);
@@ -430,7 +434,7 @@ int menu()
                     (sizeof(proposition_bis) / (128 * sizeof(char))) - ((rep < 4) ? 1 : 0)); // si Recherche donné alors pas afficher "tous"
 
                 TrierSur desir_rechercher_sur;
-                Clock(START);//démarage du timer
+                // Clock(START);//démarage du timer
                 switch (sous_rep) {
                 case 1:
                     desir_rechercher_sur = TRIE_PRENOM;
@@ -471,31 +475,56 @@ int menu()
                         input(search_string, get_size_arg(desir_rechercher_sur));
 
                         if (rep == 1) {
+                            Clock(START);//démarage du timer
                             recherche_substring(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
+                            Clock(END);//affiche le timer
                         } else if (rep == 2) {
+                            Clock(START);//démarage du timer
                             recherche_string(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
+                            Clock(END);//affiche le timer
                         } else {
+                            Clock(START);//démarage du timer
                             recherche_exacte(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
+                            Clock(END);//affiche le timer
                         }
                     }
                 } else if (rep == 4) {
                     if (desir_rechercher_sur != TRIE_NULL) {
                         if (desir_rechercher_sur == TIRE_TOUS) {
+                            Clock(START);//démarage du timer
                             recherche_tous_manquante(users, nbr_utilisateurs);
+                            Clock(END);//affiche le timer
                         } else {
+                            Clock(START);//démarage du timer
                             recherche_element_manquant(users, nbr_utilisateurs, desir_rechercher_sur);
+                            Clock(END);//affiche le timer
                         }
                     }
                 }
-                Clock(END);//affiche le timer
+                // Clock(END);//affiche le timer
             } else {
-                print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charger de fichier.\n");
+                print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charg%s de fichier.\n", E);
             }
             break;
         case '$':
             show_menu_Title("Easter Egg - Gremlins");
             show_gremlins();
             break;
+        case '*':
+            //Mode developpeur (pour éviter de charger 12 fois le fichier)
+            fp = fopen("annuaire5000.csv", "r");
+            if (fp == NULL) {
+                print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre ouvert.\n");
+            } else {
+                nbr_utilisateurs = nombre_utilisateurs(fp);
+                users = malloc(nbr_utilisateurs * sizeof(user));
+                load(fp, users);
+                users_init = 1;
+                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier a bien %st%s charg%s\n", E, E, E);
+                fclose(fp);
+                quick_sort(users, 0, nbr_utilisateurs - 1, TRIE_PRENOM);
+                triersur = TRIE_PRENOM;
+            }
         default:
             break;
         }

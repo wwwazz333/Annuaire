@@ -70,7 +70,7 @@ int del_user(user tab[], int id, int taille)
 int insert_user(user* tab[], int* taille, user u, int which)
 {
     if (which == TRIE_NULL) {
-        print(RED, DEFAULT_BACKGROUND_COLOR, "Erreur : le tableau n'est pas trier...\n");
+        print(RED, DEFAULT_BACKGROUND_COLOR, "Erreur : le tableau n'est pas tri%s...\n", E);
         return EXIT_FAILURE;
     }
     if (is_del(u)) {
@@ -186,7 +186,7 @@ void recherche_in_tab(user tab[], int taille, char* string, int which, int size_
         }
     }
     setColor(GREEN);
-    printf("%d r%ssultat(s) trouve.\n", count, E);
+    printf("%d r%ssultat(s) trouv%s(s)\n", count, E, E);
     setDefaultColor();
 }
 
@@ -231,7 +231,7 @@ void recherche_tous_manquante(user tab[], int taille) // et affiche
         }
     }
     setColor(GREEN);
-    printf("%d resultat(s) trouve.\n", count);
+    printf("%d r%ssultat(s) trouv%s(s)\n", count, E, E);
     setDefaultColor();
 }
 

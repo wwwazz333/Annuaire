@@ -125,13 +125,13 @@ void print_tab_sect(user* tab, int size_tab, int section)
         if ((i + 1) % (section) == 0 && i != 0) {
             setColor(YELLOW);
             printf("\n[%d/%d] ", i + 1, size_tab);
-            print(GREY, DEFAULT_BACKGROUND_COLOR, "Appuyer sur Entrer pour continuer ou 0 pour quitter... ");
+            print(GREY, DEFAULT_BACKGROUND_COLOR, "Appuyer sur ENTRER pour continuer ou 0 pour quitter... ");
             int c;
             setColor(AQUA);
             while ((c = getchar()) != '\n' && c != '0') { }
             setDefaultColor();
             if (c == '0') {
-                print(RED, DEFAULT_BACKGROUND_COLOR, "Annulation");
+                print(RED, DEFAULT_BACKGROUND_COLOR, "Action annul%se", E);
                 printf("\n");
                 break;
             }

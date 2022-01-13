@@ -26,7 +26,7 @@ char* ask_fichier(char* extension)
 
     while (nom[0] == '\0' || nom[0] == '\n') {
         setColor(ORANGE);
-        printf("Nom fichier: ");
+        printf("Nom du fichier: ");
         setColor(AQUA);
         input(nom, 50);
         setDefaultColor();
