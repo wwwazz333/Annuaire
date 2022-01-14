@@ -97,7 +97,7 @@ int string_cmp(const char* p1, const char* p2) // code source récuperer ici : h
     c1 = tolower((unsigned char)*s1++);
     c2 = tolower((unsigned char)*s2++);
     if (c1 == '\0') {
-        return 1;
+        return c2 != '\0';//si vrai alors les 2 son null sinon que c1
     } else if (c2 == '\0') {
         return -1;
     }
