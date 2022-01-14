@@ -390,11 +390,13 @@ int menu()
                         time_spend = Clock(END); // affiche le timer et le sauvegarde
 
                         if (rep == 1) {
-                            print_tab(users, nbr_utilisateurs);
+                            print_tab(users, nbr_utilisateurs);                            
                         } else if (rep == 2) {
                             print_tab_sect(users, nbr_utilisateurs, 500);
                         }
                         print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-secondes (pour le trie et non l'affichage)\n", time_spend / 1000.0f); // re-affiche le temps écouler l'hors du trie et non de l'affichage
+                        show_menu_Title("Liste simaire");
+                        recherche_doublon(users, nbr_utilisateurs, triersur);
                     }
                 }
             } else {

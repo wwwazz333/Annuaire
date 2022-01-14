@@ -144,8 +144,6 @@ int modif_user(user* to_modif)
     return EXIT_SUCCESS;
 }
 
-
-
 int recherche_str_cmp(const char* s1, const char* s2)
 {
     return string_cmp(s1, s2) == 0;
@@ -242,6 +240,10 @@ void usercpy(user* dst, user* src)
     }
     memcpy(dst, src, sizeof(user));
 }
+int userEqual(user* u1, user* u2)
+{
+    return (u1 != NULL && u2 != NULL && string_cmp((const char*)u1->prenom, (const char*)u2->prenom) == 0 && string_cmp((const char*)u1->nom, (const char*)u2->nom) == 0 && string_cmp((const char*)u1->ville, (const char*)u2->ville) == 0 && string_cmp((const char*)u1->code_postal, (const char*)u2->code_postal) == 0 && string_cmp((const char*)u1->email, (const char*)u2->email) == 0 && string_cmp((const char*)u1->metier, (const char*)u2->metier) == 0 && string_cmp((const char*)u1->no_telephone, (const char*)u2->no_telephone) == 0);
+}
 
 char* get_arg(user* u, int which_one)
 {
@@ -297,4 +299,60 @@ int get_size_arg(int which_one)
         break;
     }
     return 0;
+}
+
+void recherche_doublon(user tab[], int taille, int which_trier)
+{
+    if (tab == NULL) {
+        return;
+    }
+    int i, j, count;
+    count = 0;
+    for (i = 0, j = 0; i < taille - 1; i++) {
+        int k = i + 1;
+        if (is_del(tab[i])) {
+            break;
+        }
+        while (k < taille && string_cmp(get_arg(&tab[i], which_trier), get_arg(&tab[k], which_trier)) == 0) {
+            if (userEqual(&tab[i], &tab[k]) == 1) {
+                if (j % 2 == 0) {
+                    setColor(PURPLE);
+                    print_user(tab[i], i);
+                    setColor(WHITE);
+                    print_user(tab[k], k);
+                } else {
+                    setColor(WHITE);
+                    print_user(tab[i], i);
+                    setColor(PURPLE);
+                    print_user(tab[k], k);
+                }
+
+                setDefaultColor();
+                count += 2;
+
+                i = k;
+
+                if (userEqual(&tab[i], &tab[k + 1]) == 1) {
+                    if (j % 2 == 0) {
+                        setColor(PURPLE);
+                    } else {
+                        setColor(WHITE);
+                    }
+                    print_user(tab[k + 1], k + 1);
+                    count++;
+                    j++;
+
+                    i += 2;
+                    k += 2;
+                } else {
+                    k++;
+                }
+                setDefaultColor();
+            }
+            k++;
+        }
+    }
+    setColor(GREEN);
+    printf("%d similaire trouv%s(s)\n", count, E);
+    setDefaultColor();
 }

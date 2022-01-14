@@ -200,4 +200,15 @@ int get_size_arg(int which_one);
  * @param id l'index de "user" serre uniquement à l'affichage
  */
 void print_user(user u, int id);
+
+/**
+ * @brief u1 == u2
+ * 
+ * @pre aucune
+ * @post retrourne 1 ssi u1 == u2
+ */
+int userEqual(user* u1, user* u2);
+
+
+void recherche_doublon(user tab[], int taille, int which_trier);
 #endif
