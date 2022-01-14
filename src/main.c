@@ -396,6 +396,7 @@ int menu()
                             quick_sort(users, 0, nbr_utilisateurs - 1, desir_trier_sur);
                             triersur = desir_trier_sur;
                         }
+                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "temps de trie ");
                         time_spend = Clock(END); // affiche le timer et le sauvegarde
 
                         if (rep == 1) {
