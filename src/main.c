@@ -98,7 +98,7 @@ int demande_menu_while(const char* demande, char proposition[][128], int nbr_pro
  * @pre aucune
  * @post affiche les possibilité du menu
  */
-void show_menu()
+void show_menu(int isdoublon)
 {
     int i = 0;
     setDefaultColor();
@@ -115,6 +115,11 @@ void show_menu()
     setColor(PINK);
     show_line_menu("Affichage des Clients\n", &i); // 6
     show_line_menu("Fonctions de Recherches\n", &i); // 7
+    if (isdoublon==1) {
+        show_line_menu("Affichage des Doublons", &i); // 8
+        print(WHITE,DEFAULT_BACKGROUND_COLOR," - ");
+        print(RED,DEFAULT_BACKGROUND_COLOR,"Doublon(s) trouv%s(s)\n", E);
+    }
 
     setDefaultColor();
 }
@@ -185,10 +190,11 @@ int menu()
     TrierSur triersur;
     triersur = TRIE_NULL;
     int issave = 1;
+    int isdoublon = 0;
 
     char reponse = '\0';
     while (reponse != '0' || issave == 0) {
-        show_menu();
+        show_menu(isdoublon);
         print(ORANGE, DEFAULT_BACKGROUND_COLOR, ">> ");
         setColor(AQUA);
         scanf("%c", &reponse);
@@ -218,6 +224,7 @@ int menu()
 
                 quick_sort(users, 0, nbr_utilisateurs - 1, TRIE_PRENOM);
                 triersur = TRIE_PRENOM;
+                isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
             }
             Clock(END); // affiche le timer
             break;
@@ -263,6 +270,7 @@ int menu()
                 if (rep == 1) {
                     if (insert_user(&users, &nbr_utilisateurs, u, triersur) == EXIT_SUCCESS) {
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "client ajout%s\n", E);
+                        isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
                         issave = 0;
                     }
                 } else {
@@ -292,9 +300,9 @@ int menu()
                 Clock(START); // démarage du timer
                 if (rep == 1) {
                     if (del_user(users, id_del - 1, nbr_utilisateurs) == 0) {
-                        // oyelami(users, nbr_utilisateur - 1, triersur); // re trie le tableau
                         move_user_to_end(users, nbr_utilisateurs, id_del - 1);
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectu%se.\n", E);
+                        isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
                         issave = 0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la suppression.\n");
@@ -338,6 +346,7 @@ int menu()
                         usercpy(&users[id], &temp);
                         oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "modification effectu%se.\n", E);
+                        isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
                         issave = 0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "action annul%se\n", E);
@@ -395,8 +404,7 @@ int menu()
                             print_tab_sect(users, nbr_utilisateurs, 500);
                         }
                         print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-secondes (pour le trie et non l'affichage)\n", time_spend / 1000.0f); // re-affiche le temps écouler l'hors du trie et non de l'affichage
-                        show_menu_Title("Liste simaire");
-                        recherche_doublon(users, nbr_utilisateurs, triersur);
+                        isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
                     }
                 }
             } else {
@@ -507,12 +515,18 @@ int menu()
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charg%s de fichier.\n", E);
             }
             break;
+        case '8':
+            if (isdoublon==1) {
+                show_menu_Title("Affichage des Doublons");
+                recherche_doublon(users, nbr_utilisateurs, triersur);
+            }
+            break;
         case '$':
             show_menu_Title("Easter Egg - Gremlins");
             show_gremlins();
             break;
         case '*':
-            // Mode developpeur (pour éviter de charger 12 fois le fichier)
+            // Mode developpeur (pour éviter le chargement durant les tests fois le fichier)
             fp = fopen("annuaire5000.csv", "r");
             if (fp == NULL) {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre ouvert.\n");

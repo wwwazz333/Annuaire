@@ -301,6 +301,27 @@ int get_size_arg(int which_one)
     return 0;
 }
 
+int exist_doublon(user tab[], int taille, int which_trier)
+{
+    if (tab == NULL) {
+        return -1;
+    }
+    int i;
+    for (i = 0; i < taille - 1; i++) {
+        int k = i + 1;
+        if (is_del(tab[i])) {
+            break;
+        }
+        while (k < taille && string_cmp(get_arg(&tab[i], which_trier), get_arg(&tab[k], which_trier)) == 0) {
+            if (userEqual(&tab[i], &tab[k]) == 1) {
+                return 1;
+            }
+            k++;
+        }
+    }
+    return 0;
+}
+
 void recherche_doublon(user tab[], int taille, int which_trier)
 {
     if (tab == NULL) {
