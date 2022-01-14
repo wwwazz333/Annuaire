@@ -6,7 +6,7 @@ SRC = $(wildcard src/*.c)
 OBJDIR = obj
 OBJ = $(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
-FLAGS = -Iinclude -g3 -Wall -Wextra
+FLAGS = -Iinclude -g3 -Wall
 
 WINDOWS = no
 

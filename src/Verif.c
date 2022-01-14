@@ -109,14 +109,6 @@ int string_cmp(const char* p1, const char* p2) // code source récuperer ici : h
     }
     return c1 - c2;
 }
-// int string_cmp(const char* s1, const char* s2)
-// {
-//     if (s1[0] == '\0' || s2[0] == '\0') {
-//         return -1 * strcmp(s1, s2);
-//     } else {
-//         return strcmp(s1, s2);
-//     }
-// }
 
 int is_in_tab(int index, int size_max)
 {
