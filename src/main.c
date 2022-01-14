@@ -526,21 +526,6 @@ int menu()
             show_menu_Title("Easter Egg - Gremlins");
             show_gremlins();
             break;
-        case '*':
-            // Mode developpeur (pour éviter le chargement durant les tests fois le fichier)
-            fp = fopen("annuaire5000.csv", "r");
-            if (fp == NULL) {
-                print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre ouvert.\n");
-            } else {
-                nbr_utilisateurs = nombre_utilisateurs(fp);
-                users = malloc(nbr_utilisateurs * sizeof(user));
-                load(fp, users);
-                users_init = 1;
-                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier a bien %st%s charg%s\n", E, E, E);
-                fclose(fp);
-                quick_sort(users, 0, nbr_utilisateurs - 1, TRIE_PRENOM);
-                triersur = TRIE_PRENOM;
-            }
         default:
             break;
         }
