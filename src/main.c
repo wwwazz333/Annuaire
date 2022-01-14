@@ -115,10 +115,11 @@ void show_menu(int isdoublon)
     setColor(PINK);
     show_line_menu("Affichage des Clients\n", &i); // 6
     show_line_menu("Fonctions de Recherches\n", &i); // 7
-    if (isdoublon==1) {
+    if (isdoublon == 1) {
+        setColor(YELLOW);
         show_line_menu("Affichage des Doublons", &i); // 8
-        print(WHITE,DEFAULT_BACKGROUND_COLOR," - ");
-        print(RED,DEFAULT_BACKGROUND_COLOR,"Doublon(s) trouv%s(s)\n", E);
+        print(WHITE, DEFAULT_BACKGROUND_COLOR, " - ");
+        print(RED, DEFAULT_BACKGROUND_COLOR, "Doublon(s) trouv%s(s)\n", E);
     }
 
     setDefaultColor();
@@ -224,7 +225,7 @@ int menu()
 
                 quick_sort(users, 0, nbr_utilisateurs - 1, TRIE_PRENOM);
                 triersur = TRIE_PRENOM;
-                isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
+                isdoublon = exist_doublon(users, nbr_utilisateurs, triersur);
             }
             Clock(END); // affiche le timer
             break;
@@ -270,7 +271,7 @@ int menu()
                 if (rep == 1) {
                     if (insert_user(&users, &nbr_utilisateurs, u, triersur) == EXIT_SUCCESS) {
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "client ajout%s\n", E);
-                        isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
+                        isdoublon = exist_doublon(users, nbr_utilisateurs, triersur);
                         issave = 0;
                     }
                 } else {
@@ -302,7 +303,7 @@ int menu()
                     if (del_user(users, id_del - 1, nbr_utilisateurs) == 0) {
                         move_user_to_end(users, nbr_utilisateurs, id_del - 1);
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "suppression effectu%se.\n", E);
-                        isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
+                        isdoublon = exist_doublon(users, nbr_utilisateurs, triersur);
                         issave = 0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "erreur lors de la suppression.\n");
@@ -346,7 +347,7 @@ int menu()
                         usercpy(&users[id], &temp);
                         oyelami(users, nbr_utilisateurs - 1, triersur); // re trie le tableau
                         print(GREEN, DEFAULT_BACKGROUND_COLOR, "modification effectu%se.\n", E);
-                        isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
+                        isdoublon = exist_doublon(users, nbr_utilisateurs, triersur);
                         issave = 0;
                     } else {
                         print(RED, DEFAULT_BACKGROUND_COLOR, "action annul%se\n", E);
@@ -368,7 +369,7 @@ int menu()
                 if (rep != 0) {
                     char proposition_bis[][128] = { "annuler", "prenom", "nom", "ville", "code postal", "profession" };
                     int rep_bis = demande_menu_while("Sur quoi voulez vous trier :", proposition_bis, sizeof(proposition_bis) / (128 * sizeof(char)));
-                    Clock(START); // démarage du timer
+
                     TrierSur desir_trier_sur;
                     switch (rep_bis) {
                     case 1:
@@ -392,20 +393,20 @@ int menu()
                     }
                     long time_spend = 0;
                     if (desir_trier_sur != TRIE_NULL) {
+                        Clock(START); // démarage du timer
                         if (triersur != desir_trier_sur) {
                             quick_sort(users, 0, nbr_utilisateurs - 1, desir_trier_sur);
                             triersur = desir_trier_sur;
                         }
-                        print(AQUA, DEFAULT_BACKGROUND_COLOR, "temps de trie ");
                         time_spend = Clock(END); // affiche le timer et le sauvegarde
 
                         if (rep == 1) {
-                            print_tab(users, nbr_utilisateurs);                            
+                            print_tab(users, nbr_utilisateurs);
                         } else if (rep == 2) {
                             print_tab_sect(users, nbr_utilisateurs, 500);
                         }
                         print(AQUA, DEFAULT_BACKGROUND_COLOR, "%.3lf milli-secondes (pour le trie et non l'affichage)\n", time_spend / 1000.0f); // re-affiche le temps écouler l'hors du trie et non de l'affichage
-                        isdoublon=exist_doublon(users, nbr_utilisateurs, triersur);
+                        isdoublon = exist_doublon(users, nbr_utilisateurs, triersur);
                     }
                 }
             } else {
@@ -444,7 +445,6 @@ int menu()
                     (sizeof(proposition_bis) / (128 * sizeof(char))) - ((rep < 4) ? 1 : 0)); // si Recherche donné alors pas afficher "tous"
 
                 TrierSur desir_rechercher_sur;
-                // Clock(START);//démarage du timer
                 switch (sous_rep) {
                 case 1:
                     desir_rechercher_sur = TRIE_PRENOM;
@@ -484,63 +484,43 @@ int menu()
                         print(AQUA, DEFAULT_BACKGROUND_COLOR, ">> ");
                         input(search_string, get_size_arg(desir_rechercher_sur));
 
+                        Clock(START); // démarage du timer
                         if (rep == 1) {
-                            Clock(START); // démarage du timer
                             recherche_substring(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
-                            Clock(END); // affiche le timer
                         } else if (rep == 2) {
-                            Clock(START); // démarage du timer
                             recherche_string(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
-                            Clock(END); // affiche le timer
                         } else {
-                            Clock(START); // démarage du timer
                             recherche_exacte(users, nbr_utilisateurs, search_string, desir_rechercher_sur);
-                            Clock(END); // affiche le timer
                         }
+                        Clock(END); // affiche le timer
                     }
                 } else if (rep == 4) {
                     if (desir_rechercher_sur != TRIE_NULL) {
+                        Clock(START); // démarage du timer
                         if (desir_rechercher_sur == TIRE_TOUS) {
-                            Clock(START); // démarage du timer
                             recherche_tous_manquante(users, nbr_utilisateurs);
-                            Clock(END); // affiche le timer
                         } else {
-                            Clock(START); // démarage du timer
                             recherche_element_manquant(users, nbr_utilisateurs, desir_rechercher_sur);
-                            Clock(END); // affiche le timer
                         }
+                        Clock(END); // affiche le timer
                     }
                 }
-                // Clock(END);//affiche le timer
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charg%s de fichier.\n", E);
             }
             break;
         case '8':
-            if (isdoublon==1) {
+            if (isdoublon == 1) {
                 show_menu_Title("Affichage des Doublons");
+                Clock(START); // démarage du timer
                 recherche_doublon(users, nbr_utilisateurs, triersur);
+                Clock(END); // affiche le timer
             }
             break;
         case '$':
             show_menu_Title("Easter Egg - Gremlins");
             show_gremlins();
             break;
-        case '*':
-            // Mode developpeur (pour éviter le chargement durant les tests fois le fichier)
-            fp = fopen("annuaire5000.csv", "r");
-            if (fp == NULL) {
-                print(RED, DEFAULT_BACKGROUND_COLOR, "Le fichier n'a pas pu etre ouvert.\n");
-            } else {
-                nbr_utilisateurs = nombre_utilisateurs(fp);
-                users = malloc(nbr_utilisateurs * sizeof(user));
-                load(fp, users);
-                users_init = 1;
-                print(GREEN, DEFAULT_BACKGROUND_COLOR, "Le fichier a bien %st%s charg%s\n", E, E, E);
-                fclose(fp);
-                quick_sort(users, 0, nbr_utilisateurs - 1, TRIE_PRENOM);
-                triersur = TRIE_PRENOM;
-            }
         default:
             break;
         }
