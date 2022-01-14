@@ -148,7 +148,7 @@ int recherche_str_cmp(const char* s1, const char* s2)
 {
     return string_cmp(s1, s2) == 0;
 }
-int recherche_element_cmp(const char* s1, const char* s2)
+int recherche_element_cmp(const char* s1, const char* s2) // nous n'utilisons pas le second argument (s2) mais nous le mettons quand même car il est necessaire que la fonction ("func_compare") de comparaison dans la fonction "recherche_in_tab" soit de la frome (int (fonction)(const char*, const char*)) se qui nous évite d'écrire 4 fois la "recherche_in_tab"
 {
     return s1[0] == '\0';
 }

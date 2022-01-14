@@ -209,6 +209,15 @@ void print_user(user u, int id);
  */
 int userEqual(user* u1, user* u2);
 
-
+/**
+ * @brief affiche les user qui sont présent plusieur fois
+ * 
+ * @pre aucune
+ * @post affiche les user qui sont présent plusieur fois dans "tab"
+ * 
+ * @param tab le tableau
+ * @param taille la taille de "tab"
+ * @param which_trier sur quelle paramètre tab est tirer
+ */
 void recherche_doublon(user tab[], int taille, int which_trier);
 #endif
