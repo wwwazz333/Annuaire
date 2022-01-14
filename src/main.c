@@ -116,6 +116,7 @@ void show_menu(int isdoublon)
     show_line_menu("Affichage des Clients\n", &i); // 6
     show_line_menu("Fonctions de Recherches\n", &i); // 7
     if (isdoublon==1) {
+        setColor(YELLOW);
         show_line_menu("Affichage des Doublons", &i); // 8
         print(WHITE,DEFAULT_BACKGROUND_COLOR," - ");
         print(RED,DEFAULT_BACKGROUND_COLOR,"Doublon(s) trouv%s(s)\n", E);
@@ -443,7 +444,6 @@ int menu()
                     (sizeof(proposition_bis) / (128 * sizeof(char))) - ((rep < 4) ? 1 : 0)); // si Recherche donné alors pas afficher "tous"
 
                 TrierSur desir_rechercher_sur;
-                // Clock(START);//démarage du timer
                 switch (sous_rep) {
                 case 1:
                     desir_rechercher_sur = TRIE_PRENOM;
@@ -510,7 +510,6 @@ int menu()
                         }
                     }
                 }
-                // Clock(END);//affiche le timer
             } else {
                 print(RED, DEFAULT_BACKGROUND_COLOR, "vous n'avez pas charg%s de fichier.\n", E);
             }
@@ -518,7 +517,9 @@ int menu()
         case '8':
             if (isdoublon==1) {
                 show_menu_Title("Affichage des Doublons");
+                Clock(START); // démarage du timer
                 recherche_doublon(users, nbr_utilisateurs, triersur);
+                Clock(END); // affiche le timer
             }
             break;
         case '$':
