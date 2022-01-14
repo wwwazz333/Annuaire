@@ -104,4 +104,7 @@ int get_nombre_user_del(user* tab, int size_tab);
  */
 void move_user_to_end(user* tab, int size_tab, int index);
 
+
+
+
 #endif

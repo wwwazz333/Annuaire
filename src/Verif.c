@@ -147,7 +147,7 @@ int stringstring(const char* haystack, const char* needle) // inspirer de strstr
         return stringstring(haystack, save_needle);
     }
 }
-char* stringchr(register const char* s, int c) // https://code.woboq.org/gcc/libiberty/strchr.c.html et modifier
+char* stringchr(const char* s, int c) // https://code.woboq.org/gcc/libiberty/strchr.c.html et modifier
 {
     do {
         if (tolower(*s) == tolower(c)) {

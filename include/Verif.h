@@ -89,8 +89,26 @@ void strtolower(char* dst, char* src, int size);
  */
 int string_cmp(const char* p1, const char* p2);
 
+/**
+ * @brief surcharge de la fonction strstr qui ne prend pas en compte la casse
+ * 
+ * @pre needle non null
+ * @post retourne 1 ssi "needle" est dans "haystack" sans prendre en compte la casse
+ * 
+ * @param haystack la chaine de caractère dans la quelle chercher
+ * @param needle la sous chaine de caractère à chercher
+ */
 int stringstring(const char* haystack, const char* needle);
-char* stringchr(register const char* s, int c);
+
+/**
+ * @brief cherche le caractère "c" dans "s"
+ * 
+ * @post retourne un pointeur de char sur le prochain caractère "c" rencontrer dans la chaine de caractère s
+ * @param s la chaine de caractère dans la quelle chercher
+ * @param c le caractère à chercher (le code ascii)
+ * @return char* 
+ */
+char* stringchr(const char* s, int c);
 
 /**
  * @brief
